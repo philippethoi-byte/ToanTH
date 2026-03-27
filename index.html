@@ -1,62 +1,39 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chương Trình Học Tập</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Course Index</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f4f4f4; }
+        h1 { color: #333; }
+        .course { margin-bottom: 15px; padding: 15px; background: #fff; border: 1px solid #ccc; border-radius: 5px; }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>Chương Trình Học Tập - Dấu Hiệu Chia Hết</h1>
-    </header>
-    <main>
-        <section id="grade-levels">
-            <h2>Các Khối Lớp</h2>
-            <div class="grade" id="grade-1">
-                <h3>Khối 1</h3>
-                <div class="card">
-                    <h4>Môn Toán</h4>
-                    <p>Thông tin chi tiết về Dấu hiệu chia hết.</p>
-                    <a href="link-to-lesson-1">Xem chi tiết</a>
-                </div>
-            </div>
-            <div class="grade" id="grade-2">
-                <h3>Khối 2</h3>
-                <div class="card">
-                    <h4>Môn Toán</h4>
-                    <p>Thông tin chi tiết về Dấu hiệu chia hết.</p>
-                    <a href="link-to-lesson-2">Xem chi tiết</a>
-                </div>
-            </div>
-            <div class="grade" id="grade-3">
-                <h3>Khối 3</h3>
-                <div class="card">
-                    <h4>Môn Toán</h4>
-                    <p>Thông tin chi tiết về Dấu hiệu chia hết.</p>
-                    <a href="link-to-lesson-3">Xem chi tiết</a>
-                </div>
-            </div>
-            <div class="grade" id="grade-4">
-                <h3>Khối 4</h3>
-                <div class="card">
-                    <h4>Môn Toán</h4>
-                    <p>Thông tin chi tiết về Dấu hiệu chia hết.</p>
-                    <a href="link-to-lesson-4">Xem chi tiết</a>
-                </div>
-            </div>
-            <div class="grade" id="grade-5">
-                <h3>Khối 5</h3>
-                <div class="card">
-                    <h4>Môn Toán</h4>
-                    <p>Thông tin chi tiết về Dấu hiệu chia hết.</p>
-                    <a href="link-to-lesson-5">Xem chi tiết</a>
-                </div>
-            </div>
-        </section>
-    </main>
-    <footer>
-        <p>Bản quyền © 2026</p>
-    </footer>
+    <h1>Course Index</h1>
+    <div id="course-container"></div>
+
+    <script>
+        const courses = [
+            { level: 1, title: 'Introduction to Math', description: 'A beginner course on math concepts.' },
+            { level: 2, title: 'Intermediate Math', description: 'Building upon basic math principles.' },
+            { level: 3, title: 'Advanced Math', description: 'Diving deeper into complex math topics.' },
+            { level: 4, title: 'Math for Real Life', description: 'Applying math in real-life situations.' },
+            { level: 5, title: 'Math Challenge', description: 'A challenging course for advanced learners.' }
+        ];
+
+        function renderCourses() {
+            const container = document.getElementById('course-container');
+            courses.forEach(course => {
+                const courseDiv = document.createElement('div');
+                courseDiv.className = 'course';
+                courseDiv.innerHTML = `<h2>${course.title} (Grade ${course.level})</h2><p>${course.description}</p>`;
+                container.appendChild(courseDiv);
+            });
+        }
+
+        renderCourses();
+    </script>
 </body>
 </html>
