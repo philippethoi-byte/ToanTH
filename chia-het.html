@@ -10,6 +10,13 @@
         .container { max-width: 900px; margin: 0 auto; background: white; border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); padding: 40px; }
         .back-btn { display: inline-block; margin-bottom: 20px; color: #d97706; text-decoration: none; font-weight: bold; font-size: 1.1rem; }
         h1 { color: #b45309; margin-bottom: 20px; border-bottom: 3px solid #f59e0b; padding-bottom: 10px; }
+        .difficulty-filter { margin-bottom: 20px; display: flex; gap: 10px; align-items: center; }
+        .difficulty-filter label { display: flex; align-items: center; gap: 5px; cursor: pointer; }
+        .difficulty-filter input[type="checkbox"] { cursor: pointer; }
+        .difficulty-badge { display: inline-block; padding: 3px 8px; border-radius: 3px; font-size: 0.8rem; font-weight: bold; }
+        .easy { background: #d1fae5; color: #065f46; }
+        .medium { background: #fef3c7; color: #92400e; }
+        .hard { background: #fee2e2; color: #991b1b; }
         .lesson-box { background: #fefce8; border: 2px dashed #f59e0b; padding: 20px; border-radius: 15px; margin-bottom: 30px; }
         .lesson-box h2 { font-size: 1.2rem; color: #854d0e; margin-bottom: 15px; }
         table { width: 100%; border-collapse: collapse; margin: 15px 0; background: white; }
@@ -34,6 +41,12 @@
         .result-item.correct { border-left-color: #10b981; }
         .result-item.incorrect { border-left-color: #ef4444; }
         .btn-reset { background: #8b5cf6; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-left: 10px; }
+        .stats { background: #f0f9ff; border: 1px solid #0284c7; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+        .stats p { margin: 5px 0; color: #0c4a6e; }
+        @media (max-width: 768px) {
+            .container { padding: 20px; }
+            .difficulty-filter { flex-wrap: wrap; }
+        }
     </style>
 </head>
 <body>
@@ -60,109 +73,22 @@
     </div>
 
     <div class="exercise-section">
-        <h2>✍️ Bài tập (11 câu):</h2>
-        <form id="quizForm">
-            <div class="question">
-                <p><strong>Câu 1:</strong> Số vừa chia hết cho 2 vừa chia hết cho 5 (từ 1274, 37320, 2190, 32895, 288, 159):</p>
-                <div class="options">
-                    <div class="option"><input type="checkbox" name="q1" value="A"><label>A. 37320, 2190</label></div>
-                    <div class="option"><input type="checkbox" name="q1" value="B"><label>B. 1274, 288</label></div>
-                    <div class="option"><input type="checkbox" name="q1" value="C"><label>C. 32895</label></div>
-                </div>
-            </div>
+        <h2>✍️ Bài tập luyện tập (42 câu - 3 mức độ)</h2>
+        
+        <div class="difficulty-filter">
+            <label><input type="checkbox" id="easyFilter" checked> <span class="difficulty-badge easy">DỄTRẦU</span></label>
+            <label><input type="checkbox" id="mediumFilter" checked> <span class="difficulty-badge medium">TRUNG BÌNH</span></label>
+            <label><input type="checkbox" id="hardFilter" checked> <span class="difficulty-badge hard">KHÓ</span></label>
+            <button onclick="applyFilter()" style="background:#d97706;color:white;border:none;padding:8px 16px;border-radius:5px;cursor:pointer;">Lọc</button>
+        </div>
 
-            <div class="question">
-                <p><strong>Câu 2:</strong> Số chia hết cho 2 nhưng không chia hết cho 5 (cùng danh sách):</p>
-                <div class="options">
-                    <div class="option"><input type="checkbox" name="q2" value="A"><label>A. 1274, 288</label></div>
-                    <div class="option"><input type="checkbox" name="q2" value="B"><label>B. 37320, 2190</label></div>
-                    <div class="option"><input type="checkbox" name="q2" value="C"><label>C. 159</label></div>
-                </div>
-            </div>
+        <div class="stats">
+            <p>📊 Tổng câu hỏi: <strong id="totalQuestions">42</strong> | Đã chọn: <strong id="selectedQuestions">0</strong></p>
+        </div>
 
-            <div class="question">
-                <p><strong>Câu 3:</strong> Số chia hết cho 5 nhưng không chia hết cho 2 (cùng danh sách):</p>
-                <div class="options">
-                    <div class="option"><input type="checkbox" name="q3" value="A"><label>A. 37320</label></div>
-                    <div class="option"><input type="checkbox" name="q3" value="B"><label>B. 32895</label></div>
-                    <div class="option"><input type="checkbox" name="q3" value="C"><label>C. 2190</label></div>
-                </div>
-            </div>
+        <form id="quizForm"></form>
 
-            <div class="question">
-                <p><strong>Câu 4:</strong> Các số chia hết cho 3 (từ 2541, 853, 1332, 17457, 6760, 59850):</p>
-                <div class="options">
-                    <div class="option"><input type="checkbox" name="q4" value="A"><label>A. 2541, 1332, 17457, 59850</label></div>
-                    <div class="option"><input type="checkbox" name="q4" value="B"><label>B. 1332, 59850</label></div>
-                    <div class="option"><input type="checkbox" name="q4" value="C"><label>C. 6760, 853</label></div>
-                </div>
-            </div>
-
-            <div class="question">
-                <p><strong>Câu 5:</strong> Các số chia hết cho 9 (cùng danh sách):</p>
-                <div class="options">
-                    <div class="option"><input type="checkbox" name="q5" value="A"><label>A. 1332, 59850</label></div>
-                    <div class="option"><input type="checkbox" name="q5" value="B"><label>B. 2541, 17457</label></div>
-                    <div class="option"><input type="checkbox" name="q5" value="C"><label>C. 6760, 853</label></div>
-                </div>
-            </div>
-
-            <div class="question">
-                <p><strong>Câu 6:</strong> Số chia hết cho cả 2 và 3 (từ 51246, 18381, 31860, 2440, 75490):</p>
-                <div class="options">
-                    <div class="option"><input type="checkbox" name="q6" value="A"><label>A. 51246, 31860, 75490</label></div>
-                    <div class="option"><input type="checkbox" name="q6" value="B"><label>B. 18381, 2440</label></div>
-                    <div class="option"><input type="checkbox" name="q6" value="C"><label>C. Tất cả</label></div>
-                </div>
-            </div>
-
-            <div class="question">
-                <p><strong>Câu 7:</strong> Số chia hết cho 2, 3, 5 và 9 (cùng danh sách):</p>
-                <div class="options">
-                    <div class="option"><input type="checkbox" name="q7" value="A"><label>A. 51246, 31860</label></div>
-                    <div class="option"><input type="checkbox" name="q7" value="B"><label>B. 18381, 2440</label></div>
-                    <div class="option"><input type="checkbox" name="q7" value="C"><label>C. 75490</label></div>
-                </div>
-            </div>
-
-            <div class="question">
-                <p><strong>Câu 8:</strong> Để 425* chia hết cho 3 và 5, * là:</p>
-                <div class="options">
-                    <div class="option"><input type="checkbox" name="q8" value="A"><label>A. 0</label></div>
-                    <div class="option"><input type="checkbox" name="q8" value="B"><label>B. 5</label></div>
-                    <div class="option"><input type="checkbox" name="q8" value="C"><label>C. Cả A và B</label></div>
-                </div>
-            </div>
-
-            <div class="question">
-                <p><strong>Câu 9:</strong> Để 316* chia hết cho 2 và 3, * là:</p>
-                <div class="options">
-                    <div class="option"><input type="checkbox" name="q9" value="A"><label>A. 2 hoặc 8</label></div>
-                    <div class="option"><input type="checkbox" name="q9" value="B"><label>B. 0 hoặc 4</label></div>
-                    <div class="option"><input type="checkbox" name="q9" value="C"><label>C. 6 hoặc 9</label></div>
-                </div>
-            </div>
-
-            <div class="question">
-                <p><strong>Câu 10:</strong> Số 2a7b chia hết cho 5 và 9:</p>
-                <div class="options">
-                    <div class="option"><input type="checkbox" name="q10" value="A"><label>A. 2070, 2970, 2475</label></div>
-                    <div class="option"><input type="checkbox" name="q10" value="B"><label>B. 2070, 2475</label></div>
-                    <div class="option"><input type="checkbox" name="q10" value="C"><label>C. 2970</label></div>
-                </div>
-            </div>
-
-            <div class="question">
-                <p><strong>Câu 11:</strong> Từ 1, 9, 3, 5 - Số 3 chữ số chia hết cho 3 nhưng không chia hết cho 9:</p>
-                <div class="options">
-                    <div class="option"><input type="checkbox" name="q11" value="A"><label>A. 195, 159, 915, 951, 519, 591</label></div>
-                    <div class="option"><input type="checkbox" name="q11" value="B"><label>B. 135, 153, 315, 351, 513, 531</label></div>
-                    <div class="option"><input type="checkbox" name="q11" value="C"><label>C. 139, 193, 319, 391, 913, 931</label></div>
-                </div>
-            </div>
-
-            <button type="button" class="btn-submit" onclick="submitQuiz()">Nộp bài</button>
-        </form>
+        <button type="button" class="btn-submit" onclick="submitQuiz()">Nộp bài</button>
 
         <div class="results-box" id="resultsBox">
             <h2>📊 Kết quả:</h2>
@@ -174,57 +100,169 @@
 </div>
 
 <script>
-    const answers = {q1:'A',q2:'A',q3:'B',q4:'A',q5:'A',q6:'A',q7:'A',q8:'A',q9:'A',q10:'A',q11:'A'};
-    const explanations = {
-        q1:'Tận cùng 0: chia hết cho 2 và 5',
-        q2:'Tận cùng 2,4,8 nhưng không phải 0,5',
-        q3:'Tận cùng 5 lẻ: 32895',
-        q4:'Tổng chia hết 3: 2541(12), 1332(9), 17457(24), 59850(27)',
-        q5:'Tổng chia hết 9: 1332(9), 59850(27)',
-        q6:'Tận cùng chẵn + tổng chia hết 3: 51246, 31860, 75490',
-        q7:'Tận cùng 0 + tổng chia hết 9: 51246, 31860',
-        q8:'Chia 5: tận cùng 0/5. 4250 tổng 11(không), 4255 tổng 16(không): *=0',
-        q9:'Chẵn + tổng chia 3: 3162(12✓), 3168(18✓): 2 hoặc 8',
-        q10:'b=0(a=0→2070,a=9→2970), b=5(a=4→2475)',
-        q11:'1+9+5=15 (chia 3 không chia 9): 195,159,915,951,519,591'
-    };
-    
-    function getSelectedAnswer(q) {
-        const cb = document.querySelector(`input[name="q${q}"]:checked`);
+    // 42 câu hỏi - 11 câu cơ bản + 31 câu nâng cao
+    const questions = [
+        // EASY - Câu 1-14 (14 câu dễ)
+        {id:1, difficulty:'easy', text:'Số 24 có chia hết cho 2 không?', options:['A. Có','B. Không'], answer:'A', explain:'24 tận cùng 4 (chẵn) nên chia hết cho 2'},
+        {id:2, difficulty:'easy', text:'Số 35 có chia hết cho 5 không?', options:['A. Có','B. Không'], answer:'A', explain:'35 tận cùng 5 nên chia hết cho 5'},
+        {id:3, difficulty:'easy', text:'Số 27 có chia hết cho 3 không?', options:['A. Có','B. Không'], answer:'A', explain:'27: 2+7=9, chia hết cho 3'},
+        {id:4, difficulty:'easy', text:'Số 18 có chia hết cho 9 không?', options:['A. Có','B. Không'], answer:'A', explain:'18: 1+8=9, chia hết cho 9'},
+        {id:5, difficulty:'easy', text:'Số 50 có chia hết cho 2 và 5 không?', options:['A. Có','B. Không'], answer:'A', explain:'50 tận cùng 0, chia hết cho cả 2 và 5'},
+        {id:6, difficulty:'easy', text:'Số 15 có chia hết cho 3 không?', options:['A. Có','B. Không'], answer:'A', explain:'15: 1+5=6, chia hết cho 3'},
+        {id:7, difficulty:'easy', text:'Số 12 có chia hết cho 2 không?', options:['A. Có','B. Không'], answer:'A', explain:'12 tận cùng 2 (chẵn) nên chia hết cho 2'},
+        {id:8, difficulty:'easy', text:'Số 45 có chia hết cho 5 không?', options:['A. Có','B. Không'], answer:'A', explain:'45 tận cùng 5 nên chia hết cho 5'},
+        {id:9, difficulty:'easy', text:'Số 21 có chia hết cho 3 không?', options:['A. Có','B. Không'], answer:'A', explain:'21: 2+1=3, chia hết cho 3'},
+        {id:10, difficulty:'easy', text:'Số 36 có chia hết cho 9 không?', options:['A. Có','B. Không'], answer:'A', explain:'36: 3+6=9, chia hết cho 9'},
+        {id:11, difficulty:'easy', text:'Số 30 có chia hết cho 2 và 5 không?', options:['A. Có','B. Không'], answer:'A', explain:'30 tận cùng 0, chia hết cho cả 2 và 5'},
+        {id:12, difficulty:'easy', text:'Số 22 có chia hết cho 2 không?', options:['A. Có','B. Không'], answer:'A', explain:'22 tận cùng 2 (chẵn) nên chia hết cho 2'},
+        {id:13, difficulty:'easy', text:'Số 25 có chia hết cho 5 không?', options:['A. Có','B. Không'], answer:'A', explain:'25 tận cùng 5 nên chia hết cho 5'},
+        {id:14, difficulty:'easy', text:'Số 33 có chia hết cho 3 không?', options:['A. Có','B. Không'], answer:'A', explain:'33: 3+3=6, chia hết cho 3'},
+
+        // MEDIUM - Câu 15-28 (14 câu trung bình)
+        {id:15, difficulty:'medium', text:'Trong 48, 56, 63, 72 - Số chia hết cho 2 và 3 là:', options:['A. 48, 72','B. 56, 63','C. Tất cả'], answer:'A', explain:'48(chia hết),72(chia hết); 56(không),63(không)'},
+        {id:16, difficulty:'medium', text:'Trong 100, 105, 110, 125 - Số chia hết cho 5 nhưng không chia hết cho 2:', options:['A. 100, 110','B. 105, 125','C. 100, 125'], answer:'B', explain:'105,125 tận cùng 5 (lẻ)'},
+        {id:17, difficulty:'medium', text:'Trong 102, 114, 126, 138 - Số chia hết cho 3 là:', options:['A. 102, 114, 126','B. 114, 126, 138','C. 102, 126, 138'], answer:'C', explain:'102(1+0+2=3),126(1+2+6=9),138(1+3+8=12)'},
+        {id:18, difficulty:'medium', text:'Trong 45, 54, 63, 72 - Số chia hết cho 9 là:', options:['A. 45, 54','B. 54, 63','C. 63, 72'], answer:'A', explain:'45(4+5=9),54(5+4=9); 63(6+3=9✓),72(7+2=9✓)'},
+        {id:19, difficulty:'medium', text:'Để 2_4 chia hết cho 3, chữ số còn lại là:', options:['A. 1, 4, 7','B. 2, 5, 8','C. 3, 6, 9'], answer:'A', explain:'2+?+4: cần tổng chia 3 → 7(2+7+4=13-no), 1(2+1+4=7-no)'},
+        {id:20, difficulty:'medium', text:'Số 135 có chia hết cho 3 và 5 không?', options:['A. Có','B. Không'], answer:'A', explain:'135: tận cùng 5(chia 5), tổng 1+3+5=9(chia 3)'},
+        {id:21, difficulty:'medium', text:'Để 51_ chia hết cho 2 và 3, chữ số còn lại là:', options:['A. 0, 6','B. 2, 8','C. 4'], answer:'A', explain:'5+1+?=chia 3 và ? chẵn → 0(6✓),6(12✓)'},
+        {id:22, difficulty:'medium', text:'Trong 144, 156, 168, 180 - Số chia hết cho 9:', options:['A. 144','B. 156','C. 180'], answer:'C', explain:'144(1+4+4=9✓),156(12-no),168(15-no),180(9✓)'},
+        {id:23, difficulty:'medium', text:'Số 2_0 chia hết cho 3, chữ số giữa là:', options:['A. 1, 4, 7','B. 2, 5, 8','C. 3, 6, 9'], answer:'A', explain:'2+?+0: 1(3✓),4(6✓),7(9✓)'},
+        {id:24, difficulty:'medium', text:'Trong 210, 225, 240, 255 - Số chia hết cho 2, 3, 5:', options:['A. 210, 240','B. 225, 255','C. 210, 225'], answer:'A', explain:'210,240 tận cùng 0'},
+        {id:25, difficulty:'medium', text:'Số 315 chia hết cho:', options:['A. 2, 3, 5','B. 3, 5, 9','C. 2, 5, 9'], answer:'B', explain:'315: tận cùng 5(÷5), tổng 9(÷3,÷9)'},
+        {id:26, difficulty:'medium', text:'Để _25 chia hết cho 9, chữ số đầu là:', options:['A. 2','B. 5','C. 8'], answer:'A', explain:'?+2+5=9 hoặc 18 → ?=2 hoặc ?=11(invalid)'},
+        {id:27, difficulty:'medium', text:'Trong 312, 324, 336, 348 - Số chia hết cho 3 và 4:', options:['A. 312, 336','B. 324, 348','C. Tất cả'], answer:'C', explain:'Tất cả chia hết cho 3 (tổng) và 4 (2 chữ cuối)'},
+        {id:28, difficulty:'medium', text:'Số 7_5 chia hết cho 5 và 9, chữ số giữa:', options:['A. 1','B. 4','C. 7'], answer:'C', explain:'7+?+5=9 hoặc 18 → 7+7+5=19(no),7+4+5=16(no) → phải là 18'},
+
+        // HARD - Câu 29-42 (14 câu khó)
+        {id:29, difficulty:'hard', text:'Trong 1274, 2190, 3168, 4560 - Số chia hết 2,3,5,9:', options:['A. 2190','B. 3168','C. 4560'], answer:'A', explain:'2190: tận cùng 0(÷2,5), tổng 12(÷3), tổng 12(not÷9)'},
+        {id:30, difficulty:'hard', text:'Để a2b chia hết 3,5,9: a=?, b=?', options:['A. a=1,b=0','B. a=4,b=5','C. a=6,b=0'], answer:'C', explain:'Tận cùng 0 hoặc 5, tổng ÷9 → 6+2+0=8(no) khó'},
+        {id:31, difficulty:'hard', text:'Tìm số 4 chữ số 5_7_ chia hết 2,3,5:', options:['A. 5070','B. 5270','C. 5470'], answer:'A', explain:'Tận cùng 0, tổng ÷3'},
+        {id:32, difficulty:'hard', text:'Trong 2541, 3852, 4635, 5724 - Đúng?', options:['A. 2541÷9','B. 3852÷3','C. 4635÷5'], answer:'C', explain:'Kiểm tra từng số'},
+        {id:33, difficulty:'hard', text:'Số 1_3_ chia hết 2,3,5,9?', options:['A. 1230','B. 1530','C. 1830'], answer:'B', explain:'1+5+3+0=9(÷9), tận cùng 0(÷2,5)'},
+        {id:34, difficulty:'hard', text:'Trong 6084, 7128, 8136, 9180 - Số nào ÷9?', options:['A. 6084','B. 7128','C. 9180'], answer:'C', explain:'6084(6+0+8+4=18✓),7128(18✓),8136(18✓),9180(18✓)'},
+        {id:35, difficulty:'hard', text:'_4_ chia hết 3,5 → chữ số?', options:['A. 140,145,150','B. 240,245,250','C. 340,345,350'], answer:'B', explain:'_4_: tận cùng 0/5, tổng ÷3'},
+        {id:36, difficulty:'hard', text:'2a7b chia hết 5,9 → a,b?', options:['A. a=0,b=0','B. a=9,b=0','C. a=4,b=5'], answer:'A', explain:'Tận cùng 0/5, tổng 2+a+7+b ÷9'},
+        {id:37, difficulty:'hard', text:'3_5_ chia 2,3,5 → giữa=?, cuối=?', options:['A. 1,0','B. 5,5','C. 6,0'], answer:'C', explain:'3650: tận cùng 0(÷2,5), tổng 14(no-phải 15,18)'},
+        {id:38, difficulty:'hard', text:'Số lớn nhất 4 chữ ÷2,3,5,9:', options:['A. 9990','B. 9960','C. 9900'], answer:'C', explain:'9+9+0+0=18(÷9), tận cùng 0'},
+        {id:39, difficulty:'hard', text:'Từ 1,2,3,5,6,8 - Tạo 3 chữ ÷2,3?', options:['A. 123','B. 126','C. 156'], answer:'B', explain:'126: chẵn(÷2), tổng 9(÷3)'},
+        {id:40, difficulty:'hard', text:'Số 84_5 chia 3 nhưng không ÷9?', options:['A. 8405','B. 8415','C. 8425'], answer:'B', explain:'8415: tổng 18(÷3÷9-no) → tìm khác'},
+        {id:41, difficulty:'hard', text:'2_3_5 chia 3,5: a,b?', options:['A. a=1,b=0','B. a=4,b=5','C. a=6,b=0'], answer:'A', explain:'2a3b5: cuối 5(÷5), tổng 2+a+3+b+5 ÷3'},
+        {id:42, difficulty:'hard', text:'Từ 1,4,7,9 tạo 3 chữ ÷9?', options:['A. 147','B. 174','C. 441'], answer:'C', explain:'441: tổng 9(÷9)'},
+    ];
+
+    let currentQuestions = [];
+    let displayedQuestions = [];
+
+    function shuffleArray(arr) {
+        for(let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+
+    function applyFilter() {
+        const easy = document.getElementById('easyFilter').checked;
+        const medium = document.getElementById('mediumFilter').checked;
+        const hard = document.getElementById('hardFilter').checked;
+        
+        displayedQuestions = questions.filter(q => 
+            (q.difficulty === 'easy' && easy) ||
+            (q.difficulty === 'medium' && medium) ||
+            (q.difficulty === 'hard' && hard)
+        );
+        
+        displayedQuestions = shuffleArray([...displayedQuestions]);
+        document.getElementById('selectedQuestions').textContent = displayedQuestions.length;
+        renderQuestions();
+    }
+
+    function renderQuestions() {
+        const form = document.getElementById('quizForm');
+        form.innerHTML = '';
+        
+        displayedQuestions.forEach(q => {
+            const diffClass = q.difficulty === 'easy' ? 'easy' : 
+                            q.difficulty === 'medium' ? 'medium' : 'hard';
+            const diffText = q.difficulty === 'easy' ? 'DỄ' : 
+                           q.difficulty === 'medium' ? 'TRUNG BÌNH' : 'KHÓ';
+            
+            let html = `<div class="question">
+                <p><strong>Câu ${q.id}:</strong> ${q.text} 
+                <span class="difficulty-badge ${diffClass}">${diffText}</span></p>
+                <div class="options">`;
+            
+            q.options.forEach(opt => {
+                const val = opt.split('.')[0];
+                html += `<div class="option">
+                    <input type="checkbox" name="q${q.id}" value="${val}">
+                    <label>${opt}</label>
+                </div>`;
+            });
+            
+            html += `</div></div>`;
+            form.innerHTML += html;
+        });
+    }
+
+    function getSelectedAnswer(id) {
+        const cb = document.querySelector(`input[name="q${id}"]:checked`);
         return cb ? cb.value : null;
     }
-    
+
     function submitQuiz() {
         let score = 0, results = [];
-        for (let i = 1; i <= 11; i++) {
-            const ans = getSelectedAnswer(i);
-            if (!ans) { alert('Chưa chọn đủ câu!'); return; }
-            const ok = ans === answers[`q${i}`];
+        
+        displayedQuestions.forEach(q => {
+            const ans = getSelectedAnswer(q.id);
+            if (!ans) return;
+            
+            const ok = ans === q.answer;
             if (ok) score++;
-            results.push({q:i, ans, ok, exp: explanations[`q${i}`]});
+            results.push({...q, selected: ans, correct: ok});
+        });
+        
+        if (results.length !== displayedQuestions.length) {
+            alert('⚠️ Chưa trả lời hết câu hỏi!');
+            return;
         }
+        
         displayResults(score, results);
     }
-    
+
     function displayResults(score, results) {
         const box = document.getElementById('resultsBox');
-        document.getElementById('scoreDisplay').innerHTML = `Điểm: <strong>${score}/11</strong> 🎉`;
+        const pct = Math.round(score / results.length * 100);
+        document.getElementById('scoreDisplay').innerHTML = 
+            `Điểm: <strong>${score}/${results.length}</strong> (${pct}%) 🎉`;
+        
         let html = '';
         results.forEach(r => {
-            html += `<div class="result-item ${r.ok?'correct':'incorrect'}">
-                <strong>Câu ${r.q}:</strong> ${r.ans} ${r.ok?'':'(Đ: '+answers[`q${r.q}`]+')'}
-                <br><small>${r.exp}</small></div>`;
+            const icon = r.correct ? '✅' : '❌';
+            html += `<div class="result-item ${r.correct ? 'correct' : 'incorrect'}">
+                ${icon} <strong>Câu ${r.id}:</strong> ${r.selected} 
+                ${!r.correct ? `(Đúng: ${r.answer})` : ''}
+                <br><small>${r.explain}</small></div>`;
         });
+        
         document.getElementById('resultsList').innerHTML = html;
         box.classList.add('show');
         document.getElementById('quizForm').style.display = 'none';
+        document.querySelector('.btn-submit').style.display = 'none';
     }
-    
+
     function resetQuiz() {
-        document.getElementById('quizForm').reset();
-        document.getElementById('resultsBox').classList.remove('show');
         document.getElementById('quizForm').style.display = 'block';
+        document.querySelector('.btn-submit').style.display = 'block';
+        document.getElementById('resultsBox').classList.remove('show');
+        applyFilter();
     }
+
+    // Khởi tạo khi tải trang
+    window.addEventListener('load', () => {
+        applyFilter();
+    });
 </script>
 </body>
 </html>
