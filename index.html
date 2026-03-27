@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ôn tập Toán tiểu học - Chọn lớp</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #f0f2f5; font-family: 'Segoe UI', 'Roboto', sans-serif; padding: 30px 20px; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 32px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); overflow: hidden; }
+        .header { background: linear-gradient(135deg, #f59e0b, #d97706); padding: 40px 20px; text-align: center; color: white; }
+        .header h1 { font-size: 2.5rem; margin-bottom: 8px; }
+        .class-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; padding: 20px; background: white; border-bottom: 2px solid #ffe6c2; }
+        .tab-btn { background: #fff3e0; border: none; padding: 12px 28px; font-size: 1rem; font-weight: 600; border-radius: 40px; cursor: pointer; transition: 0.3s; color: #b45309; }
+        .tab-btn.active { background: #f59e0b; color: white; box-shadow: 0 4px 12px rgba(245,158,11,0.3); }
+        .content-area { padding: 30px; background: #fefaf5; min-height: 500px; }
+        .subject-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+        .card { background: white; border-radius: 24px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); overflow: hidden; border-left: 8px solid #f59e0b; transition: 0.3s; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+        .card.has-link { cursor: pointer; border-bottom: 5px solid #d97706; }
+        .card h3 { background: #fff7ed; padding: 15px 20px; color: #b45309; border-bottom: 2px solid #ffe6c2; display: flex; align-items: center; justify-content: space-between; }
+        .card ul { padding: 20px 20px 25px 40px; list-style-type: none; }
+        .card li { margin-bottom: 12px; position: relative; font-size: 1rem; color: #2d3e50; line-height: 1.5; }
+        .card li::before { content: "📌"; position: absolute; left: -30px; }
+        footer { text-align: center; padding: 20px; background: #fff7ed; color: #a16207; border-top: 1px solid #ffe6c2; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>📚 Ôn tập Toán tiểu học</h1>
+        <p>Hệ thống kiến thức trọng tâm từ Lớp 1 đến Lớp 5</p>
+    </div>
+    <div class="class-tabs" id="tabs">
+        <button class="tab-btn" onclick="showGrade('1', this)">Lớp 1</button>
+        <button class="tab-btn" onclick="showGrade('2', this)">Lớp 2</button>
+        <button class="tab-btn" onclick="showGrade('3', this)">Lớp 3</button>
+        <button class="tab-btn" onclick="showGrade('4', this)">Lớp 4</button>
+        <button class="tab-btn" onclick="showGrade('5', this)">Lớp 5</button>
+        <button class="tab-btn active" onclick="showGrade('all', this)">📌 Tất cả</button>
+    </div>
+    <div class="content-area" id="contentArea"></div>
+    <footer>🌟 Chăm chỉ mỗi ngày - Thành công mỗi bước 🌟</footer>
+</div>
+
+<script>
+    const gradeData = {
+        1: { title: "Lớp 1 - Nền tảng", cards: [{ title: "🔢 Số học", items: ["Đếm 0-100", "Cộng trừ phạm vi 20"] }, { title: "📐 Hình học", items: ["Hình vuông, tròn, tam giác"] }] },
+        2: { title: "Lớp 2 - Tính toán", cards: [{ title: "➕ Phép tính", items: ["Cộng trừ phạm vi 1000", "Bảng nhân 2,3,4,5"] }, { title: "📏 Đo lường", items: ["kg, lít, xem giờ"] }] },
+        3: { 
+            title: "Lớp 3 - Trọng tâm", 
+            cards: [
+                { title: "📐 Hình học", items: ["Chu vi & Diện tích vuông, CN"] },
+                { title: "🔢 Chia hết", items: ["Dấu hiệu chia hết 2, 5, 3, 9", "Bấm để xem bài tập chi tiết"], link: "chia-het.html" },
+                { title: "🧮 Biểu thức", items: ["Thứ tự tính: ( ) -> x : -> + -"] }
+            ] 
+        },
+        4: { title: "Lớp 4 - Tư duy", cards: [{ title: "🧮 Phân số", items: ["Cộng trừ nhân chia phân số"] }, { title: "🔢 Chia hết", items: ["Dấu hiệu 2, 3, 5, 9"], link: "chia-het.html" }] },
+        5: { title: "Lớp 5 - Tổng hợp", cards: [{ title: "🔢 Số thập phân", items: ["Tỉ số phần trăm", "Tính toán thập phân"] }, { title: "⏱️ Chuyển động", items: ["Vận tốc, Quãng đường, Thời gian"] }] },
+        all: {
+            title: "Tổng hợp kiến thức",
+            cards: [
+                { title: "📐 Hình học", items: ["Tổng hợp công thức các lớp"] },
+                { title: "🔢 Dấu hiệu chia hết", items: ["Bấm để xem bài tập & lý thuyết"], link: "chia-het.html" },
+                { title: "📊 Toán có lời văn", items: ["Tổng - Tỉ, Tổng - Hiệu, Trung bình cộng"] }
+            ]
+        }
+    };
+
+    function showGrade(key, btn) {
+        if(btn) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+        const data = gradeData[key];
+        let html = `<h2 style="margin-bottom:25px; color:#b45309;">📖 ${data.title}</h2><div class="subject-grid">`;
+        data.cards.forEach(card => {
+            const hasLink = card.link ? 'has-link' : '';
+            const action = card.link ? `onclick="location.href='${card.link}'"` : '';
+            html += `<div class="card ${hasLink}" ${action}><h3>${card.title} ${card.link ? ' ↗️' : ''}</h3><ul>${card.items.map(i => `<li>${i}</li>`).join('')}</ul></div>`;
+        });
+        document.getElementById('contentArea').innerHTML = html + `</div>`;
+    }
+    showGrade('all');
+</script>
+</body>
+</html>
