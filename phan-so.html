@@ -3,200 +3,282 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Học Toán Phân Số - Lớp 4 & 5</title>
-    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>Chinh Phục Phân Số - Lớp 4 & 5</title>
     <style>
-        :root {
-            --primary-color: #4a90e2;
-            --secondary-color: #7ed321;
-            --accent-color: #f5a623;
-            --bg-color: #f0f7ff;
-            --text-color: #333;
-            --card-bg: #ffffff;
+        /* SỬ DỤNG NGUYÊN BẢN CSS BẠN CUNG CẤP */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Lexend', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
+            background: #f0f2f5;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans', sans-serif;
+            padding: 30px 20px;
         }
-
-        header {
-            background: linear-gradient(135deg, var(--primary-color), #2c3e50);
-            color: white;
-            padding: 40px 20px;
-            text-align: center;
-            border-bottom-left-radius: 50px;
-            border-bottom-right-radius: 50px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        h1 { margin: 0; font-size: 2.5rem; }
-        .subtitle { font-weight: 300; opacity: 0.9; }
 
         .container {
-            max-width: 1000px;
-            margin: -30px auto 50px;
-            padding: 0 20px;
-        }
-
-        .card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 32px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            transition: transform 0.3s ease;
+            overflow: hidden;
         }
 
-        .card:hover { transform: translateY(-5px); }
-
-        h2 {
-            color: var(--primary-color);
-            border-left: 5px solid var(--accent-color);
-            padding-left: 15px;
-            margin-top: 0;
-        }
-
-        h3 { color: var(--secondary-color); }
-
-        .theory-box {
-            background-color: #fff9db;
-            border: 2px dashed var(--accent-color);
-            padding: 20px;
-            border-radius: 15px;
-            margin: 15px 0;
-        }
-
-        .fraction {
-            display: inline-block;
-            vertical-align: middle;
+        .header {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            padding: 30px 20px;
             text-align: center;
-            font-weight: bold;
-            font-size: 1.2rem;
+            color: white;
         }
-        .fraction span { display: block; padding: 0 5px; }
-        .fraction span.nominator { border-bottom: 2px solid #333; }
-
-        .math-example {
-            background: #eef2f7;
-            padding: 15px;
-            border-radius: 10px;
-            font-family: 'Courier New', Courier, monospace;
-            border-left: 4px solid var(--primary-color);
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
         }
 
-        .grid {
+        .class-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            padding: 20px 20px 0 20px;
+            background: white;
+            border-bottom: 2px solid #ffe6c2;
+        }
+        .tab-btn {
+            background: #fff3e0;
+            border: none;
+            padding: 10px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #b45309;
+            font-family: inherit;
+        }
+        .tab-btn.active {
+            background: #f59e0b;
+            color: white;
+            box-shadow: 0 4px 8px rgba(245,158,11,0.3);
+        }
+        .tab-btn:hover:not(.active) {
+            background: #fed7aa;
+        }
+
+        .content-area {
+            padding: 30px 25px;
+            background: #fefaf5;
+        }
+
+        /* Hiển thị/Ẩn nội dung lớp */
+        .class-content {
+            display: none;
+        }
+        .class-content.active {
+            display: block;
+        }
+
+        .subject-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
         }
-
-        @media (max-width: 768px) {
-            .grid { grid-template-columns: 1fr; }
-            h1 { font-size: 1.8rem; }
+        .card {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            overflow: hidden;
+            border-left: 8px solid #f59e0b;
+            transition: transform 0.2s;
         }
-
-        .badge {
-            display: inline-block;
-            padding: 5px 15px;
+        .card:hover {
+            transform: translateY(-4px);
+        }
+        .card h3 {
+            background: #fff7ed;
+            padding: 14px 18px;
+            font-size: 1.3rem;
+            color: #b45309;
+            border-bottom: 2px solid #ffe6c2;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .card ul {
+            padding: 16px 20px 20px 36px;
+            list-style-type: none;
+        }
+        .card li {
+            margin-bottom: 12px;
+            position: relative;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            color: #2d3e50;
+        }
+        .card li::before {
+            content: "📌";
+            position: absolute;
+            left: -24px;
+            top: 0;
+            font-size: 0.9rem;
+        }
+        .formula-highlight {
+            background: #fef3c7;
+            padding: 2px 8px;
             border-radius: 20px;
-            font-size: 0.8rem;
+            font-family: monospace;
             font-weight: bold;
-            text-transform: uppercase;
-            margin-bottom: 10px;
+            display: inline-block;
+            margin: 4px 0;
         }
-        .badge-l4 { background: #d1e7ff; color: #0056b3; }
-        .badge-l5 { background: #d4edda; color: #155724; }
-
+        .note {
+            background: #fef9e3;
+            border-radius: 16px;
+            padding: 12px 16px;
+            margin-top: 12px;
+            font-size: 0.85rem;
+            color: #7c5e2e;
+        }
+        hr {
+            margin: 16px 0;
+            border-color: #ffe6c2;
+        }
+        @media (max-width: 750px) {
+            .tab-btn {
+                padding: 6px 16px;
+                font-size: 0.85rem;
+            }
+            .header h1 {
+                font-size: 1.4rem;
+            }
+            .content-area {
+                padding: 20px;
+            }
+        }
         footer {
             text-align: center;
-            padding: 30px;
-            color: #777;
-            font-size: 0.9rem;
+            padding: 16px;
+            font-size: 0.8rem;
+            background: #fff7ed;
+            color: #a16207;
+            border-top: 1px solid #ffe6c2;
         }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>Thế Giới Phân Số 🌟</h1>
-    <p class="subtitle">Bí kíp chinh phục toán học dành cho Tiểu học</p>
-</header>
-
 <div class="container">
-    
-    <div class="card">
-        <h2>I. Lý Thuyết Cơ Bản</h2>
-        <p>Phân số gồm hai phần chính:</p>
-        <div class="theory-box" style="text-align: center;">
-            <div class="fraction">
-                <span class="nominator">Tử số (Số phần lấy đi)</span>
-                <span>Mẫu số (Tổng số phần bằng nhau)</span>
+    <div class="header">
+        <h1>🌟 Thế Giới Phân Số</h1>
+        <p>Học thật vui, hiểu thật kỹ cùng bí kíp Toán Tiểu học</p>
+    </div>
+
+    <div class="class-tabs">
+        <button class="tab-btn active" onclick="showClass('lop4', this)">Toán Lớp 4</button>
+        <button class="tab-btn" onclick="showClass('lop5', this)">Toán Lớp 5</button>
+    </div>
+
+    <div class="content-area">
+        
+        <div id="lop4" class="class-content active">
+            <div class="subject-grid">
+                <div class="card">
+                    <h3>💎 Khái niệm & Rút gọn</h3>
+                    <ul>
+                        <li><b>Cấu tạo:</b> Gồm Tử số (trên) và Mẫu số (dưới).</li>
+                        <li><b>Rút gọn:</b> Chia cả tử và mẫu cho cùng một số.
+                            <br><span class="formula-highlight">12/18 = 2/3</span>
+                        </li>
+                        <li><b>Quy đồng:</b> Làm cho các mẫu số giống nhau để so sánh hoặc cộng trừ.</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>➕ Bốn phép tính cơ bản</h3>
+                    <ul>
+                        <li><b>Cộng & Trừ:</b> Bắt buộc phải <b>Quy đồng mẫu số</b> trước khi thực hiện.</li>
+                        <li><b>Nhân:</b> Tử x Tử và Mẫu x Mẫu.</li>
+                        <li><b>Chia:</b> Nhân phân số thứ nhất với phân số thứ hai <b>đảo ngược</b>.</li>
+                        <div class="note">Mẹo: Luôn rút gọn kết quả về phân số tối giản nhé!</div>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>🚀 Giải toán có lời văn</h3>
+                    <ul>
+                        <li><b>Tìm phân số của một số:</b> Muốn tìm 2/3 của 12, ta lấy <span class="formula-highlight">12 x 2 : 3 = 8</span>.</li>
+                        <li><b>Tổng - Tỉ:</b> Vẽ sơ đồ -> Tìm tổng số phần -> Tìm giá trị 1 phần.</li>
+                        <li><b>Hiệu - Tỉ:</b> Vẽ sơ đồ -> Tìm hiệu số phần -> Tìm giá trị 1 phần.</li>
+                    </ul>
+                </div>
             </div>
-            <p><i>Lưu ý: Mẫu số luôn phải khác 0!</i></p>
         </div>
-        <ul>
-            <li><strong>Rút gọn:</strong> Chia cả tử và mẫu cho cùng một số để được phân số nhỏ hơn nhưng bằng giá trị cũ.</li>
-            <li><strong>Quy đồng:</strong> Đưa các phân số về cùng một mẫu số để dễ so sánh hoặc cộng trừ.</li>
-        </ul>
-    </div>
 
-    <div class="grid">
-        <div class="card">
-            <span class="badge badge-l4">Chương trình Lớp 4</span>
-            <h2>II. Các Dạng Toán Lớp 4</h2>
-            
-            <h3>1. So sánh phân số</h3>
-            <p>Cùng mẫu: Tử lớn hơn thì lớn hơn. Khác mẫu: Quy đồng rồi so sánh!</p>
-            
-            <h3>2. Bốn phép tính cơ bản</h3>
-            <div class="math-example">
-                Cộng/Trừ: Phải cùng mẫu số.<br>
-                Nhân: Tử x Tử / Mẫu x Mẫu.<br>
-                Chia: Nhân nghịch đảo phân số thứ hai.
+        <div id="lop5" class="class-content">
+            <div class="subject-grid">
+                <div class="card">
+                    <h3>📦 Hỗn số & Biến đổi</h3>
+                    <ul>
+                        <li><b>Hỗn số:</b> Gồm phần nguyên và phần phân số.
+                            <br><span class="formula-highlight">2 và 1/4 = 9/4</span>
+                        </li>
+                        <li><b>Cách chuyển:</b> Lấy phần nguyên nhân mẫu số rồi cộng tử số.</li>
+                        <li>Ứng dụng để giải các bài toán đo lường (m, kg, lít...).</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>🔢 Phân số thập phân</h3>
+                    <ul>
+                        <li>Là các phân số có mẫu là <span class="formula-highlight">10, 100, 1000...</span></li>
+                        <li>Dùng để chuyển đổi sang <b>Số thập phân</b>.
+                            <br><span class="formula-highlight">5/10 = 0,5</span> | <span class="formula-highlight">12/100 = 0,12</span>
+                        </li>
+                        <li>Học cách viết tỉ số phần trăm (%).</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>💡 Toán nâng cao (Lớp 5)</h3>
+                    <ul>
+                        <li><b>Dãy phân số có quy luật:</b> Tính tổng các phân số dạng 1/(n x m).</li>
+                        <li><b>Bài toán công việc chung:</b> Hai vòi nước cùng chảy vào bể...</li>
+                        <div class="note">Lớp 5 yêu cầu sự linh hoạt khi chuyển đổi giữa Phân số - Hỗn số - Số thập phân!</div>
+                    </ul>
+                </div>
             </div>
-
-            <h3>3. Tìm phân số của một số</h3>
-            <p>Muốn tìm 2/3 của 15 quả cam:</p>
-            <div class="math-example">15 x 2 : 3 = 10 (quả)</div>
         </div>
 
-        <div class="card">
-            <span class="badge badge-l5">Chương trình Lớp 5</span>
-            <h2>III. Các Dạng Toán Lớp 5</h2>
-            
-            <h3>1. Hỗn số</h3>
-            <p>Kết hợp giữa số tự nhiên và phân số.</p>
-            <div class="math-example">Ví dụ: 2 và 3/4 = (2 x 4 + 3)/4 = 11/4</div>
-
-            <h3>2. Phân số thập phân</h3>
-            <p>Các phân số có mẫu là 10, 100, 1000...</p>
-            <div class="math-example">3/10 = 0.3 ; 45/100 = 0.45</div>
-
-            <h3>3. Giải toán có lời văn</h3>
-            <p>Thường gặp bài toán <strong>Tổng - Tỉ</strong> và <strong>Hiệu - Tỉ</strong>.</p>
-        </div>
     </div>
 
-    <div class="card" style="border: 2px solid var(--secondary-color);">
-        <h2 style="color: var(--secondary-color);">IV. Thử Thách Thông Thái 🧠</h2>
-        <p><strong>Bài toán:</strong> Một chiếc bánh được chia làm 8 phần. Bạn Nam ăn 1/4 cái bánh, bạn Lan ăn 3/8 cái bánh. Hỏi ai ăn nhiều hơn?</p>
-        <div class="theory-box">
-            <strong>Hướng dẫn giải:</strong><br>
-            1. Quy đồng 1/4 về mẫu số 8: 1/4 = 2/8.<br>
-            2. So sánh 2/8 và 3/8. Vì 3 > 2 nên Lan ăn nhiều hơn!
-        </div>
-    </div>
-
+    <footer>
+        <p>&copy; 2026 - Thư viện Toán học Thông minh - Chúc bạn học tốt!</p>
+    </footer>
 </div>
 
-<footer>
-    <p>&copy; 2026 - Học Toán Cùng Gemini. Chúc các em học tốt! 🚀</p>
-</footer>
+<script>
+    function showClass(classId, btn) {
+        // Ẩn tất cả nội dung
+        const contents = document.querySelectorAll('.class-content');
+        contents.forEach(content => content.classList.remove('active'));
+
+        // Bỏ active ở tất cả các nút
+        const buttons = document.querySelectorAll('.tab-btn');
+        buttons.forEach(b => b.classList.remove('active'));
+
+        // Hiển thị nội dung được chọn
+        document.getElementById(classId).classList.add('active');
+        btn.classList.add('active');
+    }
+</script>
 
 </body>
 </html>
