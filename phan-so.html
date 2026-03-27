@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chinh Phục Phân Số - Lớp 4 & 5</title>
+    <title>Cẩm Nang Phân Số Toàn Tập - Lớp 4 & 5</title>
     <style>
-        /* SỬ DỤNG NGUYÊN BẢN CSS BẠN CUNG CẤP */
         * {
             margin: 0;
             padding: 0;
@@ -29,7 +28,7 @@
 
         .header {
             background: linear-gradient(135deg, #f59e0b, #d97706);
-            padding: 30px 20px;
+            padding: 40px 20px;
             text-align: center;
             color: white;
         }
@@ -43,54 +42,26 @@
             opacity: 0.9;
         }
 
-        .class-tabs {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 12px;
-            padding: 20px 20px 0 20px;
-            background: white;
-            border-bottom: 2px solid #ffe6c2;
-        }
-        .tab-btn {
-            background: #fff3e0;
-            border: none;
-            padding: 10px 24px;
-            font-size: 1rem;
-            font-weight: 600;
-            border-radius: 40px;
-            cursor: pointer;
-            transition: all 0.2s;
-            color: #b45309;
-            font-family: inherit;
-        }
-        .tab-btn.active {
-            background: #f59e0b;
-            color: white;
-            box-shadow: 0 4px 8px rgba(245,158,11,0.3);
-        }
-        .tab-btn:hover:not(.active) {
-            background: #fed7aa;
-        }
-
         .content-area {
-            padding: 30px 25px;
+            padding: 40px 25px;
             background: #fefaf5;
         }
 
-        /* Hiển thị/Ẩn nội dung lớp */
-        .class-content {
-            display: none;
-        }
-        .class-content.active {
-            display: block;
+        .section-title {
+            color: #92400e;
+            font-size: 1.8rem;
+            margin: 30px 0 20px 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .subject-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
             gap: 24px;
         }
+
         .card {
             background: white;
             border-radius: 24px;
@@ -98,6 +69,8 @@
             overflow: hidden;
             border-left: 8px solid #f59e0b;
             transition: transform 0.2s;
+            display: flex;
+            flex-direction: column;
         }
         .card:hover {
             transform: translateY(-4px);
@@ -105,7 +78,7 @@
         .card h3 {
             background: #fff7ed;
             padding: 14px 18px;
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             color: #b45309;
             border-bottom: 2px solid #ffe6c2;
             display: flex;
@@ -113,63 +86,72 @@
             gap: 8px;
         }
         .card ul {
-            padding: 16px 20px 20px 36px;
+            padding: 20px 20px 20px 40px;
             list-style-type: none;
+            flex-grow: 1;
         }
         .card li {
-            margin-bottom: 12px;
+            margin-bottom: 15px;
             position: relative;
-            font-size: 0.95rem;
-            line-height: 1.4;
+            font-size: 1rem;
+            line-height: 1.5;
             color: #2d3e50;
         }
         .card li::before {
-            content: "📌";
+            content: "🔸";
             position: absolute;
-            left: -24px;
-            top: 0;
-            font-size: 0.9rem;
+            left: -28px;
+            top: 2px;
         }
+
         .formula-highlight {
             background: #fef3c7;
-            padding: 2px 8px;
-            border-radius: 20px;
-            font-family: monospace;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-family: 'Consolas', monospace;
             font-weight: bold;
+            color: #92400e;
             display: inline-block;
-            margin: 4px 0;
+            margin-top: 5px;
         }
+
         .note {
             background: #fef9e3;
             border-radius: 16px;
             padding: 12px 16px;
-            margin-top: 12px;
-            font-size: 0.85rem;
+            margin: 0 20px 20px 20px;
+            font-size: 0.9rem;
             color: #7c5e2e;
+            border: 1px dashed #f59e0b;
         }
+
+        .badge {
+            font-size: 0.75rem;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: #f59e0b;
+            color: white;
+            margin-left: auto;
+        }
+
         hr {
-            margin: 16px 0;
-            border-color: #ffe6c2;
+            margin: 40px 0;
+            border: 0;
+            border-top: 2px dashed #ffe6c2;
         }
-        @media (max-width: 750px) {
-            .tab-btn {
-                padding: 6px 16px;
-                font-size: 0.85rem;
-            }
-            .header h1 {
-                font-size: 1.4rem;
-            }
-            .content-area {
-                padding: 20px;
-            }
-        }
+
         footer {
             text-align: center;
-            padding: 16px;
-            font-size: 0.8rem;
+            padding: 25px;
+            font-size: 0.9rem;
             background: #fff7ed;
             color: #a16207;
             border-top: 1px solid #ffe6c2;
+        }
+
+        @media (max-width: 750px) {
+            .header h1 { font-size: 1.8rem; }
+            .subject-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -177,108 +159,102 @@
 
 <div class="container">
     <div class="header">
-        <h1>🌟 Thế Giới Phân Số</h1>
-        <p>Học thật vui, hiểu thật kỹ cùng bí kíp Toán Tiểu học</p>
-    </div>
-
-    <div class="class-tabs">
-        <button class="tab-btn active" onclick="showClass('lop4', this)">Toán Lớp 4</button>
-        <button class="tab-btn" onclick="showClass('lop5', this)">Toán Lớp 5</button>
+        <h1>📚 Toàn Tập Về Phân Số</h1>
+        <p>Kiến thức nền tảng và các dạng toán trọng tâm Lớp 4 & 5</p>
     </div>
 
     <div class="content-area">
         
-        <div id="lop4" class="class-content active">
-            <div class="subject-grid">
-                <div class="card">
-                    <h3>💎 Khái niệm & Rút gọn</h3>
-                    <ul>
-                        <li><b>Cấu tạo:</b> Gồm Tử số (trên) và Mẫu số (dưới).</li>
-                        <li><b>Rút gọn:</b> Chia cả tử và mẫu cho cùng một số.
-                            <br><span class="formula-highlight">12/18 = 2/3</span>
-                        </li>
-                        <li><b>Quy đồng:</b> Làm cho các mẫu số giống nhau để so sánh hoặc cộng trừ.</li>
-                    </ul>
-                </div>
-
-                <div class="card">
-                    <h3>➕ Bốn phép tính cơ bản</h3>
-                    <ul>
-                        <li><b>Cộng & Trừ:</b> Bắt buộc phải <b>Quy đồng mẫu số</b> trước khi thực hiện.</li>
-                        <li><b>Nhân:</b> Tử x Tử và Mẫu x Mẫu.</li>
-                        <li><b>Chia:</b> Nhân phân số thứ nhất với phân số thứ hai <b>đảo ngược</b>.</li>
-                        <div class="note">Mẹo: Luôn rút gọn kết quả về phân số tối giản nhé!</div>
-                    </ul>
-                </div>
-
-                <div class="card">
-                    <h3>🚀 Giải toán có lời văn</h3>
-                    <ul>
-                        <li><b>Tìm phân số của một số:</b> Muốn tìm 2/3 của 12, ta lấy <span class="formula-highlight">12 x 2 : 3 = 8</span>.</li>
-                        <li><b>Tổng - Tỉ:</b> Vẽ sơ đồ -> Tìm tổng số phần -> Tìm giá trị 1 phần.</li>
-                        <li><b>Hiệu - Tỉ:</b> Vẽ sơ đồ -> Tìm hiệu số phần -> Tìm giá trị 1 phần.</li>
-                    </ul>
-                </div>
+        <h2 class="section-title">✨ Kiến Thức Nền Tảng</h2>
+        <div class="subject-grid">
+            <div class="card">
+                <h3>🧩 Khái niệm cơ bản</h3>
+                <ul>
+                    <li><b>Cấu tạo:</b> Tử số (trên gạch ngang), Mẫu số (dưới gạch ngang, khác 0).</li>
+                    <li><b>Tính chất:</b> Khi nhân hoặc chia cả tử và mẫu với cùng 1 số (khác 0), ta được phân số mới bằng phân số cũ.</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>✂️ Rút gọn & Quy đồng</h3>
+                <ul>
+                    <li><b>Rút gọn:</b> Chia cho đến khi không chia được nữa (Phân số tối giản).</li>
+                    <li><b>Quy đồng:</b> Tìm Mẫu số chung để đưa các phân số về cùng "nhà".</li>
+                    <span class="formula-highlight">Mẹo: Chọn mẫu chung nhỏ nhất để tính cho nhanh!</span>
+                </ul>
             </div>
         </div>
 
-        <div id="lop5" class="class-content">
-            <div class="subject-grid">
-                <div class="card">
-                    <h3>📦 Hỗn số & Biến đổi</h3>
-                    <ul>
-                        <li><b>Hỗn số:</b> Gồm phần nguyên và phần phân số.
-                            <br><span class="formula-highlight">2 và 1/4 = 9/4</span>
-                        </li>
-                        <li><b>Cách chuyển:</b> Lấy phần nguyên nhân mẫu số rồi cộng tử số.</li>
-                        <li>Ứng dụng để giải các bài toán đo lường (m, kg, lít...).</li>
-                    </ul>
-                </div>
+        <hr>
 
-                <div class="card">
-                    <h3>🔢 Phân số thập phân</h3>
-                    <ul>
-                        <li>Là các phân số có mẫu là <span class="formula-highlight">10, 100, 1000...</span></li>
-                        <li>Dùng để chuyển đổi sang <b>Số thập phân</b>.
-                            <br><span class="formula-highlight">5/10 = 0,5</span> | <span class="formula-highlight">12/100 = 0,12</span>
-                        </li>
-                        <li>Học cách viết tỉ số phần trăm (%).</li>
-                    </ul>
-                </div>
+        <h2 class="section-title">🎒 Trọng Tâm Lớp 4</h2>
+        <div class="subject-grid">
+            <div class="card">
+                <h3>🧮 Bốn phép tính <span class="badge">Lớp 4</span></h3>
+                <ul>
+                    <li><b>Cộng/Trừ:</b> Bắt buộc phải <b>Quy đồng mẫu số</b> rồi mới tính tử.</li>
+                    <li><b>Nhân:</b> Tử x Tử, Mẫu x Mẫu.</li>
+                    <li><b>Chia:</b> Lấy phân số thứ 1 nhân với phân số thứ 2 <b>đảo ngược</b>.</li>
+                </ul>
+                <div class="note">Nhớ rút gọn kết quả cuối cùng về tối giản nhé!</div>
+            </div>
 
-                <div class="card">
-                    <h3>💡 Toán nâng cao (Lớp 5)</h3>
-                    <ul>
-                        <li><b>Dãy phân số có quy luật:</b> Tính tổng các phân số dạng 1/(n x m).</li>
-                        <li><b>Bài toán công việc chung:</b> Hai vòi nước cùng chảy vào bể...</li>
-                        <div class="note">Lớp 5 yêu cầu sự linh hoạt khi chuyển đổi giữa Phân số - Hỗn số - Số thập phân!</div>
-                    </ul>
-                </div>
+            <div class="card">
+                <h3>⚖️ So sánh phân số <span class="badge">Lớp 4</span></h3>
+                <ul>
+                    <li><b>Cùng mẫu:</b> So sánh tử số (Tử lớn -> Phân số lớn).</li>
+                    <li><b>Cùng tử:</b> Mẫu càng bé thì phân số đó lại càng lớn!</li>
+                    <li><b>So sánh với 1:</b> Tử < Mẫu (Bé hơn 1), Tử > Mẫu (Lớn hơn 1).</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>📝 Giải toán có lời văn <span class="badge">Lớp 4</span></h3>
+                <ul>
+                    <li><b>Tìm phân số của một số:</b> Lấy số đó nhân với phân số.</li>
+                    <li><b>Dạng Tổng - Tỉ:</b> Tìm tổng số phần -> Tìm giá trị 1 phần -> Tìm 2 số.</li>
+                    <li><b>Dạng Hiệu - Tỉ:</b> Tìm hiệu số phần -> Tìm giá trị 1 phần -> Tìm 2 số.</li>
+                </ul>
+            </div>
+        </div>
+
+        <hr>
+
+        <h2 class="section-title">🎓 Nâng Cao Lớp 5</h2>
+        <div class="subject-grid">
+            <div class="card">
+                <h3>🏗️ Hỗn số <span class="badge">Lớp 5</span></h3>
+                <ul>
+                    <li><b>Định nghĩa:</b> Gồm phần nguyên và phần phân số.</li>
+                    <li><b>Đổi ra phân số:</b> (Phần nguyên x Mẫu + Tử) / Mẫu cũ.</li>
+                    <span class="formula-highlight">Ví dụ: 3 và 1/2 = (3x2 + 1)/2 = 7/2</span>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>💹 Phân số thập phân <span class="badge">Lớp 5</span></h3>
+                <ul>
+                    <li>Là phân số có mẫu là <span class="formula-highlight">10, 100, 1000...</span></li>
+                    <li><b>Tỉ số phần trăm:</b> Là phân số thập phân đặc biệt có mẫu là 100.</li>
+                    <li>Dùng để chuyển sang Số thập phân (0,1 ; 0,05...).</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>🔥 Toán tư duy nâng cao <span class="badge">Lớp 5</span></h3>
+                <ul>
+                    <li><b>Toán công việc:</b> Tính xem nhiều người cùng làm chung 1 việc hết bao lâu.</li>
+                    <li><b>Dãy phân số quy luật:</b> Tính tổng các phân số có mẫu số là tích các số liên tiếp.</li>
+                </ul>
+                <div class="note">Kỹ năng quan trọng nhất lớp 5 là biến đổi linh hoạt giữa các đơn vị!</div>
             </div>
         </div>
 
     </div>
 
     <footer>
-        <p>&copy; 2026 - Thư viện Toán học Thông minh - Chúc bạn học tốt!</p>
+        <p>Chúc bạn học tập thật tốt và yêu thích môn Toán mỗi ngày! 🚀</p>
     </footer>
 </div>
-
-<script>
-    function showClass(classId, btn) {
-        // Ẩn tất cả nội dung
-        const contents = document.querySelectorAll('.class-content');
-        contents.forEach(content => content.classList.remove('active'));
-
-        // Bỏ active ở tất cả các nút
-        const buttons = document.querySelectorAll('.tab-btn');
-        buttons.forEach(b => b.classList.remove('active'));
-
-        // Hiển thị nội dung được chọn
-        document.getElementById(classId).classList.add('active');
-        btn.classList.add('active');
-    }
-</script>
 
 </body>
 </html>
