@@ -3,119 +3,209 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bảng Cửu Chương - Ôn tập Toán</title>
+    <title>Toán Tiểu Học - Học & Kiểm Tra</title>
     <style>
-        /* Giữ nguyên style gốc của bạn để đồng bộ */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #f0f2f5; font-family: 'Segoe UI', sans-serif; padding: 20px; }
-        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 32px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); overflow: hidden; }
+        .container { max-width: 1000px; margin: 0 auto; background: white; border-radius: 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); overflow: hidden; }
         
         .header { background: linear-gradient(135deg, #f59e0b, #d97706); padding: 30px; text-align: center; color: white; }
         
-        .tabs { display: flex; justify-content: center; gap: 15px; padding: 20px; background: white; border-bottom: 2px solid #ffe6c2; }
-        .tab-btn { background: #fff3e0; border: none; padding: 12px 30px; font-size: 1.1rem; font-weight: 600; border-radius: 40px; cursor: pointer; color: #b45309; transition: 0.3s; }
-        .tab-btn.active { background: #f59e0b; color: white; box-shadow: 0 4px 10px rgba(245,158,11,0.4); }
+        .tabs { display: flex; justify-content: center; gap: 10px; padding: 15px; background: white; border-bottom: 2px solid #ffe6c2; flex-wrap: wrap; }
+        .tab-btn { background: #fff3e0; border: none; padding: 10px 20px; font-size: 1rem; font-weight: 600; border-radius: 40px; cursor: pointer; color: #b45309; transition: 0.3s; }
+        .tab-btn.active { background: #f59e0b; color: white; }
 
-        .content-area { padding: 30px; background: #fefaf5; min-height: 400px; }
+        .content-area { padding: 25px; background: #fefaf5; min-height: 500px; }
         
-        /* Grid hiển thị các bảng cửu chương */
-        .grid-cuu-chuong { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-            gap: 20px; 
-        }
+        /* Bảng cửu chương */
+        .grid-cuu-chuong { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; }
+        .table-card { background: white; border-radius: 15px; padding: 15px; border-top: 5px solid #f59e0b; box-shadow: 0 2px 8px rgba(0,0,0,0.05); text-align: center; }
+        .table-card h3 { color: #b45309; margin-bottom: 10px; border-bottom: 1px dashed #fed7aa; padding-bottom: 5px; }
+        .line { font-family: monospace; font-size: 1.1rem; margin: 4px 0; font-weight: bold; }
 
-        .table-card { 
-            background: white; 
-            border-radius: 20px; 
-            padding: 20px; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
-            border-top: 5px solid #f59e0b;
-            text-align: center;
-            transition: 0.2s;
-        }
-        .table-card:hover { transform: translateY(-5px); }
-        .table-card h3 { color: #b45309; margin-bottom: 15px; font-size: 1.4rem; border-bottom: 1px dashed #fed7aa; padding-bottom: 10px; }
-        
-        .line { font-family: 'Courier New', Courier, monospace; font-size: 1.1rem; margin: 5px 0; color: #374151; font-weight: bold; }
-        .line span { color: #d97706; }
+        /* Cấu hình Test */
+        .quiz-config { text-align: center; margin-bottom: 25px; padding: 20px; background: white; border-radius: 20px; border: 2px solid #fed7aa; }
+        .quiz-config select { padding: 8px; border-radius: 10px; border: 2px solid #f59e0b; font-size: 1rem; }
 
-        footer { text-align: center; padding: 20px; background: #fff7ed; color: #a16207; font-size: 0.9rem; }
+        /* Câu hỏi */
+        .question-item { background: white; padding: 20px; border-radius: 15px; margin-bottom: 15px; border-left: 8px solid #f59e0b; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .question-text { font-size: 1.2rem; font-weight: bold; margin-bottom: 15px; }
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .opt-btn { padding: 10px; border: 2px solid #fed7aa; border-radius: 10px; background: white; cursor: pointer; font-size: 1.1rem; transition: 0.2s; }
+        .opt-btn.selected { background: #fff7ed; border-color: #f59e0b; font-weight: bold; }
+        .opt-btn.correct-show { background: #10b981 !important; color: white; border-color: #059669; }
+        .opt-btn.wrong-show { background: #ef4444 !important; color: white; border-color: #dc2626; }
+
+        /* Tổng kết */
+        .result-summary { display: none; text-align: center; padding: 30px; background: #fffbeb; border-radius: 20px; border: 3px dashed #f59e0b; margin-bottom: 20px; }
+        .score-circle { width: 100px; height: 100px; background: #f59e0b; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; font-weight: bold; margin: 0 auto 15px; border: 4px solid white; }
+
+        .btn-submit { background: #d97706; color: white; padding: 15px 40px; border: none; border-radius: 50px; font-size: 1.2rem; font-weight: bold; cursor: pointer; margin-top: 20px; display: block; margin-left: auto; margin-right: auto; }
         
         .hidden { display: none; }
+        footer { text-align: center; padding: 20px; color: #a16207; font-size: 0.8rem; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div class="header">
-        <h1>🔢 Bảng Cửu Chương </h1>
-        <p>Bé cùng học phép Nhân và phép Chia thật vui nhé!</p>
+        <h1>📚 Cùng Học Toán Nào!</h1>
+        <p>Học bảng cửu chương và thử thách tư duy</p>
     </div>
 
     <div class="tabs">
-        <button class="tab-btn active" onclick="showTable('nhan')">✖️ Phép Nhân</button>
-        <button class="tab-btn" onclick="showTable('chia')">➗ Phép Chia</button>
+        <button class="tab-btn active" onclick="switchTab('nhan')">✖️ Bảng Nhân</button>
+        <button class="tab-btn" onclick="switchTab('chia')">➗ Bảng Chia</button>
+        <button class="tab-btn" onclick="switchTab('test')">📝 Kiểm Tra (Quiz)</button>
     </div>
 
     <div class="content-area">
-        <div id="nhan-container" class="grid-cuu-chuong">
+        <div id="nhan-area" class="grid-cuu-chuong"></div>
+
+        <div id="chia-area" class="grid-cuu-chuong hidden"></div>
+
+        <div id="test-area" class="hidden">
+            <div id="result-summary" class="result-summary">
+                <div class="score-circle" id="finalScoreText">0/0</div>
+                <h2 id="rankTitle">Kết quả bài làm</h2>
+                <p id="rankMessage"></p>
+                <button class="tab-btn" style="margin-top:15px;" onclick="switchTab('test')">Làm bài mới 🔄</button>
             </div>
 
-        <div id="chia-container" class="grid-cuu-chuong hidden">
+            <div id="setup-area" class="quiz-config">
+                <h3 style="margin-bottom:10px;">Cài đặt bài kiểm tra</h3>
+                <label>Số lượng câu hỏi:</label>
+                <select id="qCount">
+                    <option value="10">10 câu</option>
+                    <option value="20">20 câu</option>
+                    <option value="30" selected>30 câu</option>
+                    <option value="50">50 câu</option>
+                </select>
+                <button class="tab-btn" style="background:#f59e0b; color:white; margin-left:10px" onclick="startQuiz()">Bắt đầu Nộp bài 🚀</button>
             </div>
+
+            <div id="quiz-list"></div>
+            <button id="btn-submit" class="btn-submit hidden" onclick="submitQuiz()">Nộp bài & Xem điểm ✨</button>
+        </div>
     </div>
 
-    <footer>
-        🌟 Học thuộc mỗi ngày để tính toán nhanh hơn con nhé! 🌟
-    </footer>
+    <footer>🌟 Học chăm chỉ để trở thành nhà toán học nhí! 🌟</footer>
 </div>
 
 <script>
-    function renderTables() {
-        const nhanContainer = document.getElementById('nhan-container');
-        const chiaContainer = document.getElementById('chia-container');
+    let quizData = [];
+    let userAnswers = [];
 
+    // 1. Tạo bảng cửu chương ngay khi load
+    function init() {
+        const nArea = document.getElementById('nhan-area');
+        const cArea = document.getElementById('chia-area');
         for (let i = 1; i <= 9; i++) {
-            // Tạo bảng nhân
-            let nhanHtml = `<div class="table-card"><h3>Bảng nhân ${i}</h3>`;
+            let nHtml = `<div class="table-card"><h3>Bảng ${i}</h3>`;
+            let cHtml = `<div class="table-card"><h3>Bảng ${i}</h3>`;
             for (let j = 1; j <= 10; j++) {
-                nhanHtml += `<div class="line">${i} x ${j} = <span>${i * j}</span></div>`;
+                nHtml += `<div class="line">${i} x ${j} = ${i*j}</div>`;
+                cHtml += `<div class="line">${i*j} : ${i} = ${j}</div>`;
             }
-            nhanHtml += `</div>`;
-            nhanContainer.innerHTML += nhanHtml;
-
-            // Tạo bảng chia
-            let chiaHtml = `<div class="table-card"><h3>Bảng chia ${i}</h3>`;
-            for (let j = 1; j <= 10; j++) {
-                // j * i là số bị chia, i là số chia
-                chiaHtml += `<div class="line">${i * j} : ${i} = <span>${j}</span></div>`;
-            }
-            chiaHtml += `</div>`;
-            chiaContainer.innerHTML += chiaHtml;
+            nArea.innerHTML += nHtml + "</div>";
+            cArea.innerHTML += cHtml + "</div>";
         }
     }
 
-    function showTable(type) {
-        const btns = document.querySelectorAll('.tab-btn');
-        const nhanBox = document.getElementById('nhan-container');
-        const chiaBox = document.getElementById('chia-container');
+    // 2. Chuyển đổi giữa các phần
+    function switchTab(tab) {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        event.target.classList.add('active');
+        
+        document.getElementById('nhan-area').classList.add('hidden');
+        document.getElementById('chia-area').classList.add('hidden');
+        document.getElementById('test-area').classList.add('hidden');
+        
+        document.getElementById(tab + '-area').classList.remove('hidden');
 
-        btns.forEach(b => b.classList.remove('active'));
-        if (type === 'nhan') {
-            btns[0].classList.add('active');
-            nhanBox.classList.remove('hidden');
-            chiaBox.classList.add('hidden');
-        } else {
-            btns[1].classList.add('active');
-            nhanBox.classList.add('hidden');
-            chiaBox.classList.remove('hidden');
+        if(tab === 'test') {
+            document.getElementById('setup-area').classList.remove('hidden');
+            document.getElementById('quiz-list').innerHTML = "";
+            document.getElementById('btn-submit').classList.add('hidden');
+            document.getElementById('result-summary').style.display = 'none';
         }
     }
 
-    // Chạy render khi load trang
-    renderTables();
+    // 3. Logic Quiz
+    function startQuiz() {
+        const count = parseInt(document.getElementById('qCount').value);
+        const quizList = document.getElementById('quiz-list');
+        quizList.innerHTML = "";
+        quizData = [];
+        userAnswers = new Array(count).fill(null);
+
+        for (let i = 0; i < count; i++) {
+            const q = generateQuestion(i + 1, count);
+            quizData.push(q);
+            quizList.innerHTML += `
+                <div class="question-item" id="q-box-${i}">
+                    <div class="question-text">Câu ${i+1}: ${q.text}</div>
+                    <div class="options-grid">
+                        ${q.opts.map(o => `<button class="opt-btn q-btns-${i}" onclick="selectOpt(${i}, ${o}, this)">${o}</button>`).join('')}
+                    </div>
+                </div>`;
+        }
+        document.getElementById('setup-area').classList.add('hidden');
+        document.getElementById('btn-submit').classList.remove('hidden');
+    }
+
+    function generateQuestion(idx, total) {
+        let n1, n2, type, ans, text;
+        let p = idx / total;
+        // Cấp độ: 1 chữ số -> 2 chữ số -> 3 chữ số
+        if (p <= 0.3) { n1 = rand(2, 9); n2 = rand(2, 9); }
+        else if (p <= 0.7) { n1 = rand(10, 99); n2 = rand(2, 9); }
+        else { n1 = rand(100, 500); n2 = rand(2, 5); }
+
+        type = Math.random() > 0.5 ? 'x' : ':';
+        if (type === 'x') { ans = n1 * n2; text = `${n1} x ${n2} = ?`; }
+        else { ans = n1; text = `${n1 * n2} : ${n2} = ?`; }
+
+        let opts = [ans];
+        while(opts.length < 4) {
+            let f = ans + rand(-10, 10);
+            if(f > 0 && !opts.includes(f)) opts.push(f);
+        }
+        return { text, ans, opts: opts.sort(() => Math.random() - 0.5) };
+    }
+
+    function rand(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+
+    function selectOpt(qIdx, val, btn) {
+        userAnswers[qIdx] = val;
+        document.querySelectorAll(`.q-btns-${qIdx}`).forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+    }
+
+    function submitQuiz() {
+        let score = 0;
+        quizData.forEach((q, i) => {
+            const btns = document.querySelectorAll(`.q-btns-${i}`);
+            btns.forEach(b => {
+                b.disabled = true;
+                let v = parseInt(b.innerText);
+                if(v === q.ans) b.classList.add('correct-show');
+                if(v === userAnswers[i] && v !== q.ans) b.classList.add('wrong-show');
+            });
+            if(userAnswers[i] === q.ans) score++;
+        });
+
+        document.getElementById('result-summary').style.display = 'block';
+        document.getElementById('btn-submit').classList.add('hidden');
+        document.getElementById('finalScoreText').innerText = `${score}/${quizData.length}`;
+        
+        let msg = score/quizData.length >= 0.8 ? "Tuyệt vời! Con rất giỏi toán." : "Con hãy luyện tập thêm bảng cửu chương nhé!";
+        document.getElementById('rankMessage').innerText = msg;
+        window.scrollTo(0, 0);
+    }
+
+    init();
 </script>
-
 </body>
 </html>
