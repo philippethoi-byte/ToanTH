@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Học Toán Phân Số - Lớp 4 & 5</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #7ed321;
+            --accent-color: #f5a623;
+            --bg-color: #f0f7ff;
+            --text-color: #333;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Lexend', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), #2c3e50);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 { margin: 0; font-size: 2.5rem; }
+        .subtitle { font-weight: 300; opacity: 0.9; }
+
+        .container {
+            max-width: 1000px;
+            margin: -30px auto 50px;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover { transform: translateY(-5px); }
+
+        h2 {
+            color: var(--primary-color);
+            border-left: 5px solid var(--accent-color);
+            padding-left: 15px;
+            margin-top: 0;
+        }
+
+        h3 { color: var(--secondary-color); }
+
+        .theory-box {
+            background-color: #fff9db;
+            border: 2px dashed var(--accent-color);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 15px 0;
+        }
+
+        .fraction {
+            display: inline-block;
+            vertical-align: middle;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        .fraction span { display: block; padding: 0 5px; }
+        .fraction span.nominator { border-bottom: 2px solid #333; }
+
+        .math-example {
+            background: #eef2f7;
+            padding: 15px;
+            border-radius: 10px;
+            font-family: 'Courier New', Courier, monospace;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .grid { grid-template-columns: 1fr; }
+            h1 { font-size: 1.8rem; }
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        .badge-l4 { background: #d1e7ff; color: #0056b3; }
+        .badge-l5 { background: #d4edda; color: #155724; }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #777;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Thế Giới Phân Số 🌟</h1>
+    <p class="subtitle">Bí kíp chinh phục toán học dành cho Tiểu học</p>
+</header>
+
+<div class="container">
+    
+    <div class="card">
+        <h2>I. Lý Thuyết Cơ Bản</h2>
+        <p>Phân số gồm hai phần chính:</p>
+        <div class="theory-box" style="text-align: center;">
+            <div class="fraction">
+                <span class="nominator">Tử số (Số phần lấy đi)</span>
+                <span>Mẫu số (Tổng số phần bằng nhau)</span>
+            </div>
+            <p><i>Lưu ý: Mẫu số luôn phải khác 0!</i></p>
+        </div>
+        <ul>
+            <li><strong>Rút gọn:</strong> Chia cả tử và mẫu cho cùng một số để được phân số nhỏ hơn nhưng bằng giá trị cũ.</li>
+            <li><strong>Quy đồng:</strong> Đưa các phân số về cùng một mẫu số để dễ so sánh hoặc cộng trừ.</li>
+        </ul>
+    </div>
+
+    <div class="grid">
+        <div class="card">
+            <span class="badge badge-l4">Chương trình Lớp 4</span>
+            <h2>II. Các Dạng Toán Lớp 4</h2>
+            
+            <h3>1. So sánh phân số</h3>
+            <p>Cùng mẫu: Tử lớn hơn thì lớn hơn. Khác mẫu: Quy đồng rồi so sánh!</p>
+            
+            <h3>2. Bốn phép tính cơ bản</h3>
+            <div class="math-example">
+                Cộng/Trừ: Phải cùng mẫu số.<br>
+                Nhân: Tử x Tử / Mẫu x Mẫu.<br>
+                Chia: Nhân nghịch đảo phân số thứ hai.
+            </div>
+
+            <h3>3. Tìm phân số của một số</h3>
+            <p>Muốn tìm 2/3 của 15 quả cam:</p>
+            <div class="math-example">15 x 2 : 3 = 10 (quả)</div>
+        </div>
+
+        <div class="card">
+            <span class="badge badge-l5">Chương trình Lớp 5</span>
+            <h2>III. Các Dạng Toán Lớp 5</h2>
+            
+            <h3>1. Hỗn số</h3>
+            <p>Kết hợp giữa số tự nhiên và phân số.</p>
+            <div class="math-example">Ví dụ: 2 và 3/4 = (2 x 4 + 3)/4 = 11/4</div>
+
+            <h3>2. Phân số thập phân</h3>
+            <p>Các phân số có mẫu là 10, 100, 1000...</p>
+            <div class="math-example">3/10 = 0.3 ; 45/100 = 0.45</div>
+
+            <h3>3. Giải toán có lời văn</h3>
+            <p>Thường gặp bài toán <strong>Tổng - Tỉ</strong> và <strong>Hiệu - Tỉ</strong>.</p>
+        </div>
+    </div>
+
+    <div class="card" style="border: 2px solid var(--secondary-color);">
+        <h2 style="color: var(--secondary-color);">IV. Thử Thách Thông Thái 🧠</h2>
+        <p><strong>Bài toán:</strong> Một chiếc bánh được chia làm 8 phần. Bạn Nam ăn 1/4 cái bánh, bạn Lan ăn 3/8 cái bánh. Hỏi ai ăn nhiều hơn?</p>
+        <div class="theory-box">
+            <strong>Hướng dẫn giải:</strong><br>
+            1. Quy đồng 1/4 về mẫu số 8: 1/4 = 2/8.<br>
+            2. So sánh 2/8 và 3/8. Vì 3 > 2 nên Lan ăn nhiều hơn!
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    <p>&copy; 2026 - Học Toán Cùng Gemini. Chúc các em học tốt! 🚀</p>
+</footer>
+
+</body>
+</html>
