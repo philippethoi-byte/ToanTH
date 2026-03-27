@@ -3,221 +3,328 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hệ Thống Luyện Tập Phân Số Thông Minh</title>
+    <title>Ôn tập Toán tiểu học - Chọn lớp</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: #f0f2f5; font-family: 'Segoe UI', sans-serif; padding: 20px; color: #2d3e50; }
-        .container { max-width: 1000px; margin: 0 auto; background: white; border-radius: 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); overflow: hidden; }
-        
-        /* HEADER */
-        .header { background: linear-gradient(135deg, #f59e0b, #d97706); padding: 30px; text-align: center; color: white; }
-        .nav-box { background: #fff7ed; padding: 15px; display: flex; justify-content: center; gap: 10px; border-bottom: 2px solid #ffe6c2; }
-        
-        .btn { padding: 10px 25px; border-radius: 50px; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        .btn-main { background: #f59e0b; color: white; }
-        .btn-outline { background: white; color: #b45309; border: 2px solid #f59e0b; }
-        .btn:hover { transform: scale(1.05); opacity: 0.9; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-        .page { display: none; padding: 30px; }
-        .page.active { display: block; }
+        body {
+            background: #f0f2f5;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans', sans-serif;
+            padding: 30px 20px;
+        }
 
-        /* FILTER BOX */
-        .filter-section { background: #fef3c7; padding: 20px; border-radius: 20px; margin-bottom: 30px; display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: center; }
-        select { padding: 8px 15px; border-radius: 10px; border: 1px solid #f59e0b; font-size: 1rem; }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
 
-        /* QUIZ CARD */
-        .quiz-card { background: white; border: 1px solid #ffe6c2; padding: 20px; border-radius: 15px; margin-bottom: 20px; position: relative; }
-        .question-text { font-size: 1.1rem; font-weight: 600; margin-bottom: 15px; color: #92400e; }
-        .options-group { display: grid; gap: 10px; }
-        .option-label { display: block; padding: 12px 15px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 10px; cursor: pointer; transition: 0.2s; }
-        .option-label:hover { background: #fff7ed; border-color: #f59e0b; }
-        input[type="radio"] { margin-right: 10px; transform: scale(1.2); }
+        .header {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            padding: 30px 20px;
+            text-align: center;
+            color: white;
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
 
-        /* RESULT STYLES */
-        .correct { background: #dcfce7 !important; border-color: #22c55e !important; }
-        .wrong { background: #fee2e2 !important; border-color: #ef4444 !important; }
-        .explanation { display: none; margin-top: 15px; padding: 12px; background: #eff6ff; border-radius: 8px; font-size: 0.95rem; color: #1e40af; border-left: 4px solid #3b82f6; }
-        
-        #result-summary { display: none; text-align: center; padding: 20px; background: #fff7ed; border-radius: 20px; margin-top: 20px; }
-        .score { font-size: 2rem; font-weight: bold; color: #d97706; }
+        .class-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            padding: 20px 20px 0 20px;
+            background: white;
+            border-bottom: 2px solid #ffe6c2;
+        }
+        .tab-btn {
+            background: #fff3e0;
+            border: none;
+            padding: 10px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #b45309;
+            font-family: inherit;
+        }
+        .tab-btn.active {
+            background: #f59e0b;
+            color: white;
+            box-shadow: 0 4px 8px rgba(245,158,11,0.3);
+        }
+        .tab-btn:hover:not(.active) {
+            background: #fed7aa;
+        }
 
-        .frac { display: inline-block; vertical-align: middle; text-align: center; }
-        .frac span { display: block; padding: 0 2px; }
-        .frac .top { border-bottom: 1px solid #2d3e50; }
+        .content-area {
+            padding: 30px 25px;
+            background: #fefaf5;
+        }
+
+        .subject-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        .card {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            overflow: hidden;
+            border-left: 8px solid #f59e0b;
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+        }
+        .card h3 {
+            background: #fff7ed;
+            padding: 14px 18px;
+            font-size: 1.3rem;
+            color: #b45309;
+            border-bottom: 2px solid #ffe6c2;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .card ul {
+            padding: 16px 20px 20px 36px;
+            list-style-type: none;
+        }
+        .card li {
+            margin-bottom: 12px;
+            position: relative;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            color: #2d3e50;
+        }
+        .card li::before {
+            content: "📌";
+            position: absolute;
+            left: -24px;
+            top: 0;
+            font-size: 0.9rem;
+        }
+        .formula-highlight {
+            background: #fef3c7;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-family: monospace;
+            font-weight: bold;
+            display: inline-block;
+            margin: 4px 0;
+        }
+        .note {
+            background: #fef9e3;
+            border-radius: 16px;
+            padding: 12px 16px;
+            margin-top: 12px;
+            font-size: 0.85rem;
+            color: #7c5e2e;
+        }
+        hr {
+            margin: 16px 0;
+            border-color: #ffe6c2;
+        }
+        @media (max-width: 750px) {
+            .tab-btn {
+                padding: 6px 16px;
+                font-size: 0.85rem;
+            }
+            .header h1 {
+                font-size: 1.4rem;
+            }
+            .content-area {
+                padding: 20px;
+            }
+        }
+        footer {
+            text-align: center;
+            padding: 16px;
+            font-size: 0.8rem;
+            background: #fff7ed;
+            color: #a16207;
+            border-top: 1px solid #ffe6c2;
+        }
     </style>
 </head>
 <body>
-
 <div class="container">
     <div class="header">
-        <h1>🎓 Đấu Trường Phân Số</h1>
-        <p>Học tập thông minh - Kết quả vững vàng</p>
+        <h1>📚 Ôn tập Toán tiểu học</h1>
+        <p>Chọn lớp để xem các chủ đề quan trọng</p>
     </div>
 
-    <div class="nav-box">
-        <button class="btn btn-outline" onclick="showPage('theory')">📖 Xem Lý Thuyết</button>
-        <button class="btn btn-main" onclick="showPage('quiz')">✍️ Làm Bài Tập</button>
+    <div class="class-tabs">
+        <button class="tab-btn" data-grade="1">Lớp 1</button>
+        <button class="tab-btn" data-grade="2">Lớp 2</button>
+        <button class="tab-btn" data-grade="3">Lớp 3</button>
+        <button class="tab-btn" data-grade="4">Lớp 4</button>
+        <button class="tab-btn" data-grade="5">Lớp 5</button>
+        <button class="tab-btn active" data-grade="all">📌 Tất cả</button>
     </div>
 
-    <div id="theory" class="page">
-        <h2 style="color: #b45309; margin-bottom: 15px;">💡 Nhắc lại kiến thức</h2>
-        <p>Hãy chọn nút <b>"Làm Bài Tập"</b> phía trên, sau đó chọn mức độ và số lượng câu hỏi để bắt đầu thử thách nhé!</p>
-        <div style="margin-top: 20px; padding: 20px; background: #fff7ed; border-radius: 15px;">
-            <p>🌟 <b>Dạng 1:</b> Rút gọn & Quy đồng</p>
-            <p>🌟 <b>Dạng 2:</b> 4 phép tính (+, -, *, /)</p>
-            <p>🌟 <b>Dạng 3:</b> Tìm phân số của một số</p>
-            <p>🌟 <b>Dạng 4:</b> Tổng - Tỉ & Hiệu - Tỉ</p>
-            <p>🌟 <b>Dạng 5:</b> Hỗn số & Thập phân</p>
-            <p>🌟 <b>Dạng 6:</b> Toán tư duy nâng cao</p>
-        </div>
+    <div class="content-area" id="contentArea">
+        <div style="text-align: center; padding: 40px;">Đang tải nội dung...</div>
     </div>
-
-    <div id="quiz" class="page active">
-        <div class="filter-section">
-            <div>
-                <label>Mức độ:</label>
-                <select id="level-select">
-                    <option value="easy">Dễ (Cơ bản)</option>
-                    <option value="medium">Trung bình (Ứng dụng)</option>
-                    <option value="hard">Khó (Tư duy)</option>
-                </select>
-            </div>
-            <div>
-                <label>Số câu hỏi:</label>
-                <select id="count-select">
-                    <option value="5">5 câu</option>
-                    <option value="10">10 câu</option>
-                    <option value="20">20 câu</option>
-                </select>
-            </div>
-            <button class="btn btn-main" onclick="generateQuiz()">Bắt đầu làm bài 🚀</button>
-        </div>
-
-        <div id="quiz-container">
-            </div>
-
-        <div id="result-summary">
-            <h3>Kết quả của bạn</h3>
-            <div class="score" id="score-text">0/0</div>
-            <p id="feedback-text"></p>
-            <button class="btn btn-outline" style="margin-top: 15px;" onclick="generateQuiz()">Làm đề mới 🔄</button>
-        </div>
-
-        <button id="check-btn" class="btn btn-main" style="display: none; width: 100%; margin-top: 20px; font-size: 1.2rem;" onclick="checkAnswers()">Kiểm tra kết quả ✅</button>
-    </div>
-
-    <footer style="text-align: center; padding: 20px; font-size: 0.9rem; color: #a16207;">
-        © 2026 Hệ thống hỗ trợ học tập Hạo Nhiên
+    <footer>
+        🌟 In ra hoặc lưu lại để ôn tập mỗi ngày | Học mà vui, vui mà học 🌟
     </footer>
 </div>
 
 <script>
-    // NGÂN HÀNG CÂU HỎI (Demo đại diện các dạng, cấu trúc đủ cho logic)
-    const questionBank = {
-        easy: [
-            { q: "Phân số nào sau đây tối giản?", options: ["2/4", "3/6", "5/7", "10/20"], ans: 2, exp: "5 và 7 không cùng chia hết cho số nào khác 1 nên 5/7 là tối giản." },
-            { q: "Phân số 12/18 rút gọn được kết quả là:", options: ["2/3", "3/4", "1/2", "5/6"], ans: 0, exp: "12 và 18 cùng chia hết cho 6. 12:6=2, 18:6=3." },
-            { q: "Kết quả của 1/5 + 2/5 là:", options: ["3/10", "3/5", "2/5", "1/1"], ans: 1, exp: "Cùng mẫu số nên ta cộng tử: 1 + 2 = 3. Giữ nguyên mẫu là 5." },
-            { q: "Phân số nào lớn hơn 1?", options: ["4/5", "9/8", "1/2", "7/7"], ans: 1, exp: "Phân số lớn hơn 1 khi Tử số lớn hơn Mẫu số (9 > 8)." },
-            { q: "Hỗn số 2 và 1/3 đổi ra phân số là:", options: ["3/3", "5/3", "7/3", "2/3"], ans: 2, exp: "(2 x 3 + 1) / 3 = 7/3." },
-            { q: "Tìm 1/2 của 20?", options: ["5", "10", "15", "20"], ans: 1, exp: "20 x 1 : 2 = 10." },
-            { q: "Mẫu số của phân số 3/4 là số nào?", options: ["3", "4", "7", "1"], ans: 1, exp: "Mẫu số là số nằm dưới gạch ngang." },
-            { q: "Phân số 25/100 dưới dạng thập phân là:", options: ["0.25", "2.5", "0.025", "25"], ans: 0, exp: "25/100 tương đương với 0,25." },
-            { q: "Tính 3/4 x 1/2?", options: ["4/6", "3/8", "3/2", "2/4"], ans: 1, exp: "Tử x Tử (3x1=3), Mẫu x Mẫu (4x2=8)." },
-            { q: "Phân số nào bằng 1/2?", options: ["2/3", "5/10", "4/10", "1/3"], ans: 1, exp: "5/10 rút gọn cho 5 được 1/2." }
-            // ... (Tiếp tục bổ sung cho đủ 30 câu dễ)
-        ],
-        medium: [
-            { q: "Tìm x biết: x - 1/2 = 1/4", options: ["1/4", "3/4", "1/2", "1/6"], ans: 1, exp: "x = 1/4 + 1/2 = 1/4 + 2/4 = 3/4." },
-            { q: "Tổng 2 số là 50, tỉ số là 2/3. Số bé là:", options: ["20", "30", "15", "25"], ans: 0, exp: "Tổng số phần: 2+3=5. Giá trị 1 phần: 50:5=10. Số bé: 10x2=20." },
-            { q: "Một vòi nước chảy 2/5 bể trong giờ đầu, 1/3 bể giờ sau. Cả 2 giờ chảy được:", options: ["3/8 bể", "11/15 bể", "7/15 bể", "1/2 bể"], ans: 1, exp: "2/5 + 1/3 = 6/15 + 5/15 = 11/15." },
-            { q: "Lớp có 30 HS, 2/3 là HS khá. Số HS khá là:", options: ["10", "20", "15", "25"], ans: 1, exp: "30 x 2 : 3 = 20." },
-            { q: "Hiệu 2 số là 20, tỉ số 1/3. Số lớn là:", options: ["10", "20", "30", "40"], ans: 2, exp: "Hiệu phần: 3-1=2. Giá trị 1 phần: 20:2=10. Số lớn: 10x3=30." }
-            // ... (Tiếp tục bổ sung cho đủ 30 câu trung bình)
-        ],
-        hard: [
-            { q: "Tính nhanh: 1/(2x3) + 1/(3x4) + 1/(4x5)", options: ["1/2", "1/10", "3/10", "1/5"], ans: 3, exp: "1/2-1/3 + 1/3-1/4 + 1/4-1/5 = 1/2-1/5 = 3/10. (Đáp án rút gọn tương ứng)" },
-            { q: "Mẹ hơn con 24 tuổi. Tuổi con bằng 1/4 tuổi mẹ. Tính tuổi con?", options: ["6", "8", "10", "12"], ans: 1, exp: "Hiệu phần: 4-1=3. Giá trị 1 phần: 24:3=8. Tuổi con là 8." },
-            { q: "Sau khi bán 1/3 tấm vải thì còn 20m. Tấm vải ban đầu dài:", options: ["30m", "40m", "60m", "15m"], ans: 0, exp: "Phân số chỉ 20m là 1 - 1/3 = 2/3. Chiều dài: 20 : 2/3 = 30m." }
-            // ... (Tiếp tục bổ sung cho đủ 30 câu khó)
+    // Nội dung lớp 3 lấy từ 7 chủ đề cô đọng (giống file HTML trước)
+    const grade3Compact = {
+        title: "Lớp 3 - Kiến thức trọng tâm",
+        cards: [
+            { title: "📐 Hình học (Chu vi & Diện tích)", items: [
+                "Chu vi: Hình vuông = Cạnh × 4 | Hình chữ nhật = (Dài + Rộng) × 2",
+                "Diện tích: Hình vuông = Cạnh × Cạnh | Hình chữ nhật = Dài × Rộng",
+                "⚠️ Đơn vị diện tích luôn có số 2 nhỏ trên đầu (cm², m²)"
+            ] },
+            { title: "📏 Đơn vị đo", items: [
+                "Độ dài: 1km = 1000m ; 1m = 10dm = 100cm",
+                "Khối lượng: 1kg = 1000g",
+                "Dung tích: 1 lít = 1000ml",
+                "Thời gian: 1 giờ = 60 phút ; 1 ngày = 24 giờ"
+            ] },
+            { title: "📅 Tháng năm", items: [
+                "Mẹo bàn tay: Tháng nhô (1,3,5,7,8,10,12) → 31 ngày",
+                "Tháng lõm (4,6,9,11) → 30 ngày",
+                "Tháng 2: 28 ngày (năm thường) hoặc 29 ngày (năm nhuận)"
+            ] },
+            { title: "🧮 Tính giá trị biểu thức", items: [
+                "1️⃣ Làm trong ngoặc ( ) trước",
+                "2️⃣ Nhân, chia trước; cộng, trừ sau",
+                "3️⃣ Nếu chỉ có +, – hoặc ×, ÷ thì tính từ trái sang phải"
+            ] },
+            { title: "🔍 Tìm thành phần chưa biết (Tìm x)", items: [
+                "Số hạng chưa biết = Tổng – Số hạng kia",
+                "Thừa số chưa biết = Tích : Thừa số kia",
+                "Số bị chia = Thương × Số chia"
+            ] },
+            { title: "🔢 Dấu hiệu chia hết", items: [
+                "Chia hết cho 2: chữ số tận cùng 0,2,4,6,8",
+                "Chia hết cho 5: chữ số tận cùng 0 hoặc 5",
+                "Chia hết cho 3 & 9: tổng các chữ số chia hết cho 3 hoặc 9"
+            ],
+            // THAY LINK TRANG WEB CỦA BẠN VÀO ĐÂY
+                link: "https://philippethoi-byte.github.io/ToanTH/chia-het.html" 
+        },
+            { title: "📊 Toán Tổng – Tỷ", items: [
+                "Bước 1: Vẽ sơ đồ đoạn thẳng",
+                "Bước 2: Tìm tổng số phần bằng nhau",
+                "Bước 3: Giá trị 1 phần = Tổng ÷ Tổng số phần",
+                "Bước 4: Tìm số lớn, số bé theo tỷ lệ"
+            ] }
         ]
     };
 
-    let currentQuestions = [];
+    // Dữ liệu các lớp khác (1,2,4,5) và "Tất cả"
+    const gradeData = {
+        1: {
+            title: "Lớp 1 - Nền tảng đầu tiên",
+            cards: [
+                { title: "🔢 Số học cơ bản", items: ["Đếm, đọc, viết số từ 0 đến 100", "So sánh số (>, <, =)", "Phép cộng, trừ trong phạm vi 20", "Số chẵn, số lẻ cơ bản"] },
+                { title: "📐 Hình học đơn giản", items: ["Nhận biết hình vuông, hình tròn, hình tam giác", "Điểm, đoạn thẳng", "Vẽ đoạn thẳng có độ dài cho trước"] },
+                { title: "📏 Đo lường", items: ["Xem giờ đúng trên đồng hồ", "Độ dài: cm, dm", "Ngày trong tuần, tháng trong năm"] }
+            ]
+        },
+        2: {
+            title: "Lớp 2 - Làm quen với tính toán",
+            cards: [
+                { title: "➕ Phép tính", items: ["Cộng, trừ có nhớ trong phạm vi 1000", "Bảng nhân 2, 3, 4, 5", "Tính giá trị biểu thức đơn giản (chỉ +, - hoặc ×, ÷)"] },
+                { title: "📐 Hình học", items: ["Chu vi hình tam giác, tứ giác", "Đường gấp khúc – độ dài đường gấp khúc", "Hình chữ nhật, hình tứ giác"] },
+                { title: "⚖️ Đo lường & thống kê", items: ["Kilogam (kg), lít (l)", "Xem lịch, xem giờ chính xác đến 15 phút", "Bảng số liệu đơn giản"] }
+            ]
+        },
+        // Lớp 3 sẽ dùng grade3Compact ở trên, không dùng gradeData[3]
+        4: {
+            title: "Lớp 4 - Tư duy logic",
+            cards: [
+                { title: "🧮 Số tự nhiên & phân số", items: ["Số có nhiều chữ số, triệu, lớp triệu", "Phân số, so sánh phân số", "Các phép tính với phân số", "Dấu hiệu chia hết cho 2,3,5,9"] },
+                { title: "📐 Hình học nâng cao", items: ["Hình bình hành, hình thoi", "Diện tích hình bình hành, hình thoi", "Hai đường thẳng vuông góc, song song"] },
+                { title: "📈 Biểu đồ & bài toán", items: ["Biểu đồ cột, biểu đồ tranh", "Tìm số trung bình cộng", "Toán tổng – hiệu, tổng – tỉ"] }
+            ]
+        },
+        5: {
+            title: "Lớp 5 - Tổng hợp & chuẩn bị cấp 2",
+            cards: [
+                { title: "🔢 Số thập phân", items: ["Đọc, viết, so sánh số thập phân", "Cộng, trừ, nhân, chia số thập phân", "Tỉ số phần trăm"] },
+                { title: "📐 Hình học tổng hợp", items: ["Diện tích tam giác, hình thang", "Hình tròn: bán kính, đường kính, chu vi, diện tích", "Hình hộp chữ nhật, hình lập phương (diện tích, thể tích)"] },
+                { title: "⏱️ Chuyển động & toán có lời văn", items: ["Vận tốc, quãng đường, thời gian", "Toán chuyển động ngược chiều, cùng chiều", "Giải bài toán bằng cách đặt ẩn (cơ bản)"] }
+            ]
+        },
+        all: {
+            title: "Tất cả các lớp – Tóm tắt kiến thức cốt lõi",
+            cards: [
+                { title: "📐 Hình học", items: ["Chu vi: vuông = cạnh×4, chữ nhật = (dài+rộng)×2", "Diện tích: vuông = cạnh×cạnh, chữ nhật = dài×rộng", "Hình tam giác, hình thang, hình tròn (lớp 5)", "Đơn vị đo diện tích: cm², m²"] },
+                { title: "📏 Đơn vị đo", items: ["1km = 1000m, 1m = 10dm = 100cm", "1kg = 1000g, 1 lít = 1000ml", "1 giờ = 60 phút, 1 ngày = 24 giờ"] },
+                { title: "📅 Tháng – năm", items: ["Mẹo bàn tay: tháng 1,3,5,7,8,10,12 có 31 ngày", "Tháng 4,6,9,11 có 30 ngày", "Tháng 2: 28 hoặc 29 ngày"] },
+                { title: "🧮 Tính giá trị biểu thức", items: ["( ) trước → × ÷ trước + - sau", "Cùng cấp tính từ trái sang phải"] },
+                { title: "🔍 Tìm thành phần chưa biết", items: ["Số hạng = Tổng – số hạng kia", "Thừa số = Tích : thừa số kia", "Số bị chia = Thương × số chia"] },
+                { title: "🔢 Dấu hiệu chia hết", items: ["2: tận cùng 0,2,4,6,8", "5: tận cùng 0 hoặc 5", "3 và 9: tổng chữ số chia hết cho 3 hoặc 9"],
+                // THAY LINK TRANG WEB CỦA BẠN VÀO ĐÂY
+                link: "https://philippethoi-byte.github.io/ToanTH/chia-het.html" 
+        },
+                { title: "📊 Toán Tổng – Tỉ", items: ["Vẽ sơ đồ", "Tìm tổng số phần", "Giá trị 1 phần = Tổng : tổng số phần", "Tìm số lớn, số bé"] }
+            ]
+        }
+    };
 
-    function showPage(pageId) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.getElementById(pageId).classList.add('active');
-    }
+        // 2. CẬP NHẬT HÀM RENDER (Quan trọng)
+    function renderGrade(gradeKey) {
+        let data = (gradeKey === '3') ? grade3Compact : gradeData[gradeKey];
+        if (!data) return;
 
-    function generateQuiz() {
-        const level = document.getElementById('level-select').value;
-        const count = parseInt(document.getElementById('count-select').value);
-        const container = document.getElementById('quiz-container');
-        const summary = document.getElementById('result-summary');
+        let html = `<h2 style="margin-bottom: 20px; font-size: 1rem; color: #b45309;">📖 ${data.title}</h2>`;
+        html += `<div class="subject-grid">`;
         
-        summary.style.display = "none";
-        container.innerHTML = "";
-        
-        // Trộn ngẫu nhiên câu hỏi từ ngân hàng
-        let shuffled = [...questionBank[level]].sort(() => 0.5 - Math.random());
-        currentQuestions = shuffled.slice(0, count);
-
-        currentQuestions.forEach((item, index) => {
-            const card = document.createElement('div');
-            card.className = 'quiz-card';
-            card.innerHTML = `
-                <div class="question-text">Câu ${index + 1}: ${item.q}</div>
-                <div class="options-group">
-                    ${item.options.map((opt, i) => `
-                        <label class="option-label">
-                            <input type="radio" name="q${index}" value="${i}"> ${opt}
-                        </label>
-                    `).join('')}
-                </div>
-                <div class="explanation" id="exp${index}"><b>Giải thích:</b> ${item.exp}</div>
-            `;
-            container.appendChild(card);
-        });
-
-        document.getElementById('check-btn').style.display = "block";
-    }
-
-    function checkAnswers() {
-        let score = 0;
-        currentQuestions.forEach((item, index) => {
-            const selected = document.querySelector(`input[name="q${index}"]:checked`);
-            const exp = document.getElementById(`exp${index}`);
-            const labels = document.querySelectorAll(`input[name="q${index}"]`);
+        data.cards.forEach(card => {
+            // Kiểm tra nếu có link thì bọc trong thẻ <a>, nếu không thì để <div> bình thường
+            const isLink = card.link ? `onclick="window.top.location.href='${card.link}'" style="cursor:pointer; border-bottom: 3px solid #f59e0b;"` : "";
             
-            exp.style.display = "block"; // Hiện giải thích
-
-            labels.forEach((radio, i) => {
-                const parent = radio.parentElement;
-                if (i === item.ans) {
-                    parent.classList.add('correct'); // Đánh dấu câu đúng
-                }
-                if (selected && parseInt(selected.value) === i && i !== item.ans) {
-                    parent.classList.add('wrong'); // Đánh dấu nếu chọn sai
-                }
-            });
-
-            if (selected && parseInt(selected.value) === item.ans) {
-                score++;
-            }
+            html += `
+                <div class="card" ${isLink}>
+                    <h3>${card.title} ${card.link ? ' <small>(BT ↗️)</small>' : ''}</h3>
+                    <ul>
+                        ${card.items.map(item => `<li>${item}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
         });
-
-        const total = currentQuestions.length;
-        document.getElementById('score-text').innerText = `${score}/${total}`;
-        document.getElementById('result-summary').style.display = "block";
-        document.getElementById('check-btn').style.display = "none";
-        
-        let feedback = score === total ? "Tuyệt vời! Bạn là thiên tài phân số! 🏆" : (score > total/2 ? "Khá tốt! Cố gắng phát huy nhé! 👍" : "Đừng buồn, đọc lại lý thuyết và thử lại nhé! 💪");
-        document.getElementById('feedback-text').innerText = feedback;
-        
-        window.scrollTo(0, document.body.scrollHeight);
+        html += `</div>`;
+        // ... phần footer giữ nguyên
+        document.getElementById('contentArea').innerHTML = html;
     }
-</script>
 
+    const tabs = document.querySelectorAll('.tab-btn');
+    tabs.forEach(btn => {
+        btn.addEventListener('click', () => {
+            tabs.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const grade = btn.getAttribute('data-grade');
+            renderGrade(grade);
+        });
+    });
+
+    renderGrade('all');
+</script>
 </body>
 </html>
