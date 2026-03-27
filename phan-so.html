@@ -3,264 +3,255 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cẩm Nang Phân Số Thông Minh</title>
+    <title>Cẩm Nang Phân Số Toàn Diện</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background: #f0f2f5;
-            font-family: 'Segoe UI', 'Roboto', 'Noto Sans', sans-serif;
-            padding: 30px 20px;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 32px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            overflow: hidden;
-            min-height: 80vh;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #f0f2f5; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 30px 20px; color: #2d3e50; }
+        .container { max-width: 1100px; margin: 0 auto; background: white; border-radius: 32px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); overflow: hidden; min-height: 90vh; }
+        
         /* HEADER */
-        .header {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            padding: 40px 20px;
-            text-align: center;
-            color: white;
-            position: relative;
-        }
-        .header h1 { font-size: 2.2rem; margin-bottom: 8px; }
-        .header p { font-size: 1.1rem; opacity: 0.9; }
+        .header { background: linear-gradient(135deg, #f59e0b, #d97706); padding: 40px 20px; text-align: center; color: white; }
+        .header h1 { font-size: 2.5rem; margin-bottom: 8px; }
+        .header p { font-size: 1.2rem; opacity: 0.9; }
 
-        /* NAVIGATION BUTTON */
-        .nav-box {
-            background: white;
-            padding: 15px;
-            display: flex;
-            justify-content: center;
-            border-bottom: 2px solid #ffe6c2;
-        }
-        .btn-toggle {
-            background: #f59e0b;
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(245,158,11,0.3);
-        }
-        .btn-toggle:hover {
-            background: #d97706;
-            transform: scale(1.05);
-        }
+        /* NAVIGATION */
+        .nav-box { background: white; padding: 20px; display: flex; justify-content: center; border-bottom: 2px solid #ffe6c2; position: sticky; top: 0; z-index: 100; }
+        .btn-toggle { background: #f59e0b; color: white; border: none; padding: 14px 40px; font-size: 1.1rem; font-weight: bold; border-radius: 50px; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(245,158,11,0.3); }
+        .btn-toggle:hover { background: #d97706; transform: translateY(-2px); }
 
-        /* CONTENT AREAS */
-        .page { display: none; padding: 30px 25px; background: #fefaf5; }
-        .page.active { display: block; animation: fadeIn 0.5s; }
+        /* PAGES */
+        .page { display: none; padding: 40px 30px; background: #fefaf5; }
+        .page.active { display: block; animation: fadeIn 0.4s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        /* CONTENT STYLES */
+        .section-title { color: #92400e; font-size: 1.8rem; margin: 20px 0; border-left: 10px solid #f59e0b; padding-left: 15px; }
+        .card { background: white; border-radius: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 30px; border: 1px solid #ffe6c2; overflow: hidden; }
+        .card-header { background: #fff7ed; padding: 15px 25px; font-weight: bold; color: #b45309; font-size: 1.3rem; border-bottom: 2px solid #ffe6c2; }
+        .card-body { padding: 25px; line-height: 1.7; }
 
-        .section-title {
-            color: #92400e;
-            font-size: 1.6rem;
-            margin: 20px 0;
-            border-bottom: 2px solid #fcd34d;
-            padding-bottom: 5px;
-        }
+        /* MATH BOXES */
+        .example-box { background: #f0fdf4; border-radius: 16px; padding: 20px; margin-top: 15px; border-left: 5px solid #22c55e; }
+        .example-title { color: #166534; font-weight: bold; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .formula-highlight { background: #fef3c7; padding: 2px 8px; border-radius: 8px; font-family: monospace; font-weight: bold; color: #92400e; }
+        
+        /* FRACTION VISUAL */
+        .frac { display: inline-block; vertical-align: middle; text-align: center; margin: 0 3px; }
+        .frac span { display: block; padding: 0 5px; }
+        .frac span.top { border-bottom: 2px solid #2d3e50; }
 
-        /* CARDS */
-        .card {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            margin-bottom: 25px;
-            border-left: 8px solid #f59e0b;
-            overflow: hidden;
-        }
-        .card-header {
-            background: #fff7ed;
-            padding: 15px 20px;
-            font-weight: bold;
-            color: #b45309;
-            font-size: 1.2rem;
-            border-bottom: 1px solid #ffe6c2;
-        }
-        .card-body { padding: 20px; }
+        /* QUIZ STYLES */
+        .quiz-item { background: white; padding: 25px; border-radius: 20px; margin-bottom: 20px; border: 1px solid #ffe6c2; }
+        .btn-answer { background: #fff3e0; border: 1px solid #f59e0b; color: #b45309; padding: 10px 20px; border-radius: 10px; cursor: pointer; margin-top: 15px; font-weight: bold; }
+        .answer-text { display: none; margin-top: 15px; padding: 15px; background: #ecfdf5; color: #065f46; border-radius: 12px; border-left: 5px solid #10b981; }
 
-        /* EXAMPLES */
-        .example-box {
-            background: #f0fdf4;
-            border-radius: 12px;
-            padding: 15px;
-            margin-top: 15px;
-            border-left: 4px solid #22c55e;
-        }
-        .example-title {
-            color: #166534;
-            font-weight: bold;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .formula-highlight {
-            background: #fef3c7;
-            padding: 2px 8px;
-            border-radius: 8px;
-            font-family: monospace;
-            font-weight: bold;
-            color: #92400e;
-        }
-
-        /* EXERCISES STYLE */
-        .quiz-item {
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            border: 1px solid #ffe6c2;
-        }
-        .btn-answer {
-            background: #fff3e0;
-            border: 1px solid #f59e0b;
-            color: #b45309;
-            padding: 8px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-        .answer-text {
-            display: none;
-            margin-top: 10px;
-            padding: 10px;
-            background: #ecfdf5;
-            color: #065f46;
-            border-radius: 8px;
-            font-style: italic;
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px;
-            background: #fff7ed;
-            color: #a16207;
-            font-size: 0.9rem;
-        }
+        footer { text-align: center; padding: 30px; background: #fff7ed; color: #a16207; border-top: 1px solid #ffe6c2; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div class="header">
-        <h1 id="main-title">📚 Học Phân Số Thật Dễ</h1>
-        <p id="main-sub">Kiến thức nền tảng và bài tập thực hành</p>
+        <h1 id="main-title">🌟 Bí Kíp Phân Số Toàn Tập</h1>
+        <p id="main-sub">Lý thuyết chi tiết kèm ví dụ minh họa dễ hiểu</p>
     </div>
 
     <div class="nav-box">
-        <button class="btn-toggle" id="btnNav" onclick="togglePage()">Chuyển sang Bài Tập Thực Hành ✍️</button>
+        <button class="btn-toggle" onclick="togglePage()" id="btnNav">Chuyển sang Bài Tập Thực Hành ✍️</button>
     </div>
 
     <div id="theoryPage" class="page active">
-        <h2 class="section-title">✨ Bí kíp cần nhớ</h2>
+        
+        <h2 class="section-title">I. Kiến Thức Cơ Bản</h2>
 
         <div class="card">
-            <div class="card-header">1. Phân số là gì?</div>
+            <div class="card-header">1. Khái niệm & Cấu tạo</div>
             <div class="card-body">
-                <p>Phân số gồm <b>Tử số</b> (ở trên) và <b>Mẫu số</b> (ở dưới, khác 0).</p>
+                <p>Phân số gồm <b>tử số</b> (trên gạch ngang) và <b>mẫu số</b> (dưới gạch ngang, mẫu số khác 0).</p>
+                <ul>
+                    <li><b>Ý nghĩa:</b> Mẫu số chỉ tổng số phần bằng nhau được chia ra; Tử số chỉ số phần được lấy đi.</li>
+                </ul>
                 <div class="example-box">
-                    <div class="example-title">💡 Ví dụ thực tế:</div>
-                    Mẹ chia cái bánh làm 4 phần bằng nhau, con ăn 1 phần. Phân số chỉ phần bánh con đã ăn là <span class="formula-highlight">1/4</span>.
-                    <br>• Tử số = 1 (Số phần con ăn)
-                    <br>• Mẫu số = 4 (Tổng số phần cái bánh)
+                    <div class="example-title">🍰 Ví dụ:</div>
+                    Phân số <div class="frac"><span class="top">3</span><span>4</span></div> nghĩa là gì?
+                    <br>Nghĩa là một cái bánh được chia làm <b>4 phần bằng nhau</b>, ta lấy đi <b>3 phần</b>.
                 </div>
             </div>
         </div>
 
         <div class="card">
-            <div class="card-header">2. Rút gọn phân số</div>
+            <div class="card-header">2. Tính chất cơ bản của phân số</div>
             <div class="card-body">
-                <p>Chia cả tử và mẫu cho cùng một số tự nhiên lớn hơn 1 để được phân số đơn giản hơn.</p>
+                <p><b>Tính chất 1:</b> Nhân cả tử và mẫu với cùng 1 số tự nhiên (khác 0) ta được phân số mới bằng phân số cũ.</p>
                 <div class="example-box">
-                    <div class="example-title">📝 Hướng dẫn giải:</div>
-                    Rút gọn phân số <span class="formula-highlight">6/8</span>:
-                    <br>Ta thấy cả 6 và 8 đều chia hết cho 2.
-                    <br>6 : 2 = 3; 8 : 2 = 4. 
-                    <br>Vậy <span class="formula-highlight">6/8 = 3/4</span> (3/4 là phân số tối giản).
+                    <div class="example-title">💡 Ví dụ Tính chất 1:</div>
+                    <div class="frac"><span class="top">2</span><span>5</span></div> = <div class="frac"><span class="top">2 x 3</span><span>5 x 3</span></div> = <span class="formula-highlight">6/15</span>. Vậy 2/5 = 6/15.
+                </div>
+                <hr style="margin: 15px 0; border: 0; border-top: 1px solid #ffe6c2;">
+                <p><b>Tính chất 2:</b> Chia cả tử và mẫu cho cùng 1 số tự nhiên (khác 0) ta được phân số mới bằng phân số cũ (gọi là <b>Rút gọn phân số</b>).</p>
+                <div class="example-box">
+                    <div class="example-title">💡 Ví dụ Tính chất 2:</div>
+                    Rút gọn <div class="frac"><span class="top">12</span><span>18</span></div>: Cả 12 và 18 cùng chia hết cho 6.
+                    <br><div class="frac"><span class="top">12 : 6</span><span>18 : 6</span></div> = <span class="formula-highlight">2/3</span>.
                 </div>
             </div>
         </div>
 
         <div class="card">
-            <div class="card-header">3. Cộng hai phân số khác mẫu</div>
+            <div class="card-header">3. So sánh phân số</div>
             <div class="card-body">
-                <p><b>Bước 1:</b> Quy đồng mẫu số. <b>Bước 2:</b> Cộng hai tử số và giữ nguyên mẫu số chung.</p>
+                <p><b>Cùng mẫu số:</b> Tử số nào lớn hơn thì phân số đó lớn hơn.</p>
                 <div class="example-box">
-                    <div class="example-title">📝 Hướng dẫn giải:</div>
-                    Tính: <span class="formula-highlight">1/2 + 1/3</span>
-                    <br>1. Mẫu số chung là 2 x 3 = 6.
-                    <br>2. Quy đồng: 1/2 = 3/6 và 1/3 = 2/6.
-                    <br>3. Cộng: 3/6 + 2/6 = <span class="formula-highlight">5/6</span>.
+                    <div class="example-title">📏 Ví dụ cùng mẫu:</div>
+                    So sánh <div class="frac"><span class="top">5</span><span>7</span></div> và <div class="frac"><span class="top">3</span><span>7</span></div>. Vì 5 > 3 nên <span class="formula-highlight">5/7 > 3/7</span>.
+                </div>
+                <br>
+                <p><b>Khác mẫu số:</b> Ta phải <b>Quy đồng mẫu số</b> rồi mới so sánh tử số.</p>
+                <div class="example-box">
+                    <div class="example-title">📏 Ví dụ khác mẫu:</div>
+                    So sánh <div class="frac"><span class="top">2</span><span>3</span></div> và <div class="frac"><span class="top">3</span><span>5</span></div>.
+                    <br>1. Quy đồng: 2/3 = 10/15; 3/5 = 9/15. 
+                    <br>2. Vì 10 > 9 nên <span class="formula-highlight">2/3 > 3/5</span>.
+                </div>
+                <br>
+                <p><b>So sánh với 1:</b></p>
+                <ul>
+                    <li>Tử < Mẫu: Phân số < 1 (Ví dụ: <span class="formula-highlight">4/5 < 1</span>)</li>
+                    <li>Tử > Mẫu: Phân số > 1 (Ví dụ: <span class="formula-highlight">7/3 > 1</span>)</li>
+                    <li>Tử = Mẫu: Phân số = 1 (Ví dụ: <span class="formula-highlight">6/6 = 1</span>)</li>
+                </ul>
+            </div>
+        </div>
+
+        <h2 class="section-title">II. Các Dạng Toán Thường Gặp</h2>
+
+        <div class="card">
+            <div class="card-header">Dạng 1 & 2: Bốn phép tính phân số</div>
+            <div class="card-body">
+                <p><b>Cộng/Trừ:</b> Quy đồng mẫu số rồi cộng/trừ các tử số với nhau.</p>
+                <div class="example-box">
+                    <div class="example-title">📝 Bài tập mẫu:</div>
+                    Tính <div class="frac"><span class="top">1</span><span>2</span></div> + <div class="frac"><span class="top">1</span><span>3</span></div> = <div class="frac"><span class="top">3</span><span>6</span></div> + <div class="frac"><span class="top">2</span><span>6</span></div> = <span class="formula-highlight">5/6</span>.
+                </div>
+                <br>
+                <p><b>Nhân:</b> Lấy Tử x Tử và Mẫu x Mẫu.</p>
+                <div class="example-box">
+                    <div class="example-title">📝 Bài tập mẫu:</div>
+                    <div class="frac"><span class="top">3</span><span>4</span></div> x <div class="frac"><span class="top">5</span><span>7</span></div> = <div class="frac"><span class="top">3 x 5</span><span>4 x 7</span></div> = <span class="formula-highlight">15/28</span>.
+                </div>
+                <br>
+                <p><b>Chia:</b> Lấy phân số thứ nhất nhân với phân số thứ hai <b>đảo ngược</b>.</p>
+                <div class="example-box">
+                    <div class="example-title">📝 Bài tập mẫu:</div>
+                    <div class="frac"><span class="top">2</span><span>3</span></div> : <div class="frac"><span class="top">5</span><span>7</span></div> = <div class="frac"><span class="top">2</span><span>3</span></div> x <div class="frac"><span class="top">7</span><span>5</span></div> = <span class="formula-highlight">14/15</span>.
                 </div>
             </div>
         </div>
 
         <div class="card">
-            <div class="card-header">4. Cách đổi Hỗn số sang Phân số</div>
+            <div class="card-header">Dạng 3: Tìm phân số của một số</div>
             <div class="card-body">
-                <p>Lấy (Phần nguyên nhân Mẫu số + Tử số) làm Tử mới, giữ nguyên Mẫu cũ.</p>
+                <p><b>Quy tắc:</b> Muốn tìm <div class="frac"><span class="top">a</span><span>b</span></div> của số A, ta lấy <span class="formula-highlight">A x a : b</span>.</p>
                 <div class="example-box">
-                    <div class="example-title">💡 Ví dụ:</div>
-                    Đổi <span class="formula-highlight">2 và 1/3</span> sang phân số:
-                    <br>Tử mới = (2 x 3) + 1 = 7.
-                    <br>Kết quả: <span class="formula-highlight">7/3</span>.
+                    <div class="example-title">📝 Bài tập mẫu:</div>
+                    Một lớp có 40 học sinh, trong đó 3/5 là học sinh nữ. Hỏi lớp có bao nhiêu học sinh nam?
+                    <br>1. Số học sinh nữ là: 40 x 3 : 5 = 24 (học sinh).
+                    <br>2. Số học sinh nam là: 40 - 24 = <span class="formula-highlight">16 (học sinh)</span>.
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">Dạng 4: Bài toán Tổng - Tỉ và Hiệu - Tỉ</div>
+            <div class="card-body">
+                <p><b>Tổng - Tỉ:</b> Tìm tổng số phần -> Giá trị 1 phần -> Hai số.</p>
+                <div class="example-box">
+                    <div class="example-title">📝 Ví dụ Tổng - Tỉ:</div>
+                    Tổng hai số là 100. Số thứ nhất bằng 2/3 số thứ hai.
+                    <br>1. Tổng số phần: 2 + 3 = 5 (phần).
+                    <br>2. Giá trị 1 phần: 100 : 5 = 20.
+                    <br>3. Số thứ nhất: 20 x 2 = 40. Số thứ hai: 20 x 3 = 60.
+                </div>
+                <br>
+                <p><b>Hiệu - Tỉ:</b> Tìm hiệu số phần -> Giá trị 1 phần -> Hai số.</p>
+                <div class="example-box">
+                    <div class="example-title">📝 Ví dụ Hiệu - Tỉ:</div>
+                    Hiệu hai số là 24. Số bé bằng 3/5 số lớn.
+                    <br>1. Hiệu số phần: 5 - 3 = 2 (phần).
+                    <br>2. Giá trị 1 phần: 24 : 2 = 12.
+                    <br>3. Số bé: 12 x 3 = 36. Số lớn: 12 x 5 = 60.
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">Dạng 5: Hỗn số & Phân số thập phân</div>
+            <div class="card-body">
+                <p><b>Hỗn số:</b> Phần nguyên kèm phân số. Đổi ra phân số bằng cách: (Nguyên x Mẫu + Tử) / Mẫu cũ.</p>
+                <div class="example-box">
+                    <div class="example-title">📝 Bài tập mẫu:</div>
+                    Đổi <span class="formula-highlight">2 và 3/4</span> thành phân số: (2 x 4 + 3) / 4 = <span class="formula-highlight">11/4</span>.
+                </div>
+                <br>
+                <p><b>Phân số thập phân:</b> Là phân số có mẫu là 10, 100, 1000...</p>
+                <div class="example-box">
+                    <div class="example-title">📝 Bài tập mẫu:</div>
+                    Viết 1/4 dưới dạng phân số thập phân: 
+                    <br>Ta thấy 100 chia hết cho 4 (100:4 = 25). Vậy nhân cả tử và mẫu với 25:
+                    <br>1/4 = <span class="formula-highlight">25/100</span>.
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">Dạng 6: Toán tư duy nâng cao</div>
+            <div class="card-body">
+                <p>Tính nhanh tổng dãy phân số có quy luật.</p>
+                <div class="example-box">
+                    <div class="example-title">📝 Bài tập mẫu:</div>
+                    Tính nhanh A = 1/(2x3) + 1/(3x4) + 1/(4x5) + ... + 1/(9x10)
+                    <br>Giải: A = 1/2 - 1/3 + 1/3 - 1/4 + 1/4 - 1/5 + ... + 1/9 - 1/10
+                    <br>A = 1/2 - 1/10 = 4/10 = <span class="formula-highlight">2/5</span>.
                 </div>
             </div>
         </div>
     </div>
 
     <div id="exercisePage" class="page">
-        <h2 class="section-title">✍️ Thử tài cùng Phân số</h2>
-
+        <h2 class="section-title">✍️ Thử Thách Thực Hành</h2>
+        
         <div class="quiz-item">
-            <p><b>Câu 1:</b> Rút gọn phân số <span class="formula-highlight">15/25</span> về phân số tối giản.</p>
-            <button class="btn-answer" onclick="showAns(this)">Xem đáp án</button>
-            <div class="answer-text">Đáp án: 3/5 (Cùng chia cả tử và mẫu cho 5).</div>
+            <p><b>Câu 1:</b> Hãy rút gọn phân số <span class="formula-highlight">25/100</span> về dạng tối giản.</p>
+            <button class="btn-answer" onclick="showAns(this)">Xem lời giải</button>
+            <div class="answer-text">
+                Cùng chia tử và mẫu cho 25: 25:25 = 1; 100:25 = 4. 
+                <br><b>Đáp số: 1/4</b>
+            </div>
         </div>
 
         <div class="quiz-item">
-            <p><b>Câu 2:</b> Điền dấu (> , < , =) thích hợp vào chỗ trống: <span class="formula-highlight">3/4 ... 5/8</span></p>
-            <button class="btn-answer" onclick="showAns(this)">Xem đáp án</button>
-            <div class="answer-text">Đáp án: > (Vì 3/4 = 6/8, mà 6/8 > 5/8).</div>
+            <p><b>Câu 2:</b> Tính: <div class="frac"><span class="top">2</span><span>3</span></div> + <div class="frac"><span class="top">3</span><span>5</span></div></p>
+            <button class="btn-answer" onclick="showAns(this)">Xem lời giải</button>
+            <div class="answer-text">
+                Quy đồng mẫu số chung là 15: 10/15 + 9/15 = 19/15.
+                <br><b>Đáp số: 19/15</b>
+            </div>
         </div>
 
         <div class="quiz-item">
-            <p><b>Câu 3:</b> Một vòi nước chảy vào bể. Giờ thứ nhất chảy được 2/5 bể, giờ thứ hai chảy được 1/3 bể. Hỏi sau hai giờ vòi nước chảy được bao nhiêu phần bể?</p>
-            <button class="btn-answer" onclick="showAns(this)">Xem đáp án</button>
-            <div class="answer-text">Giải: 2/5 + 1/3 = 6/15 + 5/15 = 11/15 (bể).</div>
-        </div>
-
-        <div class="quiz-item">
-            <p><b>Câu 4:</b> Đổi hỗn số <span class="formula-highlight">4 và 2/5</span> thành phân số.</p>
-            <button class="btn-answer" onclick="showAns(this)">Xem đáp án</button>
-            <div class="answer-text">Đáp án: (4 x 5 + 2) / 5 = 22/5.</div>
+            <p><b>Câu 3:</b> Hiệu của hai số là 30. Số thứ nhất bằng 2/7 số thứ hai. Tìm hai số đó.</p>
+            <button class="btn-answer" onclick="showAns(this)">Xem lời giải</button>
+            <div class="answer-text">
+                1. Hiệu số phần: 7 - 2 = 5 (phần).
+                <br>2. Giá trị 1 phần: 30 : 5 = 6.
+                <br>3. Số thứ nhất: 6 x 2 = 12. Số thứ hai: 6 x 7 = 42.
+                <br><b>Đáp số: 12 và 42</b>
+            </div>
         </div>
     </div>
 
     <footer>
-        <p>Chúc bạn nhỏ học tập thật tốt! Cố lên nhé! 🚀</p>
+        <p>© 2026 - Thư Viện Toán Học Thông Minh - Học Tập Để Thành Công!</p>
     </footer>
 </div>
 
@@ -270,30 +261,32 @@
         const exercise = document.getElementById('exercisePage');
         const btn = document.getElementById('btnNav');
         const title = document.getElementById('main-title');
+        const sub = document.getElementById('main-sub');
 
         if (theory.classList.contains('active')) {
             theory.classList.remove('active');
             exercise.classList.add('active');
             btn.innerText = "⬅️ Quay lại xem Lý Thuyết";
-            title.innerText = "✍️ Bài Tập Thực Hành";
-            window.scrollTo(0,0);
+            title.innerText = "✍️ Bài Tập Tự Luyện";
+            sub.innerText = "Kiểm tra kiến thức của bạn ngay!";
         } else {
             exercise.classList.remove('active');
             theory.classList.add('active');
             btn.innerText = "Chuyển sang Bài Tập Thực Hành ✍️";
-            title.innerText = "📚 Học Phân Số Thật Dễ";
-            window.scrollTo(0,0);
+            title.innerText = "🌟 Bí Kíp Phân Số Toàn Tập";
+            sub.innerText = "Lý thuyết chi tiết kèm ví dụ minh họa dễ hiểu";
         }
+        window.scrollTo(0,0);
     }
 
     function showAns(btn) {
         const ans = btn.nextElementSibling;
         if (ans.style.display === "block") {
             ans.style.display = "none";
-            btn.innerText = "Xem đáp án";
+            btn.innerText = "Xem lời giải";
         } else {
             ans.style.display = "block";
-            btn.innerText = "Ẩn đáp án";
+            btn.innerText = "Ẩn lời giải";
         }
     }
 </script>
