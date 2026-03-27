@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bảng Cửu Chương - Ôn tập Toán</title>
+    <style>
+        /* Giữ nguyên style gốc của bạn để đồng bộ */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #f0f2f5; font-family: 'Segoe UI', sans-serif; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 32px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); overflow: hidden; }
+        
+        .header { background: linear-gradient(135deg, #f59e0b, #d97706); padding: 30px; text-align: center; color: white; }
+        
+        .tabs { display: flex; justify-content: center; gap: 15px; padding: 20px; background: white; border-bottom: 2px solid #ffe6c2; }
+        .tab-btn { background: #fff3e0; border: none; padding: 12px 30px; font-size: 1.1rem; font-weight: 600; border-radius: 40px; cursor: pointer; color: #b45309; transition: 0.3s; }
+        .tab-btn.active { background: #f59e0b; color: white; box-shadow: 0 4px 10px rgba(245,158,11,0.4); }
+
+        .content-area { padding: 30px; background: #fefaf5; min-height: 400px; }
+        
+        /* Grid hiển thị các bảng cửu chương */
+        .grid-cuu-chuong { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 20px; 
+        }
+
+        .table-card { 
+            background: white; 
+            border-radius: 20px; 
+            padding: 20px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
+            border-top: 5px solid #f59e0b;
+            text-align: center;
+            transition: 0.2s;
+        }
+        .table-card:hover { transform: translateY(-5px); }
+        .table-card h3 { color: #b45309; margin-bottom: 15px; font-size: 1.4rem; border-bottom: 1px dashed #fed7aa; padding-bottom: 10px; }
+        
+        .line { font-family: 'Courier New', Courier, monospace; font-size: 1.1rem; margin: 5px 0; color: #374151; font-weight: bold; }
+        .line span { color: #d97706; }
+
+        footer { text-align: center; padding: 20px; background: #fff7ed; color: #a16207; font-size: 0.9rem; }
+        
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>🔢 Bảng Cửu Chương </h1>
+        <p>Bé cùng học phép Nhân và phép Chia thật vui nhé!</p>
+    </div>
+
+    <div class="tabs">
+        <button class="tab-btn active" onclick="showTable('nhan')">✖️ Phép Nhân</button>
+        <button class="tab-btn" onclick="showTable('chia')">➗ Phép Chia</button>
+    </div>
+
+    <div class="content-area">
+        <div id="nhan-container" class="grid-cuu-chuong">
+            </div>
+
+        <div id="chia-container" class="grid-cuu-chuong hidden">
+            </div>
+    </div>
+
+    <footer>
+        🌟 Học thuộc mỗi ngày để tính toán nhanh hơn con nhé! 🌟
+    </footer>
+</div>
+
+<script>
+    function renderTables() {
+        const nhanContainer = document.getElementById('nhan-container');
+        const chiaContainer = document.getElementById('chia-container');
+
+        for (let i = 1; i <= 9; i++) {
+            // Tạo bảng nhân
+            let nhanHtml = `<div class="table-card"><h3>Bảng nhân ${i}</h3>`;
+            for (let j = 1; j <= 10; j++) {
+                nhanHtml += `<div class="line">${i} x ${j} = <span>${i * j}</span></div>`;
+            }
+            nhanHtml += `</div>`;
+            nhanContainer.innerHTML += nhanHtml;
+
+            // Tạo bảng chia
+            let chiaHtml = `<div class="table-card"><h3>Bảng chia ${i}</h3>`;
+            for (let j = 1; j <= 10; j++) {
+                // j * i là số bị chia, i là số chia
+                chiaHtml += `<div class="line">${i * j} : ${i} = <span>${j}</span></div>`;
+            }
+            chiaHtml += `</div>`;
+            chiaContainer.innerHTML += chiaHtml;
+        }
+    }
+
+    function showTable(type) {
+        const btns = document.querySelectorAll('.tab-btn');
+        const nhanBox = document.getElementById('nhan-container');
+        const chiaBox = document.getElementById('chia-container');
+
+        btns.forEach(b => b.classList.remove('active'));
+        if (type === 'nhan') {
+            btns[0].classList.add('active');
+            nhanBox.classList.remove('hidden');
+            chiaBox.classList.add('hidden');
+        } else {
+            btns[1].classList.add('active');
+            nhanBox.classList.add('hidden');
+            chiaBox.classList.remove('hidden');
+        }
+    }
+
+    // Chạy render khi load trang
+    renderTables();
+</script>
+
+</body>
+</html>
