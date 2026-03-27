@@ -12,9 +12,23 @@
         h1 { color: #b45309; margin-bottom: 20px; border-bottom: 3px solid #f59e0b; padding-bottom: 10px; }
         .lesson-box { background: #fefce8; border: 2px dashed #f59e0b; padding: 20px; border-radius: 15px; margin-bottom: 30px; }
         .lesson-box h2 { font-size: 1.2rem; color: #854d0e; margin-bottom: 15px; }
-        .exercise-section h2 { color: #d97706; margin-bottom: 15px; }
-        .question { background: white; border: 1px solid #ffe6c2; padding: 15px; border-radius: 10px; margin-bottom: 15px; }
-        .btn-check { background: #f59e0b; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
+        .lesson-box ul { margin-left: 20px; }
+        .lesson-box li { margin-bottom: 10px; line-height: 1.6; }
+        .exercise-section h2 { color: #d97706; margin-bottom: 15px; font-size: 1.2rem; }
+        .question { background: white; border: 2px solid #ffe6c2; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
+        .question p { margin-bottom: 15px; font-size: 1rem; line-height: 1.6; }
+        .btn-check { background: #f59e0b; color: white; border: none; padding: 12px 24px; border-radius: 5px; cursor: pointer; font-size: 1rem; font-weight: bold; transition: background 0.3s; }
+        .btn-check:hover { background: #d97706; }
+        .answer-box { display: none; background: #d1fae5; border: 2px solid #10b981; padding: 15px; border-radius: 8px; margin-top: 15px; color: #047857; font-weight: 500; }
+        .answer-box.show { display: block; }
+        .exercise-section { margin-top: 30px; }
+
+        @media (max-width: 768px) {
+            .container { padding: 20px; }
+            h1 { font-size: 1.5rem; }
+            .question { padding: 15px; }
+            .btn-check { padding: 10px 20px; font-size: 0.95rem; }
+        }
     </style>
 </head>
 <body>
@@ -34,12 +48,36 @@
 
     <div class="exercise-section">
         <h2>✍️ Bài tập luyện tập:</h2>
+        
         <div class="question">
             <p><strong>Câu 1:</strong> Trong các số sau, số nào chia hết cho cả 2 và 5?</p>
             <p>A. 125 | B. 230 | C. 442</p>
-            <button class="btn-check" onclick="alert('Đáp án đúng là B (230) vì tận cùng là số 0!')">Xem đáp án</button>
+            <button class="btn-check" onclick="toggleAnswer(this)">Xem đáp án</button>
+            <div class="answer-box">✅ Đáp án đúng là <strong>B (230)</strong> vì tận cùng là số 0, vừa chia hết cho 2, vừa chia hết cho 5.</div>
         </div>
+
+        <div class="question">
+            <p><strong>Câu 2:</strong> Số nào chia hết cho 3?</p>
+            <p>A. 124 | B. 215 | C. 231</p>
+            <button class="btn-check" onclick="toggleAnswer(this)">Xem đáp án</button>
+            <div class="answer-box">✅ Đáp án đúng là <strong>C (231)</strong> vì tổng các chữ số: 2 + 3 + 1 = 6, mà 6 chia hết cho 3.</div>
         </div>
+
+        <div class="question">
+            <p><strong>Câu 3:</strong> Số nào chia hết cho 9?</p>
+            <p>A. 324 | B. 415 | C. 521</p>
+            <button class="btn-check" onclick="toggleAnswer(this)">Xem đáp án</button>
+            <div class="answer-box">✅ Đáp án đúng là <strong>A (324)</strong> vì tổng các chữ số: 3 + 2 + 4 = 9, mà 9 chia hết cho 9.</div>
+        </div>
+    </div>
 </div>
+
+<script>
+    function toggleAnswer(button) {
+        const answerBox = button.nextElementSibling;
+        answerBox.classList.toggle('show');
+        button.textContent = answerBox.classList.contains('show') ? 'Ẩn đáp án' : 'Xem đáp án';
+    }
+</script>
 </body>
 </html>
