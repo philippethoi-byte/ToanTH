@@ -658,50 +658,27 @@
             renderAllQuestions();
         }
 
-        function renderAllQuestions() {
-            const container = document.getElementById('all-questions-container');
-            let finalHTML = ''; // SỬA LỖI 2: Tạo biến lưu trữ toàn bộ chuỗi HTML
+       function renderAllQuestions(questions) {
+			const container = document.getElementById('questions-container');
+			container.innerHTML = questions.map((q, index) => {
+				return `
+					<div class="question-card" id="q-${q.id}">
+						<div class="question-text">Câu ${index + 1}: ${q.questionText}</div>
+						
+						${q.image ? `<img src="${q.image}" class="question-image">` : ''}
 
-            selectedQuestions.forEach((q, index) => {
-                // Tạo chuỗi HTML cho các tùy chọn đáp án trước
-                const optionsHTML = q.options.map((opt, i) => {
-                    const letter = String.fromCharCode(65 + i);
-                    const selected = userAnswers[q.id] === opt ? 'selected' : '';
-                    return `
-                        <div class="option ${selected}" onclick="selectAnswer(${q.id}, '${opt.replace(/'/g, "\\'")}')">
-                            <span class="option-letter">${letter}</span>
-                            <span>${opt}</span>
-                        </div>
-                    `;
-                }).join('');
-
-                // Ghép đáp án vào thẻ thẻ câu hỏi
-                const cardHTML = `
-                    <div class="question-card">
-                        <div class="question-header">
-                            <div class="question-number">Câu ${index + 1}</div>
-                            <div style="font-size:0.95rem; color:#666;">ID: ${q.id}</div>
-                        </div>
-                        <div class="question-text">${q.question}</div>
-                        
-                        ${q.image ? `
-                        <div class="question-image">
-                            <img src="images/${q.image}" alt="Hình minh họa câu ${q.id}">
-                        </div>` : ''}
-                        
-                        <h4 style="margin:20px 0 12px 0; color:#b45309; font-weight:600;">Chọn đáp án đúng:</h4>
-                        <div class="options" id="options-q${q.id}">
-                            ${optionsHTML} </div>
-                    </div>
-                `;
-                
-                finalHTML += cardHTML; // Cộng dồn HTML vào biến
-            });
-
-            // Sau khi vòng lặp kết thúc, gán vào DOM 1 lần duy nhất
-            container.innerHTML = finalHTML;
-            renderMath();
-        }
+						<div class="options-container">
+							${q.options.map(opt => `
+								<label class="option">
+									<input type="radio" name="question-${q.id}" value="${opt.id}">
+									<span>${opt.id}. ${opt.content}</span>
+								</label>
+							`).join('')}
+						</div>
+					</div>
+				`;
+			}).join('');
+		}
 
         function selectAnswer(questionId, answer) {
             userAnswers[questionId] = answer;
@@ -709,51 +686,33 @@
         }
 
         function finishQuiz() {
-            let correctCount = 0;
-            selectedQuestions.forEach(q => {
-                if (userAnswers[q.id] === q.correct) correctCount++;
-            });
-            const percent = Math.round((correctCount / selectedQuestions.length) * 100);
+			let correctCount = 0;
+			const resultDetails = document.getElementById('result-details');
+			resultDetails.innerHTML = '';
 
-            // LƯU KẾT QUẢ VÀO LỊCH SỬ
-            saveTestResult(correctCount, percent);
+			allQuestions.forEach((q, index) => {
+				const selected = document.querySelector(`input[name="question-${q.id}"]:checked`);
+				const userValue = selected ? selected.value : null;
+				
+				// So khớp với q.correctAnswers[0] vì JSON của bạn để dạng mảng ["C"]
+				const isCorrect = userValue === q.correctAnswers[0];
+				if (isCorrect) correctCount++;
 
-            // Chuyển sang kết quả
-            document.getElementById('quiz-screen').classList.remove('active');
-            document.getElementById('results-screen').classList.add('active');
+				// Hiển thị chi tiết từng câu
+				resultDetails.innerHTML += `
+					<div class="result-item ${isCorrect ? 'correct' : 'incorrect'}">
+						<div class="res-question">Câu ${index + 1}: ${q.questionText}</div>
+						<div class="res-user">Bạn chọn: <span class="val">${userValue || 'Chưa trả lời'}</span></div>
+						<div class="res-correct">Đáp án đúng: <span class="val">${q.correctAnswers[0]}</span></div>
+						<div class="res-explanation"><b>Giải thích:</b> ${q.explanation}</div>
+					</div>
+				`;
+			});
 
-            document.getElementById('score-correct').textContent = correctCount;
-            document.getElementById('score-total').textContent = selectedQuestions.length;
-            document.getElementById('score-percent').textContent = percent + '%';
-
-            const messageEl = document.getElementById('result-message');
-            if (percent >= 80) messageEl.innerHTML = `🎉 Xuất sắc!`;
-            else if (percent >= 60) messageEl.innerHTML = `👍 Tốt!`;
-            else messageEl.innerHTML = `📚 Cố lên!`;
-
-            const listEl = document.getElementById('results-list');
-            listEl.innerHTML = '';
-
-            selectedQuestions.forEach((q, index) => {
-                const userAns = userAnswers[q.id] || "(chưa trả lời)";
-                const isCorrect = userAns === q.correct;
-                const html = `
-                    <div class="result-card">
-                        <div class="result-question">Câu ${index + 1}: ${q.question}</div>
-                        <div class="answer-row ${isCorrect ? 'answer-correct' : 'answer-wrong'}">
-                            <strong>Bạn chọn:</strong> <span style="margin-left:auto;">${userAns}</span>
-                        </div>
-                        <div class="answer-row" style="background:#ecfdf5;color:#10b981;">
-                            <strong>Đáp án đúng:</strong> <span style="margin-left:auto;">${q.correct}</span>
-                        </div>
-                        ${!isCorrect ? `<div class="explanation"><strong>Giải thích:</strong><br>${q.explanation}</div>` : ''}
-                    </div>
-                `;
-                listEl.innerHTML += html;
-            });
-
-            renderMath();
-        }
+			// Cập nhật điểm số lên vòng tròn
+			document.getElementById('score-text').innerText = `${correctCount} / ${allQuestions.length}`;
+			// ... code hiển thị modal kết quả ...
+		}
 
         function restartSetup() {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
