@@ -141,23 +141,48 @@
         showResults(correctCount, currentQuestions.length, results);
     }
 
+    // CẬP NHẬT HÀM SHOWRESULTS ĐỂ HIỆN BIỂU ĐỒ
     function showResults(correct, total, results) {
         const percent = Math.round((correct / total) * 100);
+        
+        // 1. Phải hiện resultView lên TRƯỚC để Canvas có kích thước
         document.getElementById('quizView').classList.add('hidden');
-        document.getElementById('resultView').classList.remove('hidden');
+        const resultView = document.getElementById('resultView');
+        resultView.style.display = 'block'; // Hiển thị khung kết quả
+        
         document.getElementById('scoreText').innerText = `${correct}/${total}`;
         document.getElementById('percentText').innerText = `${percent}%`;
 
-        // Vẽ biểu đồ và bảng
-        displayHistoryAnalytics();
+        // 2. Dùng setTimeout để chắc chắn trình duyệt đã render xong HTML rồi mới vẽ Chart
+        setTimeout(() => {
+            displayHistoryAnalytics();
+        }, 100);
 
-        document.getElementById('reviewContainer').innerHTML = results.map((r, i) => `
-            <div class="review-card ${r.isCorrect ? 'correct' : 'incorrect'}">
-                <p><strong>Câu ${i+1}:</strong> ${r.questionText}</p>
-                <p>Đáp án đúng: <strong>${r.correctAnswers.join(', ')}</strong></p>
-                <div class="explanation">Giải thích: ${r.explanation}</div>
-            </div>
-        `).join('');
+        // 3. Hiển thị lời chúc
+        let msg = percent >= 80 ? "Tuyệt vời! Bạn rất thông minh! 🎉" : 
+                  (percent >= 50 ? "Khá tốt! Tiếp tục phát huy nhé! 👍" : "Cố gắng hơn nữa nhé!");
+        document.getElementById('congratsMsg').innerText = msg;
+
+        // 4. Đổ dữ liệu Review
+        document.getElementById('reviewContainer').innerHTML = `
+            <h3 style="margin: 20px 0 10px 0;">Chi tiết bài làm:</h3>
+            ${results.map((r, i) => `
+                <div class="review-card ${r.isCorrect ? 'correct' : 'incorrect'}">
+                    <p><strong>Câu ${i+1}:</strong> ${r.questionText}</p>
+                    <p>Đáp án đúng: <strong style="color: #059669">${r.correctAnswers.join(', ')}</strong></p>
+                    <div class="explanation"><strong>Giải thích:</strong> ${r.explanation}</div>
+                </div>
+            `).join('')}
+        `;
+        
+        window.scrollTo(0, 0);
+    }
+
+    // CẬP NHẬT LẠI HÀM RESET ĐỂ ĐỒNG BỘ DISPLAY
+    function resetQuiz() {
+        document.getElementById('resultView').style.display = 'none';
+        document.getElementById('setupView').classList.remove('hidden');
+        window.scrollTo(0, 0);
     }
 
     function saveHistory(correct, total) {
@@ -222,10 +247,7 @@
         summaryBox.innerHTML = `Lần cuối: ${last.date} - Đúng ${last.correct}/${last.total} (${last.percent}%)`;
     }
 
-    function resetQuiz() {
-        document.getElementById('resultView').classList.add('hidden');
-        document.getElementById('setupView').classList.remove('hidden');
-    }
+
 
     init();
 </script>
