@@ -102,31 +102,46 @@
     }
 
     function startQuiz() {
-        const diff = document.getElementById('difficultySelect').value;
-        const count = parseInt(document.getElementById('questionCount').value);
-        let filtered = diff === 'all' ? allQuestions : allQuestions.filter(q => q.difficulty === diff);
-        
-        currentQuestions = filtered.sort(() => 0.5 - Math.random()).slice(0, count);
-        
-        const container = document.getElementById('questionContainer');
-        container.innerHTML = currentQuestions.map((q, i) => `
-            <div class="question-card">
-                <h3>Câu ${i+1}: ${q.questionText}</h3>
-                <div class="options-list">
-                    ${q.options.map(opt => `
-                        <label class="option-item">
-                            <input type="checkbox" name="q-${i}" value="${opt.id}">
-                            <span><strong>${opt.id}:</strong> ${opt.content}</span>
-                        </label>
-                    `).join('')}
-                </div>
-            </div>
-        `).join('');
+		const diff = document.getElementById('difficultySelect').value;
+		const count = parseInt(document.getElementById('questionCount').value);
+		let filtered = diff === 'all' ? allQuestions : allQuestions.filter(q => q.difficulty === diff);
+		
+		currentQuestions = filtered.sort(() => 0.5 - Math.random()).slice(0, count);
+		
+		const container = document.getElementById('questionContainer');
+		container.innerHTML = currentQuestions.map((q, i) => {
+			// Tìm vị trí X của câu hỏi trong mảng gốc allQuestions (bắt đầu từ 1)
+			const questionID = allQuestions.indexOf(q) + 1;
+			const imagePath = `images/cau${questionID}.png`;
 
-        document.getElementById('setupView').classList.add('hidden');
-        document.getElementById('quizView').classList.remove('hidden');
-        document.getElementById('resultView').classList.add('hidden');
-    }
+			return `
+				<div class="question-card">
+					<h3 style="margin-bottom: 10px;">Câu ${i+1}: ${q.questionText}</h3>
+					
+					<div class="question-img-container" style="text-align: center; margin-bottom: 15px;">
+						<img src="${imagePath}" 
+							 alt="Hình minh họa câu ${questionID}"
+							 style="max-width: 100%; max-height: 300px; border-radius: 12px; display: block; margin: 0 auto;"
+							 onerror="this.parentElement.style.display='none'"> 
+							 </div>
+
+					<div class="options-list">
+						${q.options.map(opt => `
+							<label class="option-item">
+								<input type="checkbox" name="q-${i}" value="${opt.id}">
+								<span><strong>${opt.id}:</strong> ${opt.content}</span>
+							</label>
+						`).join('')}
+					</div>
+				</div>
+			`;
+		}).join('');
+
+		document.getElementById('setupView').classList.add('hidden');
+		document.getElementById('quizView').classList.remove('hidden');
+		document.getElementById('resultView').classList.add('hidden');
+		window.scrollTo(0, 0);
+	}
 
     function submitQuiz() {
         let correctCount = 0;
@@ -165,16 +180,23 @@
         document.getElementById('congratsMsg').innerText = msg;
 
         // 4. Đổ dữ liệu Review
-        document.getElementById('reviewContainer').innerHTML = `
-            <h3 style="margin: 20px 0 10px 0;">Chi tiết bài làm:</h3>
-            ${results.map((r, i) => `
-                <div class="review-card ${r.isCorrect ? 'correct' : 'incorrect'}">
-                    <p><strong>Câu ${i+1}:</strong> ${r.questionText}</p>
-                    <p>Đáp án đúng: <strong style="color: #059669">${r.correctAnswers.join(', ')}</strong></p>
-                    <div class="explanation"><strong>Giải thích:</strong> ${r.explanation}</div>
-                </div>
-            `).join('')}
-        `;
+       document.getElementById('reviewContainer').innerHTML = results.map((r, i) => {
+			const questionNumber = allQuestions.indexOf(r) + 1;
+			const imagePath = `images/cau${questionNumber}.png`;
+
+			return `
+				<div class="review-card ${r.isCorrect ? 'correct' : 'incorrect'}">
+					<p><strong>Câu ${i+1}:</strong> ${r.questionText}</p>
+					
+					<img src="${imagePath}" 
+						 style="max-width: 200px; margin: 10px 0; border-radius: 8px;" 
+						 onerror="this.style.display='none'">
+
+					<p>Đáp án đúng: <strong style="color: #059669">${r.correctAnswers.join(', ')}</strong></p>
+					<div class="explanation"><strong>Giải thích:</strong> ${r.explanation}</div>
+				</div>
+			`;
+		}).join('');
         
         window.scrollTo(0, 0);
     }
