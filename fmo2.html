@@ -379,7 +379,7 @@
         <!-- HEADER -->
         <div class="header">
             <h1>📐 Kiểm Tra Kiến Thức Toán Học</h1>
-            <p>Học sinh lớp 8–10 • Chọn mức độ • Làm bài • Xem kết quả chi tiết</p>
+            <p>Chọn mức độ • Làm bài • Xem kết quả chi tiết</p>
             <button onclick="showHistory()" class="history-btn">
                 📊 Lịch sử
             </button>
@@ -464,270 +464,135 @@
     </div>
 
     <script>
-        // ==================== CẤU HÌNH ĐƯỜNG DẪN JSON (bạn có thể thay đổi) ====================
-        const JSON_PATH = 'https://raw.githubusercontent.com/philippethoi-byte/ToanTH/main/questions/questions.json';   // ← Thay đổi đường dẫn file JSON ở đây nếu cần
+       // 1. Khai báo biến toàn cục
+		let allQuestions = [];
+		let userAnswers = {};
+		let filteredQuestions = [];
 
-        // ==================== BIẾN TOÀN CỤC ====================
-        let questionsDB = [];
-        let selectedDifficulty = "de";
-        let selectedNumQuestions = 5;
-        let selectedQuestions = [];
-        let userAnswers = {};           // {questionId: selectedOption}
-        
-        let testHistory = [];           // Lưu lịch sử + progress
+		// 2. Tải dữ liệu từ GitHub
+		async function loadQuestions() {
+			const url = 'https://raw.githubusercontent.com/philippethoi-byte/ToanTH/main/questions/questions.json';
+			try {
+				const response = await fetch(url);
+				if (!response.ok) throw new Error('Không thể tải file JSON');
+				allQuestions = await response.json();
+				console.log("✅ Đã tải thành công", allQuestions.length, "câu hỏi.");
+			} catch (error) {
+				console.error("❌ Lỗi:", error);
+				alert("Không thể tải bộ câu hỏi. Vui lòng kiểm tra kết nối mạng!");
+			}
+		}
 
-        // ==================== MATHJAX ====================
-        window.MathJax = {
-            tex: { inlineMath: [['\\(', '\\)']] },
-            svg: { fontCache: 'global' }
-        };
+		// 3. Hàm bắt đầu làm bài
+		function startQuiz(difficulty = 'tat-ca') {
+			// Lọc câu hỏi theo độ khó (nếu cần)
+			filteredQuestions = difficulty === 'tat-ca' 
+				? allQuestions 
+				: allQuestions.filter(q => q.difficulty === difficulty);
 
-        function renderMath() {
-            if (typeof MathJax !== "undefined") {
-                MathJax.typesetPromise().catch(() => {});
-            }
-        }
+			if (filteredQuestions.length === 0) {
+				alert("Không có câu hỏi nào phù hợp!");
+				return;
+			}
 
-        // ==================== TẢI JSON ====================
-		
-		async function loadQuestionsJSON() {
-            try {
-                // SỬA LỖI 1: Thay vì fetch('./questions/questions.json'), hãy dùng biến JSON_PATH
-                const response = await fetch(JSON_PATH);
-                if (!response.ok) throw new Error('Không tìm thấy file');
-                
-                questionsDB = await response.json();
-                console.log(`✅ Đã tải ${questionsDB.length} câu hỏi từ ${JSON_PATH}`);
-                document.getElementById('json-path-display').textContent = JSON_PATH;
-                return true;
-            } catch (error) {
-                console.error('❌ Lỗi tải JSON:', error);
-                alert(`❌ Không tải được file JSON từ đường dẫn: ${JSON_PATH}\n\nVui lòng kiểm tra file và thay đổi biến JSON_PATH trong code nếu cần.`);
-                return false;
-            }
-        }
+			userAnswers = {}; // Reset câu trả lời
+			renderAllQuestions(filteredQuestions);
+			
+			// Chuyển đổi màn hình (ẩn menu, hiện bài làm) - Tùy biến theo ID của bạn
+			document.getElementById('home-screen').style.display = 'none';
+			document.getElementById('quiz-screen').style.display = 'block';
+		}
 
-        // ==================== LƯU / TẢI LỊCH SỬ (localStorage) ====================
-        function saveHistory() {
-            localStorage.setItem('mathTestHistory', JSON.stringify(testHistory));
-        }
-
-        function loadHistory() {
-            const saved = localStorage.getItem('mathTestHistory');
-            if (saved) testHistory = JSON.parse(saved);
-        }
-
-        // ==================== THÊM KẾT QUẢ VÀO LỊCH SỬ ====================
-        function saveTestResult(correctCount, percent) {
-            const result = {
-                id: Date.now(),
-                dateTime: new Date().toLocaleString('vi-VN', { 
-                    year: 'numeric', month: '2-digit', day: '2-digit',
-                    hour: '2-digit', minute: '2-digit', second: '2-digit'
-                }),
-                difficulty: selectedDifficulty,
-                numQuestions: selectedQuestions.length,
-                correct: correctCount,
-                percent: percent,
-                selectedQuestions: selectedQuestions.map(q => ({
-                    ...q,
-                    userAnswer: userAnswers[q.id] || null
-                }))
-            };
-            testHistory.unshift(result); // thêm mới nhất lên đầu
-            if (testHistory.length > 50) testHistory.pop(); // giới hạn 50 kết quả
-            saveHistory();
-        }
-
-        // ==================== HIỂN THỊ LỊCH SỬ ====================
-        function showHistory() {
-            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-            document.getElementById('history-screen').classList.add('active');
-
-            const container = document.getElementById('history-list');
-            container.innerHTML = testHistory.length === 0 
-                ? `<p style="text-align:center; color:#888; padding:40px;">Chưa có kết quả kiểm tra nào.<br>Bạn chưa làm bài kiểm tra nào cả.</p>`
-                : '';
-
-            testHistory.forEach(item => {
-                const div = document.createElement('div');
-                div.className = 'history-item';
-                div.innerHTML = `
-                    <div class="history-info">
-                        <div class="history-date">${item.dateTime} • Mức độ: <strong>${item.difficulty}</strong></div>
-                        <div style="margin-top:8px; font-size:1.1rem;">${item.numQuestions} câu • Đúng ${item.correct}/${item.numQuestions}</div>
-                    </div>
-                    <div class="history-score">${item.percent}%</div>
-                `;
-                div.onclick = () => viewHistoryDetail(item);
-                container.appendChild(div);
-            });
-        }
-
-        function viewHistoryDetail(item) {
-            // Hiển thị chi tiết như màn kết quả
-            document.getElementById('history-screen').classList.remove('active');
-            document.getElementById('results-screen').classList.add('active');
-
-            document.getElementById('score-correct').textContent = item.correct;
-            document.getElementById('score-total').textContent = item.numQuestions;
-            document.getElementById('score-percent').textContent = item.percent + '%';
-
-            const msgEl = document.getElementById('result-message');
-            msgEl.innerHTML = `Kết quả ngày ${item.dateTime} • Mức độ ${item.difficulty}`;
-
-            const listEl = document.getElementById('results-list');
-            listEl.innerHTML = '';
-
-            item.selectedQuestions.forEach((q, index) => {
-                const userAns = q.userAnswer || "(chưa trả lời)";
-                const isCorrect = userAns === q.correct;
-
-                const html = `
-                    <div class="result-card">
-                        <div class="result-question">Câu ${index + 1}: ${q.question}</div>
-                        
-                        <div class="answer-row ${isCorrect ? 'answer-correct' : 'answer-wrong'}">
-                            <strong>Bạn chọn:</strong> 
-                            <span style="margin-left:auto;">${userAns}</span>
-                        </div>
-                        
-                        <div class="answer-row" style="background:#ecfdf5;color:#10b981;">
-                            <strong>Đáp án đúng:</strong> 
-                            <span style="margin-left:auto;">${q.correct}</span>
-                        </div>
-                        
-                        ${!isCorrect && q.explanation ? `
-                        <div class="explanation">
-                            <strong>Giải thích:</strong><br>
-                            ${q.explanation}
-                        </div>` : ''}
-                    </div>
-                `;
-                listEl.innerHTML += html;
-            });
-
-            renderMath();
-        }
-
-        // ==================== CÁC HÀM SETUP & QUIZ (giữ nguyên logic cũ) ====================
-        function setupDifficultyListeners() {
-            const buttons = document.querySelectorAll('#difficulty-buttons .tab-btn');
-            buttons.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    buttons.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    selectedDifficulty = btn.getAttribute('data-difficulty');
-                });
-            });
-        }
-
-        function setupNumListeners() {
-            const buttons = document.querySelectorAll('#num-buttons .num-btn');
-            buttons.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    buttons.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    selectedNumQuestions = parseInt(btn.getAttribute('data-num'));
-                });
-            });
-        }
-
-        async function startQuiz() {
-            if (questionsDB.length === 0) {
-                const loaded = await loadQuestionsJSON();
-                if (!loaded) return;
-            }
-
-            let filtered = questionsDB.filter(q => q.difficulty === selectedDifficulty);
-            if (filtered.length === 0) {
-                alert(`Chưa có câu hỏi cho mức độ "${selectedDifficulty}"!`);
-                return;
-            }
-
-            filtered = filtered.sort(() => Math.random() - 0.5);
-            selectedQuestions = filtered.slice(0, Math.min(selectedNumQuestions, filtered.length));
-            userAnswers = {};
-
-            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-            document.getElementById('quiz-screen').classList.add('active');
-
-            document.getElementById('quiz-difficulty-display').textContent = selectedDifficulty;
-            document.getElementById('quiz-total-questions').textContent = selectedQuestions.length;
-
-            renderAllQuestions();
-        }
-
-       function renderAllQuestions(questions) {
+		// 4. Hiển thị danh sách câu hỏi (Sửa lỗi .map undefined)
+		function renderAllQuestions(questions) {
 			const container = document.getElementById('questions-container');
+			if (!container) return;
+
 			container.innerHTML = questions.map((q, index) => {
 				return `
 					<div class="question-card" id="q-${q.id}">
-						<div class="question-text">Câu ${index + 1}: ${q.questionText}</div>
+						<div class="question-text">
+							<strong>Câu ${index + 1}:</strong> ${q.questionText}
+						</div>
 						
-						${q.image ? `<img src="${q.image}" class="question-image">` : ''}
+						${q.image ? `<div class="question-img-wrapper"><img src="${q.image}" class="question-image"></div>` : ''}
 
-						<div class="options-container">
+						<div class="options-grid">
 							${q.options.map(opt => `
-								<label class="option">
-									<input type="radio" name="question-${q.id}" value="${opt.id}">
-									<span>${opt.id}. ${opt.content}</span>
+								<label class="option-item">
+									<input type="radio" name="question-${q.id}" value="${opt.id}" 
+										   onclick="saveAnswer(${q.id}, '${opt.id}')">
+									<span class="opt-label">${opt.id}.</span>
+									<span class="opt-content">${opt.content}</span>
 								</label>
 							`).join('')}
 						</div>
 					</div>
 				`;
 			}).join('');
+
+			renderMath(); // Gọi MathJax sau khi render xong
 		}
 
-        function selectAnswer(questionId, answer) {
-            userAnswers[questionId] = answer;
-            renderAllQuestions();   // update highlight
-        }
+		// 5. Lưu câu trả lời của người dùng
+		function saveAnswer(questionId, answerId) {
+			userAnswers[questionId] = answerId;
+		}
 
-        function finishQuiz() {
+		// 6. Chấm điểm và hiển thị kết quả (Sửa lỗi null innerHTML)
+		function finishQuiz() {
 			let correctCount = 0;
 			const resultDetails = document.getElementById('result-details');
-			resultDetails.innerHTML = '';
+			
+			if (!resultDetails) {
+				console.error("❌ Thiếu thẻ <div id='result-details'> trong HTML!");
+				return;
+			}
 
-			allQuestions.forEach((q, index) => {
-				const selected = document.querySelector(`input[name="question-${q.id}"]:checked`);
-				const userValue = selected ? selected.value : null;
-				
-				// So khớp với q.correctAnswers[0] vì JSON của bạn để dạng mảng ["C"]
-				const isCorrect = userValue === q.correctAnswers[0];
+			resultDetails.innerHTML = ''; // Xóa kết quả cũ
+
+			filteredQuestions.forEach((q, index) => {
+				const userAnswer = userAnswers[q.id];
+				const correctAnswer = q.correctAnswers[0]; // Lấy phần tử đầu tiên trong mảng ["C"]
+				const isCorrect = userAnswer === correctAnswer;
+
 				if (isCorrect) correctCount++;
 
-				// Hiển thị chi tiết từng câu
+				// Tạo giao diện chi tiết từng câu
 				resultDetails.innerHTML += `
-					<div class="result-item ${isCorrect ? 'correct' : 'incorrect'}">
-						<div class="res-question">Câu ${index + 1}: ${q.questionText}</div>
-						<div class="res-user">Bạn chọn: <span class="val">${userValue || 'Chưa trả lời'}</span></div>
-						<div class="res-correct">Đáp án đúng: <span class="val">${q.correctAnswers[0]}</span></div>
-						<div class="res-explanation"><b>Giải thích:</b> ${q.explanation}</div>
+					<div class="result-card ${isCorrect ? 'is-correct' : 'is-wrong'}">
+						<div class="res-q-text">Câu ${index + 1}: ${q.questionText}</div>
+						<div class="res-info">
+							<p>Bạn chọn: <span class="user-val">${userAnswer || 'Chưa trả lời'}</span></p>
+							<p>Đáp án đúng: <span class="correct-val">${correctAnswer}</span></p>
+						</div>
+						<div class="res-explanation">
+							<strong>Giải thích:</strong> ${q.explanation}
+						</div>
 					</div>
 				`;
 			});
 
-			// Cập nhật điểm số lên vòng tròn
-			document.getElementById('score-text').innerText = `${correctCount} / ${allQuestions.length}`;
-			// ... code hiển thị modal kết quả ...
+			// Hiển thị tổng điểm
+			const scoreText = document.getElementById('score-text');
+			if (scoreText) {
+				scoreText.innerText = `${correctCount} / ${filteredQuestions.length}`;
+			}
+
+			// Hiển thị modal kết quả
+			document.getElementById('result-modal').style.display = 'flex';
+			renderMath();
 		}
 
-        function restartSetup() {
-            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-            document.getElementById('setup-screen').classList.add('active');
-        }
+		// 7. Xử lý MathJax v3 an toàn
+		function renderMath() {
+			if (window.MathJax && window.MathJax.typesetPromise) {
+				window.MathJax.typesetPromise();
+			}
+		}
 
-        // ==================== KHỞI CHẠY ====================
-        window.onload = async function() {
-            loadHistory();                     // tải lịch sử từ localStorage
-            const loaded = await loadQuestionsJSON();
-            if (loaded) {
-                setupDifficultyListeners();
-                setupNumListeners();
-            }
-        };
+		// 8. Tự động tải dữ liệu khi mở trang
+		window.onload = loadQuestions;
     </script>
 </body>
 </html>
