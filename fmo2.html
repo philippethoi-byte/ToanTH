@@ -489,24 +489,21 @@
         }
 
         // ==================== TẢI JSON ====================
+		
 		async function loadQuestionsJSON() {
-			try {
-				// Dùng đường dẫn tương đối cho ổn định
-				const response = await fetch('./questions/questions.json'); 
-				
-				if (!response.ok) {
-					throw new Error(`Lỗi hệ thống: Không tìm thấy file (Mã lỗi ${response.status})`);
-				}
-				
-				questionsDB = await response.json();
-				console.log("✅ Dữ liệu tải thành công:", questionsDB);
-				return true;
-			} catch (error) {
-				console.error('❌ Lỗi chi tiết:', error);
-				alert(`Lỗi: ${error.message}\n\nHướng dẫn: Hãy đảm bảo thư mục 'questions' và file 'questions.json' đã được push lên GitHub thành công.`);
-				return false;
-			}
-		}
+            try {
+                const response = await fetch('./questions/questions.json');
+                if (!response.ok) throw new Error('Không tìm thấy file');
+                questionsDB = await response.json();
+                console.log(`✅ Đã tải ${questionsDB.length} câu hỏi từ ${JSON_PATH}`);
+                document.getElementById('json-path-display').textContent = JSON_PATH;
+                return true;
+            } catch (error) {
+                console.error('❌ Lỗi tải JSON:', error);
+                alert(`❌ Không tải được file JSON từ đường dẫn: ${JSON_PATH}\n\nVui lòng kiểm tra file và thay đổi biến JSON_PATH trong code nếu cần.`);
+                return false;
+            }
+        }
 
         // ==================== LƯU / TẢI LỊCH SỬ (localStorage) ====================
         function saveHistory() {
