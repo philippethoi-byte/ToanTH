@@ -492,8 +492,10 @@
 		
 		async function loadQuestionsJSON() {
             try {
-                const response = await fetch('./questions/questions.json');
+                // SỬA LỖI 1: Thay vì fetch('./questions/questions.json'), hãy dùng biến JSON_PATH
+                const response = await fetch(JSON_PATH);
                 if (!response.ok) throw new Error('Không tìm thấy file');
+                
                 questionsDB = await response.json();
                 console.log(`✅ Đã tải ${questionsDB.length} câu hỏi từ ${JSON_PATH}`);
                 document.getElementById('json-path-display').textContent = JSON_PATH;
@@ -658,9 +660,22 @@
 
         function renderAllQuestions() {
             const container = document.getElementById('all-questions-container');
-            container.innerHTML = '';
+            let finalHTML = ''; // SỬA LỖI 2: Tạo biến lưu trữ toàn bộ chuỗi HTML
 
             selectedQuestions.forEach((q, index) => {
+                // Tạo chuỗi HTML cho các tùy chọn đáp án trước
+                const optionsHTML = q.options.map((opt, i) => {
+                    const letter = String.fromCharCode(65 + i);
+                    const selected = userAnswers[q.id] === opt ? 'selected' : '';
+                    return `
+                        <div class="option ${selected}" onclick="selectAnswer(${q.id}, '${opt.replace(/'/g, "\\'")}')">
+                            <span class="option-letter">${letter}</span>
+                            <span>${opt}</span>
+                        </div>
+                    `;
+                }).join('');
+
+                // Ghép đáp án vào thẻ thẻ câu hỏi
                 const cardHTML = `
                     <div class="question-card">
                         <div class="question-header">
@@ -675,25 +690,16 @@
                         </div>` : ''}
                         
                         <h4 style="margin:20px 0 12px 0; color:#b45309; font-weight:600;">Chọn đáp án đúng:</h4>
-                        <div class="options" id="options-q${q.id}"></div>
+                        <div class="options" id="options-q${q.id}">
+                            ${optionsHTML} </div>
                     </div>
                 `;
-                container.innerHTML += cardHTML;
-
-                const optContainer = document.getElementById(`options-q${q.id}`);
-                const optionsHTML = q.options.map((opt, i) => {
-                    const letter = String.fromCharCode(65 + i);
-                    const selected = userAnswers[q.id] === opt ? 'selected' : '';
-                    return `
-                        <div class="option ${selected}" onclick="selectAnswer(${q.id}, '${opt.replace(/'/g, "\\'")}')">
-                            <span class="option-letter">${letter}</span>
-                            <span>${opt}</span>
-                        </div>
-                    `;
-                }).join('');
-                optContainer.innerHTML = optionsHTML;
+                
+                finalHTML += cardHTML; // Cộng dồn HTML vào biến
             });
 
+            // Sau khi vòng lặp kết thúc, gán vào DOM 1 lần duy nhất
+            container.innerHTML = finalHTML;
             renderMath();
         }
 
