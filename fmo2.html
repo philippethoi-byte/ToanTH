@@ -112,7 +112,7 @@
 		container.innerHTML = currentQuestions.map((q, i) => {
 			// Tìm vị trí X của câu hỏi trong mảng gốc allQuestions (bắt đầu từ 1)
 			const questionID = allQuestions.indexOf(q) + 1;
-			const imagePath = `images/cau${currentQuestions.map((q, i)).id}.png`;
+			const imagePath = `images/cau${i.id}.png`;
 
 			return `
 				<div class="question-card">
@@ -120,7 +120,7 @@
 					
 					<div class="question-img-container" style="text-align: center; margin-bottom: 15px;">
 						<img src="${imagePath}" 
-							 alt="Hình minh họa câu ${currentQuestions.map((q, i)).id}"
+							 alt="Hình minh họa câu ${i.id}"
 							 style="max-width: 100%; max-height: 300px; border-radius: 12px; display: block; margin: 0 auto;"
 							 onerror="this.parentElement.style.display='none'"> 
 							 </div>
