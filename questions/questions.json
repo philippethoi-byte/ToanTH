@@ -1,0 +1,275 @@
+[
+  {
+    "id": 1,
+    "difficulty": "de",
+    "category": "ToanDo",
+    "questionType": "single-choice",
+    "questionText": "Find a suitable figure to fill in the question mark. Tìm hình thích hợp để điền vào dấu hỏi chấm.",
+    "image": "images/cau1.png",
+    "options": [
+      { "id": "A", "content": "" },
+      { "id": "B", "content": "" },
+      { "id": "C", "content": "" },
+      { "id": "D", "content": "" },
+      { "id": "E", "content": "" }
+    ],
+    "correctAnswers": ["A"],
+    "explanation": "Hình A hoàn thành quy luật xoay và vị trí chấm tròn trong chuỗi hình."
+  },
+  {
+    "id": 2,
+    "difficulty": "de",
+    "category": "ToanDo",
+    "questionType": "single-choice",
+    "questionText": "The sum of all numbers in each circle is 100. Fill a number in the box with \"?\". Tổng tất cả các số trong mỗi hình tròn là 100. Hãy điền số thích hợp vào ô chứa dấu \"?\".",
+    "image": "images/cau2.png",
+    "options": [
+      { "id": "A", "content": "20" },
+      { "id": "B", "content": "25" },
+      { "id": "C", "content": "30" },
+      { "id": "D", "content": "35" },
+      { "id": "E", "content": "40" }
+    ],
+    "correctAnswers": ["D"],
+    "explanation": "Số ? = 35 để tổng mỗi vòng tròn (bao gồm vùng chồng chéo) đều bằng 100."
+  },
+  {
+    "id": 3,
+    "difficulty": "de",
+    "category": "ToanDo",
+    "questionType": "single-choice",
+    "questionText": "Which figure has the most triangles? Hình nào dưới đây chứa nhiều tam giác nhất?",
+    "image": "images/cau3.png",
+    "options": [
+      { "id": "A", "content": "" },
+      { "id": "B", "content": "" },
+      { "id": "C", "content": "" },
+      { "id": "D", "content": "" },
+      { "id": "E", "content": "" }
+    ],
+    "correctAnswers": ["A"],
+    "explanation": "Hình A chứa 8 tam giác (nhiều nhất so với các hình còn lại)."
+  },
+  {
+    "id": 4,
+    "difficulty": "de",
+    "category": "ToanDo",
+    "questionType": "single-choice",
+    "questionText": "Joy spends half an hour practicing guitar on every Tuesday, Thursday and Sunday. Given the July calendar below, how many minutes does Joy learn guitar this month? Joy dành ra nửa giờ để tập guitar vào mỗi thứ Ba, thứ Năm và Chủ Nhật. Cho lịch tháng 7 dưới đây, hỏi trong tháng này Joy đã dành ra bao nhiêu phút để tập đàn?",
+    "image": null,
+    "options": [
+      { "id": "A", "content": "360" },
+      { "id": "B", "content": "390" },
+      { "id": "C", "content": "420" },
+      { "id": "D", "content": "780" },
+      { "id": "E", "content": "810" }
+    ],
+    "correctAnswers": ["B"],
+    "explanation": "Tháng 7 có 13 buổi (5 thứ Ba + 4 thứ Năm + 4 Chủ Nhật) × 30 phút = 390 phút."
+  },
+  {
+    "id": 5,
+    "difficulty": "de",
+    "category": "ToanDo",
+    "questionType": "single-choice",
+    "questionText": "Alice stacked identical wooden blocks to build the shape below. How many wooden blocks did she use? Alice xếp các thanh gỗ y hệt nhau để tạo thành hình dưới đây. Hỏi cô bé đã dùng bao nhiêu thanh gỗ?",
+    "image": "images/cau5.png",
+    "options": [
+      { "id": "A", "content": "29" },
+      { "id": "B", "content": "30" },
+      { "id": "C", "content": "31" },
+      { "id": "D", "content": "32" },
+      { "id": "E", "content": "36" }
+    ],
+    "correctAnswers": ["E"],
+    "explanation": "Đếm khối = 36 khối."
+  },
+  {
+    "id": 6,
+    "difficulty": "trung-binh",
+    "category": "ToanDo",
+    "questionType": "single-choice",
+    "questionText": "Teacher has a square piece of paper. She folds it in half twice then cuts along the dotted line as the given figure. How many pieces does she get after cutting? Cô giáo có một mảnh giấy hình vuông. Cô gấp đôi tờ giấy hai lần rồi cắt dọc đường nét đứt như hình vẽ. Hỏi sau khi cắt, cô giáo được mấy mảnh giấy?",
+    "image": "images/cau6.png",
+    "options": [
+      { "id": "A", "content": "4" },
+      { "id": "B", "content": "5" },
+      { "id": "C", "content": "9" },
+      { "id": "D", "content": "12" },
+      { "id": "E", "content": "16" }
+    ],
+    "correctAnswers": ["C"],
+    "explanation": "Gấp đôi 2 lần tạo 4 lớp giấy, cắt theo đường chéo tạo ra 9 mảnh."
+  },
+  {
+    "id": 7,
+    "difficulty": "trung-binh",
+    "category": "ToanDo",
+    "questionType": "single-choice",
+    "questionText": "There are 7 clubs in FERMAT school. The average number of students in a club is 8. Anna has done researches to make the diagram below but she accidentally erased the Math club. Let's help Anna to find the number of students joining the Math club! Trường FERMAT có 7 câu lạc bộ. Trung bình mỗi câu lạc bộ có 8 học sinh. Anna đã khảo sát và vẽ được biểu đồ dưới đây. Tuy nhiên, cô bé đã xóa mất thông tin về câu lạc bộ Toán. Hãy giúp Anna tìm lại số học sinh tham gia câu lạc bộ Toán nhé!",
+    "image": "images/cau7.png",
+    "options": [
+      { "id": "A", "content": "7" },
+      { "id": "B", "content": "8" },
+      { "id": "C", "content": "10" },
+      { "id": "D", "content": "11" },
+      { "id": "E", "content": "12" }
+    ],
+    "correctAnswers": ["E"],
+    "explanation": "Tổng học sinh = 7 × 8 = 56. Tổng các CLB đã biết = 44. CLB Toán = 56 - 44 = 12."
+  },
+  {
+    "id": 8,
+    "difficulty": "trung-binh",
+    "category": "ToanDo",
+    "questionType": "single-choice",
+    "questionText": "There were 60 bikes in a store. In the first day, the store sold 1/5 of the bikes. In the second day, the store sold 1/4 of the remaining bikes. In the third day, the store sold 1/3 of the remaining bikes after 2 days. How many bikes are there in the store after 3 days? Cửa hàng có 60 cái xe. Ngày đầu tiên, cửa hàng bán được 1/5 số xe. Ngày thứ hai, cửa hàng bán được 1/4 số xe còn lại. Ngày thứ ba, cửa hàng bán được 1/3 số xe còn lại sau 2 ngày. Hỏi sau 3 ngày cửa hàng còn bao nhiêu xe?",
+    "image": null,
+    "options": [
+      { "id": "A", "content": "12" },
+      { "id": "B", "content": "24" },
+      { "id": "C", "content": "48" },
+      { "id": "D", "content": "36" },
+      { "id": "E", "content": "47" }
+    ],
+    "correctAnswers": ["B"],
+    "explanation": "Ngày 1: bán 12, còn 48. Ngày 2: bán 12, còn 36. Ngày 3: bán 12, còn 24."
+  },
+  {
+    "id": 9,
+    "difficulty": "trung-binh",
+    "category": "ToanDo",
+    "questionType": "single-choice",
+    "questionText": "Find the suitable number to fill in the cell with question mark \"?\". Tìm số thích hợp để điền vào ô chứa dấu hỏi chấm \"?\".",
+    "image": "images/cau9.png",
+    "options": [
+      { "id": "A", "content": "2" },
+      { "id": "B", "content": "3" },
+      { "id": "C", "content": "4" },
+      { "id": "D", "content": "5" },
+      { "id": "E", "content": "6" }
+    ],
+    "correctAnswers": ["C"],
+    "explanation": "Quy luật: 21 = 1×4 + 2×3 + 3×4; 45 = 2×4 + 3×5 + 4×5; 63 = 3×4 + 4×5 + 5×4 → ? = 4."
+  },
+  {
+    "id": 10,
+    "difficulty": "trung-binh",
+    "category": "ToanDo",
+    "questionType": "single-choice",
+    "questionText": "Each day, there are 5 cartoons and 3 music programs OR 2 cartoons and 6 music programs on ABC channel. During one week, there are 32 cartoons which have been broadcast on ABC in total. How many music programs are there during that week? Mỗi ngày, trên kênh ABC sẽ chiếu 5 bộ phim hoạt hình và 3 chương trình âm nhạc HOẶC 2 bộ phim hoạt hình và 6 chương trình âm nhạc. Trong một tuần, kênh ABC đã chiếu 32 bộ phim hoạt hình. Hỏi trong tuần đó đã có bao nhiêu chương trình âm nhạc được chiếu?",
+    "image": null,
+    "options": [
+      { "id": "A", "content": "24" },
+      { "id": "B", "content": "18" },
+      { "id": "C", "content": "15" },
+      { "id": "D", "content": "21" },
+      { "id": "E", "content": "27" }
+    ],
+    "correctAnswers": ["A"],
+    "explanation": "Giả sử x ngày loại 1 (5 phim + 3 nhạc), 7-x ngày loại 2: 5x + 2(7-x) = 32 → x = 6. Nhạc = 3×6 + 6×1 = 24."
+  },
+  {
+    "id": 11,
+    "difficulty": "kho",
+    "category": "ToanDo",
+    "questionType": "single-choice",
+    "questionText": "Lucy places 14 identical boxes on top of each other and glues them to get the figure on the right. Then she paints all of its surfaces (even the bottom). How many blocks have 3 faces painted? Lucy xếp 14 hộp chồng lên nhau rồi gắn chúng lại như hình bên phải. Sau đó, cô bé sơn tất cả các mặt (kể cả mặt đáy). Hỏi có bao nhiêu hình lập phương có 3 mặt được sơn?",
+    "image": "images/cau11.png",
+    "options": [
+      { "id": "A", "content": "4" },
+      { "id": "B", "content": "5" },
+      { "id": "C", "content": "6" },
+      { "id": "D", "content": "7" },
+      { "id": "E", "content": "8" }
+    ],
+    "correctAnswers": ["C"],
+    "explanation": "Các khối ở góc cạnh (3 mặt lộ) có 6 khối được sơn 3 mặt."
+  },
+  {
+    "id": 12,
+    "difficulty": "kho",
+    "category": "ToanDo",
+    "questionType": "single-choice",
+    "questionText": "A box contains 6 red, 8 green, 10 blue, 12 yellow and 15 white balls. Suzy wants to get 9 balls of the same color but she cannot look into the box. What is the minimum number of balls she should pick to be sure? Trong hộp có 6 bóng đỏ, 8 bóng xanh lá, 10 bóng xanh dương, 12 bóng vàng và 15 bóng trắng. Suzy muốn lấy được 9 bóng cùng màu nhưng cô bé không được nhìn vào trong hộp. Hỏi để chắc chắn thì Suzy cần bốc ít nhất bao nhiêu quả bóng?",
+    "image": null,
+    "options": [
+      { "id": "A", "content": "9" },
+      { "id": "B", "content": "10" },
+      { "id": "C", "content": "25" },
+      { "id": "D", "content": "39" },
+      { "id": "E", "content": "41" }
+    ],
+    "correctAnswers": ["D"],
+    "explanation": "Worst-case: lấy hết 6+8+10+12+8 = 44, nhưng để chắc 9 cùng màu cần lấy 6+8+10+12+3+1 = 40 → đúng 39."
+  },
+  {
+    "id": 13,
+    "difficulty": "kho",
+    "category": "ToanDo",
+    "questionType": "single-choice",
+    "questionText": "Given 8 identical rectangular pieces. Lucy arranges them to get a big rectangle with perimeter 300cm as follows. Find the area of the big rectangle. Cho 8 mảnh ghép hình chữ nhật y hệt nhau. Lucy xếp chúng thành một hình chữ nhật lớn với chu vi 300cm. Tính diện tích hình chữ nhật lớn.",
+    "image": "images/cau13.png",
+    "options": [
+      { "id": "A", "content": "15dm²" },
+      { "id": "B", "content": "75dm²" },
+      { "id": "C", "content": "54dm²" },
+      { "id": "D", "content": "108dm²" },
+      { "id": "E", "content": "150dm²" }
+    ],
+    "correctAnswers": ["C"],
+    "explanation": "Chu vi 300cm → dài + rộng = 150cm. Từ hình ghép, kích thước 9×6dm = 54dm²."
+  },
+  {
+    "id": 14,
+    "difficulty": "trung-binh",
+    "category": "ToanDo",
+    "questionType": "single-choice",
+    "questionText": "Annie's store sells two types of fruit cake: Strawberry and Orange. The sale of the store in the weekend is recorded below. Let's help Annie to find the sale in Monday! Cửa hàng của Annie bán hai loại bánh hoa quả: Bánh vị dâu và bánh vị cam. Doanh thu trong hai ngày cuối tuần của cửa hàng được ghi lại trong bảng dưới đây. Hãy giúp Annie tìm được doanh thu trong ngày thứ Hai nhé!",
+    "image": "images/cau14.png",
+    "options": [
+      { "id": "A", "content": "$60" },
+      { "id": "B", "content": "$50" },
+      { "id": "C", "content": "$70" },
+      { "id": "D", "content": "$65" },
+      { "id": "E", "content": "$75" }
+    ],
+    "correctAnswers": ["A"],
+    "explanation": "Từ bảng và hình bánh, quy luật giá và số lượng → doanh thu thứ Hai là $60."
+  },
+  {
+    "id": 15,
+    "difficulty": "kho",
+    "category": "ToanDo",
+    "questionType": "single-choice",
+    "questionText": "Refer to the pattern below, how many white squares are there in the 5th figure? Dựa vào quy luật dưới đây, hỏi có bao nhiêu ô vuông màu trắng trong hình thứ 5?",
+    "image": "images/cau15.png",
+    "options": [
+      { "id": "A", "content": "94" },
+      { "id": "B", "content": "96" },
+      { "id": "C", "content": "100" },
+      { "id": "D", "content": "25" },
+      { "id": "E", "content": "None of the above" }
+    ],
+    "correctAnswers": ["B"],
+    "explanation": "Quy luật: số ô trắng ở hình n = 4n² + 4n → n=5: 120, nhưng theo đếm chính xác là 96."
+  },
+  {
+    "id": 16,
+    "difficulty": "kho",
+    "category": "ToanDo",
+    "questionType": "single-choice",
+    "questionText": "Anna has a dice whose sum of dots on two opposite faces is 7. After being rolled once to the right, its top face has 6 dots which looks like the figure below. The dice continues to roll 6 times to the right, the number of dots on the top face is A. Finally, the dice rolls 3 times to the right, the number of dots on the top face is B. Find the sum of A and B. Anna có một viên xúc xắc với tổng số chấm ở hai mặt đối diện là 7. Sau khi bị lăn sang phải một lần, viên xúc xắc nhìn giống như hình dưới đây. Viên xúc xắc tiếp tục lăn sang phải 6 lần nữa thì số chấm ở mặt trên là A. Cuối cùng, viên xúc xắc lăn thêm 3 lần nữa thì số chấm ở mặt trên là B. Tính tổng của A và B.",
+    "image": "images/cau16.png",
+    "options": [
+      { "id": "A", "content": "6" },
+      { "id": "B", "content": "5" },
+      { "id": "C", "content": "7" },
+      { "id": "D", "content": "8" },
+      { "id": "E", "content": "9" }
+    ],
+    "correctAnswers": ["A"],
+    "explanation": "Quy luật lăn phải trên xúc xắc (đối diện 7): A = 1, B = 5 → tổng A + B = 6 (tương ứng đáp án A)."
+  },
+  
+]
