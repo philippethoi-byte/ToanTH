@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiểm Tra Kiến Thức Toán Học</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #f0f2f5;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans', sans-serif;
+            padding: 30px 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            padding: 30px 20px;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        .header .history-btn {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .content-area {
+            padding: 30px 25px;
+            background: #fefaf5;
+        }
+        .section {
+            display: none;
+        }
+        .section.active {
+            display: block;
+        }
+
+        /* Setup screen */
+        .setup-title {
+            text-align: center;
+            font-size: 1.8rem;
+            color: #b45309;
+            margin-bottom: 30px;
+        }
+        .difficulty-select {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+        .tab-btn {
+            background: #fff3e0;
+            border: none;
+            padding: 12px 32px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #b45309;
+            font-family: inherit;
+        }
+        .tab-btn.active {
+            background: #f59e0b;
+            color: white;
+            box-shadow: 0 4px 8px rgba(245,158,11,0.3);
+        }
+        .tab-btn:hover:not(.active) {
+            background: #fed7aa;
+        }
+        .num-select {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .num-select label {
+            display: block;
+            font-size: 1.1rem;
+            color: #b45309;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .num-options {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+        }
+        .start-btn {
+            display: block;
+            margin: 0 auto;
+            background: #f59e0b;
+            color: white;
+            border: none;
+            padding: 16px 48px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            border-radius: 50px;
+            box-shadow: 0 6px 15px rgba(245,158,11,0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .start-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(245,158,11,0.4);
+        }
+
+        /* Quiz screen */
+        .quiz-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            background: white;
+            padding: 18px 25px;
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .quiz-header h3 {
+            margin: 0;
+            color: #b45309;
+            font-size: 1.25rem;
+        }
+        .all-questions-container {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+        .question-card {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            padding: 30px;
+            border-left: 8px solid #f59e0b;
+        }
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+        .question-number {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #b45309;
+        }
+        .question-text {
+            font-size: 1.25rem;
+            line-height: 1.6;
+            color: #2d3e50;
+            margin-bottom: 25px;
+        }
+        .question-image {
+            text-align: center;
+            margin: 25px 0;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        .question-image img {
+            max-width: 100%;
+            max-height: 340px;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .option {
+            background: #fff7ed;
+            border: 2px solid #ffe6c2;
+            border-radius: 16px;
+            padding: 16px 20px;
+            font-size: 1.1rem;
+            color: #2d3e50;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .option:hover {
+            background: #fff3e0;
+            border-color: #f59e0b;
+        }
+        .option.selected {
+            background: #fef3c7;
+            border-color: #f59e0b;
+            box-shadow: 0 0 0 4px rgba(245,158,11,0.2);
+        }
+        .option-letter {
+            background: #f59e0b;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .submit-btn {
+            display: block;
+            margin: 40px auto 0;
+            background: #f59e0b;
+            color: white;
+            border: none;
+            padding: 18px 56px;
+            font-size: 1.35rem;
+            font-weight: 700;
+            border-radius: 50px;
+            box-shadow: 0 8px 20px rgba(245,158,11,0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .submit-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 25px rgba(245,158,11,0.4);
+        }
+
+        /* Results screen */
+        .results-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .score-circle {
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.2rem;
+            font-weight: 700;
+            box-shadow: 0 10px 25px rgba(245,158,11,0.3);
+        }
+        .score-circle small {
+            font-size: 1rem;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+        .result-card {
+            background: white;
+            border-radius: 24px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border-left: 8px solid #f59e0b;
+        }
+        .result-question {
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+        }
+        .answer-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 12px 0;
+            padding: 12px;
+            border-radius: 12px;
+        }
+        .answer-correct {
+            background: #ecfdf5;
+            color: #10b981;
+        }
+        .answer-wrong {
+            background: #fef2f2;
+            color: #ef4444;
+        }
+        .explanation {
+            background: #fef9e3;
+            padding: 16px;
+            border-radius: 16px;
+            margin-top: 12px;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #7c5e2e;
+        }
+        .restart-btn {
+            display: block;
+            margin: 40px auto 0;
+            background: #f59e0b;
+            color: white;
+            border: none;
+            padding: 14px 40px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+
+        /* History screen */
+        .history-item {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .history-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+        }
+        .history-info {
+            flex: 1;
+        }
+        .history-date {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        .history-score {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #f59e0b;
+        }
+
+        footer {
+            text-align: center;
+            padding: 16px;
+            font-size: 0.8rem;
+            background: #fff7ed;
+            color: #a16207;
+            border-top: 1px solid #ffe6c2;
+        }
+
+        @media (max-width: 750px) {
+            .header h1 { font-size: 1.8rem; }
+            .content-area { padding: 20px; }
+            .option { font-size: 1rem; padding: 14px 16px; }
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <div class="header">
+            <h1>📐 Kiểm Tra Kiến Thức Toán Học</h1>
+            <p>Học sinh lớp 8–10 • Chọn mức độ • Làm bài • Xem kết quả chi tiết</p>
+            <button onclick="showHistory()" class="history-btn">
+                📊 Lịch sử
+            </button>
+        </div>
+
+        <!-- SETUP SCREEN -->
+        <div id="setup-screen" class="content-area section active">
+            <h2 class="setup-title">Cài đặt bài kiểm tra</h2>
+            
+            <div style="margin-bottom: 20px;">
+                <p style="text-align:center; color:#b45309; font-weight:600; margin-bottom:15px;">1. Chọn mức độ câu hỏi</p>
+                <div class="difficulty-select" id="difficulty-buttons">
+                    <button class="tab-btn active" data-difficulty="dễ">Dễ</button>
+                    <button class="tab-btn" data-difficulty="trung bình">Trung bình</button>
+                    <button class="tab-btn" data-difficulty="khó">Khó</button>
+                </div>
+            </div>
+
+            <div class="num-select">
+                <label>2. Chọn số lượng câu hỏi</label>
+                <div class="num-options" id="num-buttons">
+                    <button class="tab-btn num-btn active" data-num="5">5 câu</button>
+                    <button class="tab-btn num-btn" data-num="10">10 câu</button>
+                    <button class="tab-btn num-btn" data-num="15">15 câu</button>
+                    <button class="tab-btn num-btn" data-num="20">20 câu</button>
+                </div>
+            </div>
+
+            <button onclick="startQuiz()" class="start-btn" id="start-button">
+                🚀 BẮT ĐẦU BÀI KIỂM TRA
+            </button>
+        </div>
+
+        <!-- QUIZ SCREEN -->
+        <div id="quiz-screen" class="content-area section">
+            <div class="quiz-header">
+                <h3>Bài kiểm tra • Mức độ: <span id="quiz-difficulty-display">Dễ</span></h3>
+                <div style="font-size:1.2rem; font-weight:700; color:#2d3e50;">
+                    <span id="quiz-total-questions">10</span> câu hỏi
+                </div>
+                <button onclick="finishQuiz()" class="submit-btn" style="margin:0; padding:12px 36px; font-size:1.1rem;">
+                    📤 NỘP BÀI
+                </button>
+            </div>
+
+            <div id="all-questions-container" class="all-questions-container"></div>
+        </div>
+
+        <!-- RESULTS SCREEN -->
+        <div id="results-screen" class="content-area section">
+            <div class="results-header">
+                <h2 style="color:#b45309; margin-bottom:10px;">Kết quả bài kiểm tra của bạn</h2>
+                <div id="score-circle" class="score-circle">
+                    <span id="score-correct">8</span>/<span id="score-total">10</span>
+                    <small id="score-percent">80%</small>
+                </div>
+                <p id="result-message" style="font-size:1.3rem; color:#2d3e50;"></p>
+            </div>
+
+            <h3 style="margin:30px 0 15px 10px; color:#b45309;">Chi tiết từng câu</h3>
+            <div id="results-list"></div>
+
+            <button onclick="restartSetup()" class="restart-btn">
+                🔄 Làm bài kiểm tra mới
+            </button>
+        </div>
+
+        <!-- HISTORY SCREEN -->
+        <div id="history-screen" class="content-area section">
+            <h2 style="text-align:center; color:#b45309; margin-bottom:25px;">📊 Lịch sử kiểm tra</h2>
+            <div id="history-list"></div>
+            
+            <button onclick="restartSetup()" style="display:block; margin:30px auto; background:#f59e0b; color:white; border:none; padding:14px 40px; border-radius:50px; cursor:pointer;">
+                Quay về trang chính
+            </button>
+        </div>
+
+        <footer>
+            Trang kiểm tra toán học • Đường dẫn JSON: <strong id="json-path-display"></strong> • 
+            Kết quả được lưu tự động vào trình duyệt (localStorage)
+        </footer>
+    </div>
+
+    <script>
+        // ==================== CẤU HÌNH ĐƯỜNG DẪN JSON (bạn có thể thay đổi) ====================
+        const JSON_PATH = 'questions/questions.json';   // ← Thay đổi đường dẫn file JSON ở đây nếu cần
+
+        // ==================== BIẾN TOÀN CỤC ====================
+        let questionsDB = [];
+        let selectedDifficulty = "dễ";
+        let selectedNumQuestions = 5;
+        let selectedQuestions = [];
+        let userAnswers = {};           // {questionId: selectedOption}
+        
+        let testHistory = [];           // Lưu lịch sử + progress
+
+        // ==================== MATHJAX ====================
+        window.MathJax = {
+            tex: { inlineMath: [['\\(', '\\)']] },
+            svg: { fontCache: 'global' }
+        };
+
+        function renderMath() {
+            if (typeof MathJax !== "undefined") {
+                MathJax.typesetPromise().catch(() => {});
+            }
+        }
+
+        // ==================== TẢI JSON ====================
+        async function loadQuestionsJSON() {
+            try {
+                const response = await fetch(JSON_PATH);
+                if (!response.ok) throw new Error('Không tìm thấy file');
+                questionsDB = await response.json();
+                console.log(`✅ Đã tải ${questionsDB.length} câu hỏi từ ${JSON_PATH}`);
+                document.getElementById('json-path-display').textContent = JSON_PATH;
+                return true;
+            } catch (error) {
+                console.error('❌ Lỗi tải JSON:', error);
+                alert(`❌ Không tải được file JSON từ đường dẫn: ${JSON_PATH}\n\nVui lòng kiểm tra file và thay đổi biến JSON_PATH trong code nếu cần.`);
+                return false;
+            }
+        }
+
+        // ==================== LƯU / TẢI LỊCH SỬ (localStorage) ====================
+        function saveHistory() {
+            localStorage.setItem('mathTestHistory', JSON.stringify(testHistory));
+        }
+
+        function loadHistory() {
+            const saved = localStorage.getItem('mathTestHistory');
+            if (saved) testHistory = JSON.parse(saved);
+        }
+
+        // ==================== THÊM KẾT QUẢ VÀO LỊCH SỬ ====================
+        function saveTestResult(correctCount, percent) {
+            const result = {
+                id: Date.now(),
+                dateTime: new Date().toLocaleString('vi-VN', { 
+                    year: 'numeric', month: '2-digit', day: '2-digit',
+                    hour: '2-digit', minute: '2-digit', second: '2-digit'
+                }),
+                difficulty: selectedDifficulty,
+                numQuestions: selectedQuestions.length,
+                correct: correctCount,
+                percent: percent,
+                selectedQuestions: selectedQuestions.map(q => ({
+                    ...q,
+                    userAnswer: userAnswers[q.id] || null
+                }))
+            };
+            testHistory.unshift(result); // thêm mới nhất lên đầu
+            if (testHistory.length > 50) testHistory.pop(); // giới hạn 50 kết quả
+            saveHistory();
+        }
+
+        // ==================== HIỂN THỊ LỊCH SỬ ====================
+        function showHistory() {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById('history-screen').classList.add('active');
+
+            const container = document.getElementById('history-list');
+            container.innerHTML = testHistory.length === 0 
+                ? `<p style="text-align:center; color:#888; padding:40px;">Chưa có kết quả kiểm tra nào.<br>Bạn chưa làm bài kiểm tra nào cả.</p>`
+                : '';
+
+            testHistory.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'history-item';
+                div.innerHTML = `
+                    <div class="history-info">
+                        <div class="history-date">${item.dateTime} • Mức độ: <strong>${item.difficulty}</strong></div>
+                        <div style="margin-top:8px; font-size:1.1rem;">${item.numQuestions} câu • Đúng ${item.correct}/${item.numQuestions}</div>
+                    </div>
+                    <div class="history-score">${item.percent}%</div>
+                `;
+                div.onclick = () => viewHistoryDetail(item);
+                container.appendChild(div);
+            });
+        }
+
+        function viewHistoryDetail(item) {
+            // Hiển thị chi tiết như màn kết quả
+            document.getElementById('history-screen').classList.remove('active');
+            document.getElementById('results-screen').classList.add('active');
+
+            document.getElementById('score-correct').textContent = item.correct;
+            document.getElementById('score-total').textContent = item.numQuestions;
+            document.getElementById('score-percent').textContent = item.percent + '%';
+
+            const msgEl = document.getElementById('result-message');
+            msgEl.innerHTML = `Kết quả ngày ${item.dateTime} • Mức độ ${item.difficulty}`;
+
+            const listEl = document.getElementById('results-list');
+            listEl.innerHTML = '';
+
+            item.selectedQuestions.forEach((q, index) => {
+                const userAns = q.userAnswer || "(chưa trả lời)";
+                const isCorrect = userAns === q.correct;
+
+                const html = `
+                    <div class="result-card">
+                        <div class="result-question">Câu ${index + 1}: ${q.question}</div>
+                        
+                        <div class="answer-row ${isCorrect ? 'answer-correct' : 'answer-wrong'}">
+                            <strong>Bạn chọn:</strong> 
+                            <span style="margin-left:auto;">${userAns}</span>
+                        </div>
+                        
+                        <div class="answer-row" style="background:#ecfdf5;color:#10b981;">
+                            <strong>Đáp án đúng:</strong> 
+                            <span style="margin-left:auto;">${q.correct}</span>
+                        </div>
+                        
+                        ${!isCorrect && q.explanation ? `
+                        <div class="explanation">
+                            <strong>Giải thích:</strong><br>
+                            ${q.explanation}
+                        </div>` : ''}
+                    </div>
+                `;
+                listEl.innerHTML += html;
+            });
+
+            renderMath();
+        }
+
+        // ==================== CÁC HÀM SETUP & QUIZ (giữ nguyên logic cũ) ====================
+        function setupDifficultyListeners() {
+            const buttons = document.querySelectorAll('#difficulty-buttons .tab-btn');
+            buttons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    buttons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    selectedDifficulty = btn.getAttribute('data-difficulty');
+                });
+            });
+        }
+
+        function setupNumListeners() {
+            const buttons = document.querySelectorAll('#num-buttons .num-btn');
+            buttons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    buttons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    selectedNumQuestions = parseInt(btn.getAttribute('data-num'));
+                });
+            });
+        }
+
+        async function startQuiz() {
+            if (questionsDB.length === 0) {
+                const loaded = await loadQuestionsJSON();
+                if (!loaded) return;
+            }
+
+            let filtered = questionsDB.filter(q => q.difficulty === selectedDifficulty);
+            if (filtered.length === 0) {
+                alert(`Chưa có câu hỏi cho mức độ "${selectedDifficulty}"!`);
+                return;
+            }
+
+            filtered = filtered.sort(() => Math.random() - 0.5);
+            selectedQuestions = filtered.slice(0, Math.min(selectedNumQuestions, filtered.length));
+            userAnswers = {};
+
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById('quiz-screen').classList.add('active');
+
+            document.getElementById('quiz-difficulty-display').textContent = selectedDifficulty;
+            document.getElementById('quiz-total-questions').textContent = selectedQuestions.length;
+
+            renderAllQuestions();
+        }
+
+        function renderAllQuestions() {
+            const container = document.getElementById('all-questions-container');
+            container.innerHTML = '';
+
+            selectedQuestions.forEach((q, index) => {
+                const cardHTML = `
+                    <div class="question-card">
+                        <div class="question-header">
+                            <div class="question-number">Câu ${index + 1}</div>
+                            <div style="font-size:0.95rem; color:#666;">ID: ${q.id}</div>
+                        </div>
+                        <div class="question-text">${q.question}</div>
+                        
+                        ${q.image ? `
+                        <div class="question-image">
+                            <img src="images/${q.image}" alt="Hình minh họa câu ${q.id}">
+                        </div>` : ''}
+                        
+                        <h4 style="margin:20px 0 12px 0; color:#b45309; font-weight:600;">Chọn đáp án đúng:</h4>
+                        <div class="options" id="options-q${q.id}"></div>
+                    </div>
+                `;
+                container.innerHTML += cardHTML;
+
+                const optContainer = document.getElementById(`options-q${q.id}`);
+                const optionsHTML = q.options.map((opt, i) => {
+                    const letter = String.fromCharCode(65 + i);
+                    const selected = userAnswers[q.id] === opt ? 'selected' : '';
+                    return `
+                        <div class="option ${selected}" onclick="selectAnswer(${q.id}, '${opt.replace(/'/g, "\\'")}')">
+                            <span class="option-letter">${letter}</span>
+                            <span>${opt}</span>
+                        </div>
+                    `;
+                }).join('');
+                optContainer.innerHTML = optionsHTML;
+            });
+
+            renderMath();
+        }
+
+        function selectAnswer(questionId, answer) {
+            userAnswers[questionId] = answer;
+            renderAllQuestions();   // update highlight
+        }
+
+        function finishQuiz() {
+            let correctCount = 0;
+            selectedQuestions.forEach(q => {
+                if (userAnswers[q.id] === q.correct) correctCount++;
+            });
+            const percent = Math.round((correctCount / selectedQuestions.length) * 100);
+
+            // LƯU KẾT QUẢ VÀO LỊCH SỬ
+            saveTestResult(correctCount, percent);
+
+            // Chuyển sang kết quả
+            document.getElementById('quiz-screen').classList.remove('active');
+            document.getElementById('results-screen').classList.add('active');
+
+            document.getElementById('score-correct').textContent = correctCount;
+            document.getElementById('score-total').textContent = selectedQuestions.length;
+            document.getElementById('score-percent').textContent = percent + '%';
+
+            const messageEl = document.getElementById('result-message');
+            if (percent >= 80) messageEl.innerHTML = `🎉 Xuất sắc!`;
+            else if (percent >= 60) messageEl.innerHTML = `👍 Tốt!`;
+            else messageEl.innerHTML = `📚 Cố lên!`;
+
+            const listEl = document.getElementById('results-list');
+            listEl.innerHTML = '';
+
+            selectedQuestions.forEach((q, index) => {
+                const userAns = userAnswers[q.id] || "(chưa trả lời)";
+                const isCorrect = userAns === q.correct;
+                const html = `
+                    <div class="result-card">
+                        <div class="result-question">Câu ${index + 1}: ${q.question}</div>
+                        <div class="answer-row ${isCorrect ? 'answer-correct' : 'answer-wrong'}">
+                            <strong>Bạn chọn:</strong> <span style="margin-left:auto;">${userAns}</span>
+                        </div>
+                        <div class="answer-row" style="background:#ecfdf5;color:#10b981;">
+                            <strong>Đáp án đúng:</strong> <span style="margin-left:auto;">${q.correct}</span>
+                        </div>
+                        ${!isCorrect ? `<div class="explanation"><strong>Giải thích:</strong><br>${q.explanation}</div>` : ''}
+                    </div>
+                `;
+                listEl.innerHTML += html;
+            });
+
+            renderMath();
+        }
+
+        function restartSetup() {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById('setup-screen').classList.add('active');
+        }
+
+        // ==================== KHỞI CHẠY ====================
+        window.onload = async function() {
+            loadHistory();                     // tải lịch sử từ localStorage
+            const loaded = await loadQuestionsJSON();
+            if (loaded) {
+                setupDifficultyListeners();
+                setupNumListeners();
+            }
+        };
+    </script>
+</body>
+</html>
