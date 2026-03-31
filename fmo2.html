@@ -140,78 +140,90 @@
     }
 
     // Hiển thị câu hỏi ra HTML
-			function renderQuestions() {
-			const container = document.getElementById('questionContainer');
-			container.innerHTML = currentQuestions.map((q, index) => {
-				return `
-					<div class="question-card" id="q-block-${index}">
-						<h3 style="margin-bottom: 15px;">Câu ${index + 1}: ${q.questionText}</h3>
-						<div class="options-list">
-							${q.options.map((opt) => `
-								<label class="option-item">
-									<input type="radio" 
-										   name="question-${index}" 
-										   value="${opt.id}"> 
-									<span>
-										<strong>${opt.id}:</strong> ${opt.content}
-									</span>
-								</label>
-							`).join('')}
-						</div>
+	function renderQuestions() {
+		const container = document.getElementById('questionContainer');
+		container.innerHTML = currentQuestions.map((q, index) => {
+			return `
+				<div class="question-card" id="q-block-${index}">
+					<h3 style="margin-bottom: 15px;">Câu ${index + 1}: ${q.questionText}</h3>
+					<p style="font-size: 0.8rem; color: #666; margin-bottom: 10px;">(Chọn các đáp án đúng)</p>
+					<div class="options-list">
+						${q.options.map((opt) => `
+							<label class="option-item">
+								<input type="checkbox" 
+									   name="question-${index}" 
+									   value="${opt.id}"> 
+								<span>
+									<strong>${opt.id}:</strong> ${opt.content}
+								</span>
+							</label>
+						`).join('')}
 					</div>
-				`;
-			}).join('');
-		}
+				</div>
+			`;
+		}).join('');
+	}
     // Nộp bài và chấm điểm
     function submitQuiz() {
-        let correctCount = 0;
-        const total = currentQuestions.length;
-        const results = [];
+		let correctCount = 0;
+		const total = currentQuestions.length;
+		const results = [];
 
-        currentQuestions.forEach((q, index) => {
-            const selected = document.querySelector(`input[name="question-${index}"]:checked`);
-            const userAnswer = selected ? selected.value : null;
-            const isCorrect = userAnswer === q.correctAnswers;
+		currentQuestions.forEach((q, index) => {
+			// Lấy tất cả các checkbox được chọn cho câu hỏi này
+			const selectedElements = document.querySelectorAll(`input[name="question-${index}"]:checked`);
+			const userAnswers = Array.from(selectedElements).map(el => el.value); // Ví dụ: ["A", "C"]
 
-            if (isCorrect) correctCount++;
-            results.push({ ...q, userAnswer, isCorrect });
-        });
+			// Lấy mảng đáp án đúng từ JSON
+			const correctAnswers = q.correctAnswers; // Ví dụ: ["A", "B"]
 
-        showResults(correctCount, total, results);
-        saveHistory(correctCount, total);
-    }
+			// Logic kiểm tra: 
+			// 1. Độ dài 2 mảng phải bằng nhau
+			// 2. Mọi phần tử trong userAnswers phải nằm trong correctAnswers
+			const isCorrect = userAnswers.length === correctAnswers.length && 
+							  userAnswers.every(val => correctAnswers.includes(val));
+
+			if (isCorrect) correctCount++;
+			
+			results.push({ 
+				...q, 
+				userAnswers, 
+				isCorrect 
+			});
+		});
+
+		showResults(correctCount, total, results);
+		saveHistory(correctCount, total);
+	}
 
     // Hiển thị kết quả
     function showResults(correct, total, results) {
-        const percent = Math.round((correct / total) * 100);
-        
-        document.getElementById('quizView').classList.add('hidden');
-        document.getElementById('resultView').classList.remove('hidden');
-        
-        document.getElementById('scoreText').innerText = `${correct}/${total}`;
-        document.getElementById('percentText').innerText = `${percent}%`;
+		const percent = Math.round((correct / total) * 100);
+		
+		document.getElementById('quizView').classList.add('hidden');
+		document.getElementById('resultView').classList.remove('hidden');
+		
+		document.getElementById('scoreText').innerText = `${correct}/${total}`;
+		document.getElementById('percentText').innerText = `${percent}%`;
 
-        // Lời chúc
-        let msg = "Cố gắng hơn nữa nhé!";
-        if (percent >= 80) msg = "Tuyệt vời! Bạn rất thông minh! 🎉";
-        else if (percent >= 50) msg = "Khá tốt! Tiếp tục phát huy nhé! 👍";
-        document.getElementById('congratsMsg').innerText = msg;
+		let msg = percent >= 80 ? "Tuyệt vời! Bạn rất thông minh! 🎉" : 
+				  (percent >= 50 ? "Khá tốt! Tiếp tục phát huy nhé! 👍" : "Cố gắng hơn nữa nhé!");
+		document.getElementById('congratsMsg').innerText = msg;
 
-        // Xem lại đáp án
-        const reviewContainer = document.getElementById('reviewContainer');
-        reviewContainer.innerHTML = '<h3>Chi tiết bài làm:</h3>' + results.map((r, i) => `
-            <div class="review-card ${r.isCorrect ? 'correct' : 'incorrect'}">
-                <p><strong>Câu ${i+1}:</strong> ${r.questionText}</p>
-                <p>Đáp án của bạn: <strong>${r.userAnswer || 'Chưa chọn'}</strong></p>
-                <p>Đáp án đúng: <strong style="color: green">${r.correctAnswer}</strong></p>
-                <div class="explanation">
-                    <strong>Giải thích:</strong> ${r.explanation}
-                </div>
-            </div>
-        `).join('');
-        
-        window.scrollTo(0, 0);
-    }
+		const reviewContainer = document.getElementById('reviewContainer');
+		reviewContainer.innerHTML = '<h3>Chi tiết bài làm:</h3>' + results.map((r, i) => `
+			<div class="review-card ${r.isCorrect ? 'correct' : 'incorrect'}">
+				<p><strong>Câu ${i+1}:</strong> ${r.questionText}</p>
+				<p>Đáp án bạn chọn: <strong>${r.userAnswers.join(', ') || 'Chưa chọn'}</strong></p>
+				<p>Đáp án đúng: <strong style="color: #059669">${r.correctAnswers.join(', ')}</strong></p>
+				<div class="explanation">
+					<strong>Giải thích:</strong> ${r.explanation}
+				</div>
+			</div>
+		`).join('');
+		
+		window.scrollTo(0, 0);
+	}
 
     // Lưu lịch sử vào LocalStorage
     function saveHistory(correct, total) {
