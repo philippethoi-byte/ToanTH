@@ -141,21 +141,30 @@
 
     // Hiển thị câu hỏi ra HTML
     function renderQuestions() {
-        const container = document.getElementById('questionContainer');
-        container.innerHTML = currentQuestions.map((q, index) => `
+    const container = document.getElementById('questionContainer');
+    container.innerHTML = currentQuestions.map((q, index) => {
+        return `
             <div class="question-card" id="q-block-${index}">
-                <h3>Câu ${index + 1}: ${q.questionText}</h3>
+                ### Câu ${index + 1}: ${q.questionText}
                 <div class="options-list">
-                    ${Object.entries(q.options).map(([key, value]) => `
-                        <label class="option-item">
-                            <input type="radio" name="question-${index}" value="${key}">
-                            <span><strong>${key}.</strong> ${value}</span>
-                        </label>
-                    `).join('')}
+                    ${Object.entries(q.options).map(([key, value]) => {
+                        // KIỂM TRA: Nếu value là object thì lấy value.text, nếu là string thì lấy chính nó
+                        const optionContent = (typeof value === 'object' && value !== null) 
+                                              ? (value.text || JSON.stringify(value)) 
+                                              : value;
+                        
+                        return `
+                            <label class="option-item">
+                                <input type="radio" name="question-${index}" value="${key}">
+                                <span>**${key}.** ${optionContent}</span>
+                            </label>
+                        `;
+                    }).join('')}
                 </div>
             </div>
-        `).join('');
-    }
+        `;
+    }).join('');
+}
 
     // Nộp bài và chấm điểm
     function submitQuiz() {
@@ -166,7 +175,7 @@
         currentQuestions.forEach((q, index) => {
             const selected = document.querySelector(`input[name="question-${index}"]:checked`);
             const userAnswer = selected ? selected.value : null;
-            const isCorrect = userAnswer === q.correctAnswer;
+            const isCorrect = userAnswer === q.correctAnswers;
 
             if (isCorrect) correctCount++;
             results.push({ ...q, userAnswer, isCorrect });
