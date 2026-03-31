@@ -140,32 +140,28 @@
     }
 
     // Hiển thị câu hỏi ra HTML
-    function renderQuestions() {
-    const container = document.getElementById('questionContainer');
-    container.innerHTML = currentQuestions.map((q, index) => {
-        return `
-            <div class="question-card" id="q-block-${index}">
-                ### Câu ${index + 1}: ${q.questionText}
-                <div class="options-list">
-                    ${Object.entries(q.options).map(([key, value]) => {
-                        // KIỂM TRA: Nếu value là object thì lấy value.text, nếu là string thì lấy chính nó
-                        const optionContent = (typeof value === 'object' && value !== null) 
-                                              ? (value.text || JSON.stringify(value)) 
-                                              : value;
-                        
-                        return `
-                            <label class="option-item">
-                                <input type="radio" name="question-${index}" value="${key}">
-                                <span>**${key}.** ${optionContent}</span>
-                            </label>
-                        `;
-                    }).join('')}
-                </div>
-            </div>
-        `;
-    }).join('');
-}
-
+			function renderQuestions() {
+			const container = document.getElementById('questionContainer');
+			container.innerHTML = currentQuestions.map((q, index) => {
+				return `
+					<div class="question-card" id="q-block-${index}">
+						<h3 style="margin-bottom: 15px;">Câu ${index + 1}: ${q.questionText}</h3>
+						<div class="options-list">
+							${q.options.map((opt) => `
+								<label class="option-item">
+									<input type="radio" 
+										   name="question-${index}" 
+										   value="${opt.id}"> 
+									<span>
+										<strong>${opt.id}:</strong> ${opt.content}
+									</span>
+								</label>
+							`).join('')}
+						</div>
+					</div>
+				`;
+			}).join('');
+		}
     // Nộp bài và chấm điểm
     function submitQuiz() {
         let correctCount = 0;
