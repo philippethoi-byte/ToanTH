@@ -180,23 +180,31 @@
         document.getElementById('congratsMsg').innerText = msg;
 
         // 4. Đổ dữ liệu Review
-       document.getElementById('reviewContainer').innerHTML = results.map((r, i) => {
-			const questionNumber = allQuestions.indexOf(r) + 1;
-			const imagePath = `images/cau${questionNumber}.png`;
+       document.getElementById('reviewContainer').innerHTML = `
+			<h3 style="margin: 20px 0 10px 0; text-align: left;">Chi tiết bài làm:</h3>
+			${results.map((r, i) => {
+				// Tìm câu hỏi gốc trong allQuestions dựa trên nội dung văn bản
+				const originalIndex = allQuestions.findIndex(q => q.questionText === r.questionText);
+				const questionNumber = originalIndex + 1;
+				const imagePath = `images/cau${questionNumber}.png`;
 
-			return `
-				<div class="review-card ${r.isCorrect ? 'correct' : 'incorrect'}">
-					<p><strong>Câu ${i+1}:</strong> ${r.questionText}</p>
-					
-					<img src="${imagePath}" 
-						 style="max-width: 200px; margin: 10px 0; border-radius: 8px;" 
-						 onerror="this.style.display='none'">
+				return `
+					<div class="review-card ${r.isCorrect ? 'correct' : 'incorrect'}">
+						<p><strong>Câu ${i+1}:</strong> ${r.questionText}</p>
+						
+						<div style="text-align: left; margin: 10px 0;">
+							<img src="${imagePath}" 
+								 style="max-width: 200px; border-radius: 8px; display: block;" 
+								 onerror="this.style.display='none'">
+						</div>
 
-					<p>Đáp án đúng: <strong style="color: #059669">${r.correctAnswers.join(', ')}</strong></p>
-					<div class="explanation"><strong>Giải thích:</strong> ${r.explanation}</div>
-				</div>
-			`;
-		}).join('');
+						<p>Đáp án bạn chọn: <strong>${r.userAnswers.join(', ') || 'Chưa chọn'}</strong></p>
+						<p>Đáp án đúng: <strong style="color: #059669">${r.correctAnswers.join(', ')}</strong></p>
+						<div class="explanation"><strong>Giải thích:</strong> ${r.explanation}</div>
+					</div>
+				`;
+			}).join('')}
+		`;
         
         window.scrollTo(0, 0);
     }
