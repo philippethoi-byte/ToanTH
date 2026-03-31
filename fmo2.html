@@ -39,7 +39,32 @@
         
         .hidden { display: none; }
         footer { text-align: center; padding: 16px; font-size: 0.8rem; background: #fff7ed; color: #a16207; border-top: 1px solid #ffe6c2; }
+		.history-table {
+			width: 100%;
+			border-collapse: collapse;
+			margin-top: 20px;
+			background: white;
+			border-radius: 15px;
+			overflow: hidden;
+		}
+		.history-table th, .history-table td {
+			padding: 12px 15px;
+			text-align: center;
+			border-bottom: 1px solid #ffe6c2;
+		}
+		.history-table th {
+			background: #f59e0b;
+			color: white;
+		}
+		.chart-container {
+			margin: 30px 0;
+			padding: 20px;
+			background: white;
+			border-radius: 20px;
+			box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+		}
     </style>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -81,14 +106,24 @@
         </div>
 
         <div id="resultView" class="result-section">
-            <h2 id="congratsMsg">Chúc mừng!</h2>
-            <div class="score-circle">
-                <span id="scoreText">0/0</span>
-                <small id="percentText">0%</small>
-            </div>
-            <button class="btn-primary" onclick="resetQuiz()">Làm bài khác</button>
-            <div id="reviewContainer" style="margin-top: 30px;"></div>
-        </div>
+			<h2 id="congratsMsg">Chúc mừng!</h2>
+			<div class="score-circle">
+				<span id="scoreText">0/0</span>
+				<small id="percentText">0%</small>
+			</div>
+
+			<div class="chart-container">
+				<canvas id="progressChart"></canvas>
+			</div>
+
+			<div id="historyTableContainer"></div>
+
+			<div style="margin-top: 20px;">
+				<button class="btn-primary" onclick="resetQuiz()">Làm bài khác</button>
+			</div>
+			
+			<div id="reviewContainer" style="margin-top: 30px;"></div>
+		</div>
     </div>
 
     <footer>
@@ -100,7 +135,7 @@
     let allQuestions = [];
     let currentQuestions = [];
     const API_URL = 'https://raw.githubusercontent.com/philippethoi-byte/ToanTH/main/questions/questions.json';
-
+	let myChart = null; // Biến toàn cục để quản lý biểu đồ
     // Khởi tạo
     async function init() {
         try {
@@ -206,23 +241,99 @@
 		document.getElementById('scoreText').innerText = `${correct}/${total}`;
 		document.getElementById('percentText').innerText = `${percent}%`;
 
-		let msg = percent >= 80 ? "Tuyệt vời! Bạn rất thông minh! 🎉" : 
-				  (percent >= 50 ? "Khá tốt! Tiếp tục phát huy nhé! 👍" : "Cố gắng hơn nữa nhé!");
+		// 1. Lưu lịch sử trước khi hiển thị
+		saveHistory(correct, total);
+
+		// 2. Hiển thị bảng lịch sử và biểu đồ
+		displayHistoryAnalytics();
+
+		// 3. Hiển thị lời chúc và Review bài làm (giữ nguyên logic cũ)
+		let msg = percent >= 80 ? "Tuyệt vời! Bạn rất thông minh! 🎉" : "Cố gắng hơn nữa nhé!";
 		document.getElementById('congratsMsg').innerText = msg;
 
 		const reviewContainer = document.getElementById('reviewContainer');
 		reviewContainer.innerHTML = '<h3>Chi tiết bài làm:</h3>' + results.map((r, i) => `
 			<div class="review-card ${r.isCorrect ? 'correct' : 'incorrect'}">
 				<p><strong>Câu ${i+1}:</strong> ${r.questionText}</p>
-				<p>Đáp án bạn chọn: <strong>${r.userAnswers.join(', ') || 'Chưa chọn'}</strong></p>
 				<p>Đáp án đúng: <strong style="color: #059669">${r.correctAnswers.join(', ')}</strong></p>
-				<div class="explanation">
-					<strong>Giải thích:</strong> ${r.explanation}
-				</div>
+				<div class="explanation"><strong>Giải thích:</strong> ${r.explanation}</div>
 			</div>
 		`).join('');
+	}
+
+	function displayHistoryAnalytics() {
+		const history = JSON.parse(localStorage.getItem('quiz_history') || '[]');
+		if (history.length === 0) return;
+
+		// --- VẼ BẢNG ---
+		let tableHtml = `
+			<table class="history-table">
+				<thead>
+					<tr>
+						<th>Ngày</th>
+						<th>Lần Test</th>
+						<th>Kết quả</th>
+						<th>Tỉ lệ</th>
+					</tr>
+				</thead>
+				<tbody>
+		`;
+
+		// Đếm số lần test trong mỗi ngày
+		const dayCounter = {};
 		
-		window.scrollTo(0, 0);
+		const tableRows = history.map((item) => {
+			dayCounter[item.date] = (dayCounter[item.date] || 0) + 1;
+			return `
+				<tr>
+					<td>${item.date}</td>
+					<td>Lần ${dayCounter[item.date]}</td>
+					<td>${item.correct}/${item.total}</td>
+					<td><strong>${item.percent}%</strong></td>
+				</tr>
+			`;
+		}).reverse(); // Hiện mới nhất lên đầu
+
+		tableHtml += tableRows.join('') + `</tbody></table>`;
+		document.getElementById('historyTableContainer').innerHTML = tableHtml;
+
+		// --- VẼ BIỂU ĐỒ ---
+		const ctx = document.getElementById('progressChart').getContext('2d');
+		
+		// Nếu đã có biểu đồ trước đó thì hủy để vẽ mới (tránh lỗi đè chart)
+		if (myChart) myChart.destroy();
+
+		// Lấy 10 kết quả gần nhất để vẽ biểu đồ
+		const last10 = history.slice(-10);
+		const labels = last10.map((_, index) => `Lượt ${index + 1}`);
+		const dataPoints = last10.map(item => item.percent);
+
+		myChart = new Chart(ctx, {
+			type: 'line',
+			data: {
+				labels: labels,
+				datasets: [{
+					label: '% Tiến bộ qua các lần thi',
+					data: dataPoints,
+					borderColor: '#f59e0b',
+					backgroundColor: 'rgba(245, 158, 11, 0.1)',
+					borderWidth: 3,
+					fill: true,
+					tension: 0.4, // Độ cong của đường
+					pointRadius: 5,
+					pointBackgroundColor: '#d97706'
+				}]
+			},
+			options: {
+				responsive: true,
+				scales: {
+					y: { beginAtZero: true, max: 100 }
+				},
+				plugins: {
+					legend: { display: true, position: 'top' }
+				}
+			}
+		});
 	}
 
     // Lưu lịch sử vào LocalStorage
