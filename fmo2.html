@@ -1,11 +1,10 @@
-<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hệ Thống Ôn Tập Toán Học</title>
     <style>
-        /* CSS GỐC CỦA BẠN */
+        /* GIỮ NGUYÊN CSS CỦA BẠN */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #f0f2f5; font-family: 'Segoe UI', 'Roboto', 'Noto Sans', sans-serif; padding: 30px 20px; }
         .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 32px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); overflow: hidden; }
@@ -13,58 +12,32 @@
         .header h1 { font-size: 2.5rem; margin-bottom: 8px; letter-spacing: -0.5px; }
         .header p { font-size: 1.1rem; opacity: 0.9; }
         .content-area { padding: 30px 25px; background: #fefaf5; }
-        
-        /* CSS BỔ SUNG CHO QUIZ */
         .setup-section { background: white; padding: 20px; border-radius: 20px; margin-bottom: 20px; border: 2px solid #ffe6c2; }
         .control-group { display: flex; gap: 15px; flex-wrap: wrap; align-items: center; justify-content: center; margin-bottom: 15px; }
         select, input { padding: 10px 15px; border-radius: 10px; border: 1px solid #ddd; font-size: 1rem; }
         .btn-primary { background: #f59e0b; color: white; border: none; padding: 12px 25px; border-radius: 40px; cursor: pointer; font-weight: bold; transition: 0.3s; }
         .btn-primary:hover { background: #d97706; transform: scale(1.05); }
-        
         .history-box { background: #fff3e0; padding: 15px; border-radius: 15px; margin-bottom: 20px; color: #b45309; }
-        
         .question-card { background: white; padding: 20px; border-radius: 20px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-left: 8px solid #f59e0b; }
         .options-list { list-style: none; margin-top: 15px; padding-left: 0 !important; }
         .option-item { margin-bottom: 10px; padding: 12px; border: 1px solid #ffe6c2; border-radius: 12px; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 10px; }
         .option-item:hover { background: #fff7ed; }
-        .option-item input { cursor: pointer; }
-        
         .result-section { text-align: center; display: none; }
         .score-circle { width: 150px; height: 150px; border-radius: 50%; border: 10px solid #f59e0b; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 20px auto; font-size: 1.5rem; font-weight: bold; }
-        
         .review-card { text-align: left; background: #fff; padding: 15px; border-radius: 15px; margin-top: 15px; border: 1px solid #eee; }
         .correct { background: #dcfce7 !important; border-color: #22c55e !important; }
         .incorrect { background: #fee2e2 !important; border-color: #ef4444 !important; }
         .explanation { background: #f0f9ff; padding: 10px; border-radius: 10px; margin-top: 10px; font-size: 0.9rem; color: #0369a1; border-left: 4px solid #0ea5e9; }
-        
         .hidden { display: none; }
         footer { text-align: center; padding: 16px; font-size: 0.8rem; background: #fff7ed; color: #a16207; border-top: 1px solid #ffe6c2; }
-		.history-table {
-			width: 100%;
-			border-collapse: collapse;
-			margin-top: 20px;
-			background: white;
-			border-radius: 15px;
-			overflow: hidden;
-		}
-		.history-table th, .history-table td {
-			padding: 12px 15px;
-			text-align: center;
-			border-bottom: 1px solid #ffe6c2;
-		}
-		.history-table th {
-			background: #f59e0b;
-			color: white;
-		}
-		.chart-container {
-			margin: 30px 0;
-			padding: 20px;
-			background: white;
-			border-radius: 20px;
-			box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-		}
+        
+        /* CSS CHO BẢNG VÀ BIỂU ĐỒ */
+        .history-table { width: 100%; border-collapse: collapse; margin-top: 20px; background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .history-table th, .history-table td { padding: 12px; text-align: center; border-bottom: 1px solid #eee; }
+        .history-table th { background: #f59e0b; color: white; }
+        .chart-container { width: 100%; max-width: 800px; margin: 30px auto; padding: 20px; background: white; border-radius: 20px; }
     </style>
-	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -73,310 +46,180 @@
         <h1>Toán Tiểu Học</h1>
         <p>Luyện tập mỗi ngày - Nâng tầm trí tuệ</p>
     </div>
-
     <div class="content-area">
-        <div id="historySummary" class="history-box">
-            Đang tải dữ liệu lịch sử...
-        </div>
+        <div id="historySummary" class="history-box">Đang tải...</div>
 
         <div id="setupView" class="setup-section">
             <div class="control-group">
-                <div>
-                    <label>Mức độ:</label>
-                    <select id="difficultySelect">
-                        <option value="all">Tất cả</option>
-                        <option value="de">Dễ</option>
-                        <option value="trung-binh">Trung bình</option>
-                        <option value="kho">Khó</option>
-                    </select>
-                </div>
-                <div>
-                    <label>Số câu:</label>
-                    <input type="number" id="questionCount" value="5" min="1" max="20">
-                </div>
+                <select id="difficultySelect">
+                    <option value="all">Tất cả độ khó</option>
+                    <option value="de">Dễ</option>
+                    <option value="trung-binh">Trung bình</option>
+                    <option value="kho">Khó</option>
+                </select>
+                <input type="number" id="questionCount" value="5" min="1" max="20">
                 <button class="btn-primary" onclick="startQuiz()">Bắt đầu làm bài</button>
             </div>
         </div>
 
         <div id="quizView" class="hidden">
             <div id="questionContainer"></div>
-            <div style="text-align: center; margin-top: 20px;">
-                <button class="btn-primary" onclick="submitQuiz()">Nộp bài</button>
-            </div>
+            <button class="btn-primary" onclick="submitQuiz()" style="display:block; margin: 20px auto;">Nộp bài</button>
         </div>
 
         <div id="resultView" class="result-section">
-			<h2 id="congratsMsg">Chúc mừng!</h2>
-			<div class="score-circle">
-				<span id="scoreText">0/0</span>
-				<small id="percentText">0%</small>
-			</div>
+            <h2 id="congratsMsg">Kết quả</h2>
+            <div class="score-circle">
+                <span id="scoreText">0/0</span>
+                <small id="percentText">0%</small>
+            </div>
 
-			<div class="chart-container">
-				<canvas id="progressChart"></canvas>
-			</div>
+            <div class="chart-container">
+                <canvas id="progressChart"></canvas>
+            </div>
 
-			<div id="historyTableContainer"></div>
+            <div id="historyTableContainer"></div>
 
-			<div style="margin-top: 20px;">
-				<button class="btn-primary" onclick="resetQuiz()">Làm bài khác</button>
-			</div>
-			
-			<div id="reviewContainer" style="margin-top: 30px;"></div>
-		</div>
+            <button class="btn-primary" onclick="resetQuiz()" style="margin-top: 30px;">Làm bài khác</button>
+            <div id="reviewContainer"></div>
+        </div>
     </div>
-
-    <footer>
-        &copy; 2024 Hệ thống ôn tập Toán học trực tuyến
-    </footer>
 </div>
 
 <script>
     let allQuestions = [];
     let currentQuestions = [];
+    let myChart = null;
     const API_URL = 'https://raw.githubusercontent.com/philippethoi-byte/ToanTH/main/questions/questions.json';
-	let myChart = null; // Biến toàn cục để quản lý biểu đồ
-    // Khởi tạo
+
     async function init() {
         try {
             const response = await fetch(API_URL);
             allQuestions = await response.json();
             updateHistoryUI();
-        } catch (error) {
-            alert('Không thể tải ngân hàng câu hỏi. Vui lòng thử lại sau!');
-            console.error(error);
-        }
+        } catch (e) { console.error("Lỗi tải câu hỏi"); }
     }
 
-    // Bắt đầu Quiz
     function startQuiz() {
-        const difficulty = document.getElementById('difficultySelect').value;
+        const diff = document.getElementById('difficultySelect').value;
         const count = parseInt(document.getElementById('questionCount').value);
-
-        // Lọc câu hỏi
-        let filtered = difficulty === 'all' 
-            ? allQuestions 
-            : allQuestions.filter(q => q.difficulty === difficulty);
-
-        if (filtered.length === 0) {
-            alert('Không tìm thấy câu hỏi phù hợp!');
-            return;
-        }
-
-        // Trộn ngẫu nhiên và lấy số lượng yêu cầu
-        currentQuestions = filtered.sort(() => 0.5 - Math.random()).slice(0, count);
-
-        renderQuestions();
+        let filtered = diff === 'all' ? allQuestions : allQuestions.filter(q => q.difficulty === diff);
         
+        currentQuestions = filtered.sort(() => 0.5 - Math.random()).slice(0, count);
+        
+        const container = document.getElementById('questionContainer');
+        container.innerHTML = currentQuestions.map((q, i) => `
+            <div class="question-card">
+                <h3>Câu ${i+1}: ${q.questionText}</h3>
+                <div class="options-list">
+                    ${q.options.map(opt => `
+                        <label class="option-item">
+                            <input type="checkbox" name="q-${i}" value="${opt.id}">
+                            <span><strong>${opt.id}:</strong> ${opt.content}</span>
+                        </label>
+                    `).join('')}
+                </div>
+            </div>
+        `).join('');
+
         document.getElementById('setupView').classList.add('hidden');
         document.getElementById('quizView').classList.remove('hidden');
         document.getElementById('resultView').classList.add('hidden');
-        window.scrollTo(0, 0);
     }
 
-    // Hiển thị câu hỏi ra HTML
-	function renderQuestions() {
-		const container = document.getElementById('questionContainer');
-		container.innerHTML = currentQuestions.map((q, index) => {
-			return `
-				<div class="question-card" id="q-block-${index}">
-					<h3 style="margin-bottom: 15px;">Câu ${index + 1}: ${q.questionText}</h3>
-					<p style="font-size: 0.8rem; color: #666; margin-bottom: 10px;">(Chọn các đáp án đúng)</p>
-					<div class="options-list">
-						${q.options.map((opt) => `
-							<label class="option-item">
-								<input type="checkbox" 
-									   name="question-${index}" 
-									   value="${opt.id}"> 
-								<span>
-									<strong>${opt.id}:</strong> ${opt.content}
-								</span>
-							</label>
-						`).join('')}
-					</div>
-				</div>
-			`;
-		}).join('');
-	}
-    // Nộp bài và chấm điểm
     function submitQuiz() {
-		let correctCount = 0;
-		const total = currentQuestions.length;
-		const results = [];
-
-		currentQuestions.forEach((q, index) => {
-			// Lấy tất cả các checkbox được chọn cho câu hỏi này
-			const selectedElements = document.querySelectorAll(`input[name="question-${index}"]:checked`);
-			const userAnswers = Array.from(selectedElements).map(el => el.value); // Ví dụ: ["A", "C"]
-
-			// Lấy mảng đáp án đúng từ JSON
-			const correctAnswers = q.correctAnswers; // Ví dụ: ["A", "B"]
-
-			// Logic kiểm tra: 
-			// 1. Độ dài 2 mảng phải bằng nhau
-			// 2. Mọi phần tử trong userAnswers phải nằm trong correctAnswers
-			const isCorrect = userAnswers.length === correctAnswers.length && 
-							  userAnswers.every(val => correctAnswers.includes(val));
-
-			if (isCorrect) correctCount++;
-			
-			results.push({ 
-				...q, 
-				userAnswers, 
-				isCorrect 
-			});
-		});
-
-		showResults(correctCount, total, results);
-		saveHistory(correctCount, total);
-	}
-
-    // Hiển thị kết quả
-    function showResults(correct, total, results) {
-		const percent = Math.round((correct / total) * 100);
-		
-		document.getElementById('quizView').classList.add('hidden');
-		document.getElementById('resultView').classList.remove('hidden');
-		
-		document.getElementById('scoreText').innerText = `${correct}/${total}`;
-		document.getElementById('percentText').innerText = `${percent}%`;
-
-		// 1. Lưu lịch sử trước khi hiển thị
-		saveHistory(correct, total);
-
-		// 2. Hiển thị bảng lịch sử và biểu đồ
-		displayHistoryAnalytics();
-
-		// 3. Hiển thị lời chúc và Review bài làm (giữ nguyên logic cũ)
-		let msg = percent >= 80 ? "Tuyệt vời! Bạn rất thông minh! 🎉" : "Cố gắng hơn nữa nhé!";
-		document.getElementById('congratsMsg').innerText = msg;
-
-		const reviewContainer = document.getElementById('reviewContainer');
-		reviewContainer.innerHTML = '<h3>Chi tiết bài làm:</h3>' + results.map((r, i) => `
-			<div class="review-card ${r.isCorrect ? 'correct' : 'incorrect'}">
-				<p><strong>Câu ${i+1}:</strong> ${r.questionText}</p>
-				<p>Đáp án đúng: <strong style="color: #059669">${r.correctAnswers.join(', ')}</strong></p>
-				<div class="explanation"><strong>Giải thích:</strong> ${r.explanation}</div>
-			</div>
-		`).join('');
-	}
-
-	function displayHistoryAnalytics() {
-		const history = JSON.parse(localStorage.getItem('quiz_history') || '[]');
-		if (history.length === 0) return;
-
-		// --- VẼ BẢNG ---
-		let tableHtml = `
-			<table class="history-table">
-				<thead>
-					<tr>
-						<th>Ngày</th>
-						<th>Lần Test</th>
-						<th>Kết quả</th>
-						<th>Tỉ lệ</th>
-					</tr>
-				</thead>
-				<tbody>
-		`;
-
-		// Đếm số lần test trong mỗi ngày
-		const dayCounter = {};
-		
-		const tableRows = history.map((item) => {
-			dayCounter[item.date] = (dayCounter[item.date] || 0) + 1;
-			return `
-				<tr>
-					<td>${item.date}</td>
-					<td>Lần ${dayCounter[item.date]}</td>
-					<td>${item.correct}/${item.total}</td>
-					<td><strong>${item.percent}%</strong></td>
-				</tr>
-			`;
-		}).reverse(); // Hiện mới nhất lên đầu
-
-		tableHtml += tableRows.join('') + `</tbody></table>`;
-		document.getElementById('historyTableContainer').innerHTML = tableHtml;
-
-		// --- VẼ BIỂU ĐỒ ---
-		const ctx = document.getElementById('progressChart').getContext('2d');
-		
-		// Nếu đã có biểu đồ trước đó thì hủy để vẽ mới (tránh lỗi đè chart)
-		if (myChart) myChart.destroy();
-
-		// Lấy 10 kết quả gần nhất để vẽ biểu đồ
-		const last10 = history.slice(-10);
-		const labels = last10.map((_, index) => `Lượt ${index + 1}`);
-		const dataPoints = last10.map(item => item.percent);
-
-		myChart = new Chart(ctx, {
-			type: 'line',
-			data: {
-				labels: labels,
-				datasets: [{
-					label: '% Tiến bộ qua các lần thi',
-					data: dataPoints,
-					borderColor: '#f59e0b',
-					backgroundColor: 'rgba(245, 158, 11, 0.1)',
-					borderWidth: 3,
-					fill: true,
-					tension: 0.4, // Độ cong của đường
-					pointRadius: 5,
-					pointBackgroundColor: '#d97706'
-				}]
-			},
-			options: {
-				responsive: true,
-				scales: {
-					y: { beginAtZero: true, max: 100 }
-				},
-				plugins: {
-					legend: { display: true, position: 'top' }
-				}
-			}
-		});
-	}
-
-    // Lưu lịch sử vào LocalStorage
-    function saveHistory(correct, total) {
-        const today = new Date().toLocaleDateString('vi-VN');
-        let history = JSON.parse(localStorage.getItem('quiz_history') || '[]');
-        
-        history.push({
-            date: today,
-            correct: correct,
-            total: total,
-            percent: Math.round((correct/total)*100),
-            timestamp: new Date().getTime()
+        let correctCount = 0;
+        const results = currentQuestions.map((q, i) => {
+            const selected = Array.from(document.querySelectorAll(`input[name="q-${i}"]:checked`)).map(el => el.value);
+            const isCorrect = selected.length === q.correctAnswers.length && selected.every(v => q.correctAnswers.includes(v));
+            if (isCorrect) correctCount++;
+            return { ...q, userAnswers: selected, isCorrect };
         });
 
+        // CHỈ GỌI LƯU 1 LẦN DUY NHẤT
+        saveHistory(correctCount, currentQuestions.length);
+        showResults(correctCount, currentQuestions.length, results);
+    }
+
+    function showResults(correct, total, results) {
+        const percent = Math.round((correct / total) * 100);
+        document.getElementById('quizView').classList.add('hidden');
+        document.getElementById('resultView').classList.remove('hidden');
+        document.getElementById('scoreText').innerText = `${correct}/${total}`;
+        document.getElementById('percentText').innerText = `${percent}%`;
+
+        // Vẽ biểu đồ và bảng
+        displayHistoryAnalytics();
+
+        document.getElementById('reviewContainer').innerHTML = results.map((r, i) => `
+            <div class="review-card ${r.isCorrect ? 'correct' : 'incorrect'}">
+                <p><strong>Câu ${i+1}:</strong> ${r.questionText}</p>
+                <p>Đáp án đúng: <strong>${r.correctAnswers.join(', ')}</strong></p>
+                <div class="explanation">Giải thích: ${r.explanation}</div>
+            </div>
+        `).join('');
+    }
+
+    function saveHistory(correct, total) {
+        const history = JSON.parse(localStorage.getItem('quiz_history') || '[]');
+        history.push({
+            date: new Date().toLocaleDateString('vi-VN'),
+            correct,
+            total,
+            percent: Math.round((correct/total)*100),
+            time: new Date().getTime()
+        });
         localStorage.setItem('quiz_history', JSON.stringify(history));
         updateHistoryUI();
     }
 
-    // Cập nhật giao diện lịch sử & tiến độ
+    function displayHistoryAnalytics() {
+        const history = JSON.parse(localStorage.getItem('quiz_history') || '[]');
+        if (history.length === 0) return;
+
+        // Vẽ Bảng
+        const dayCounter = {};
+        let tableHtml = `<table class="history-table"><thead><tr><th>Ngày</th><th>Lần</th><th>Đúng</th><th>Tỉ lệ</th></tr></thead><tbody>`;
+        
+        // Tạo bảng (đảo ngược để cái mới nhất lên đầu)
+        const rows = history.map((item, index) => {
+            dayCounter[item.date] = (dayCounter[item.date] || 0) + 1;
+            return `<tr><td>${item.date}</td><td>${dayCounter[item.date]}</td><td>${item.correct}/${item.total}</td><td>${item.percent}%</td></tr>`;
+        });
+        tableHtml += rows.reverse().join('') + `</tbody></table>`;
+        document.getElementById('historyTableContainer').innerHTML = tableHtml;
+
+        // Vẽ Biểu đồ
+        const ctx = document.getElementById('progressChart').getContext('2d');
+        if (myChart) myChart.destroy();
+        
+        const last10 = history.slice(-10);
+        myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: last10.map((_, i) => `Lần ${i+1}`),
+                datasets: [{
+                    label: '% Chính xác',
+                    data: last10.map(h => h.percent),
+                    borderColor: '#f59e0b',
+                    tension: 0.3,
+                    fill: true,
+                    backgroundColor: 'rgba(245, 158, 11, 0.1)'
+                }]
+            },
+            options: { scales: { y: { min: 0, max: 100 } } }
+        });
+    }
+
     function updateHistoryUI() {
         const history = JSON.parse(localStorage.getItem('quiz_history') || '[]');
-        const today = new Date().toLocaleDateString('vi-VN');
-        const todayEfforts = history.filter(h => h.date === today);
-
         const summaryBox = document.getElementById('historySummary');
-        
-        if (todayEfforts.length === 0) {
-            summaryBox.innerHTML = "🌟 Hôm nay bạn chưa làm bài tập nào. Bắt đầu ngay nhé!";
+        if (history.length === 0) {
+            summaryBox.innerHTML = "🌟 Chào mừng! Hãy bắt đầu bài kiểm tra đầu tiên.";
             return;
         }
-
-        const avgPercent = Math.round(todayEfforts.reduce((acc, curr) => acc + curr.percent, 0) / todayEfforts.length);
-        const lastPercent = todayEfforts[todayEfforts.length - 1].percent;
-        const progressMsg = todayEfforts.length > 1 
-            ? (lastPercent >= todayEfforts[todayEfforts.length-2].percent ? "📈 Đang tiến bộ" : "📉 Cần tập trung hơn")
-            : "🎯 Lượt làm đầu tiên trong ngày";
-
-        summaryBox.innerHTML = `
-            <strong>Thống kê hôm nay (${today}):</strong><br>
-            • Số lượt làm: ${todayEfforts.length} | • Điểm trung bình: ${avgPercent}%<br>
-            • Kết quả gần nhất: ${lastPercent}% (${progressMsg})
-        `;
+        const last = history[history.length - 1];
+        summaryBox.innerHTML = `Lần cuối: ${last.date} - Đúng ${last.correct}/${last.total} (${last.percent}%)`;
     }
 
     function resetQuiz() {
@@ -384,9 +227,7 @@
         document.getElementById('setupView').classList.remove('hidden');
     }
 
-    // Chạy khởi tạo
     init();
 </script>
-
 </body>
 </html>
