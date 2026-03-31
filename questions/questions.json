@@ -272,12 +272,12 @@
     "explanation": "Quy luật lăn phải trên xúc xắc (đối diện 7): A = 1, B = 5 → tổng A + B = 6 (tương ứng đáp án A)."
   },
   {
-    "id": 33,
+    "id": 17,
     "difficulty": "de",
     "category": "ToanDo",
     "questionType": "single-choice",
     "questionText": "What should be filled into the cell with question mark? Điền hình thích hợp vào ô chứa dấu hỏi chấm.",
-    "image": "images/cau33.png",
+    "image": "images/cau17.png",
     "options": [
       { "id": "A", "content": "" },
       { "id": "B", "content": "" },
@@ -289,12 +289,12 @@
     "explanation": "Hình B hoàn thành quy luật xoay và chấm."
   },
   {
-    "id": 34,
+    "id": 18,
     "difficulty": "de",
     "category": "ToanDo",
     "questionType": "single-choice",
     "questionText": "Mr. Thomas need to hook another weight on the right side of the scale, so that both sides weigh the same. What is the mass of that weight? Ông Thomas cần móc thêm một quả cân vào phía cân bên phải để hai cân cân thăng bằng. Hỏi quả cân đó nặng bao nhiêu?",
-    "image": "images/cau34.png",
+    "image": "images/cau18.png",
     "options": [
       { "id": "A", "content": "25kg" },
       { "id": "B", "content": "17kg" },
@@ -306,12 +306,12 @@
     "explanation": "Cân trái 65kg, phải 36kg → cần thêm 29kg."
   },
   {
-    "id": 35,
+    "id": 19,
     "difficulty": "de",
     "category": "ToanDo",
     "questionType": "single-choice",
     "questionText": "Riley draws 2 squares and 7 triangles to create a rabbit as below. How many quadrilaterals are there in the figure? Riley vẽ 2 hình vuông và 7 hình tam giác để ghép thành một con thỏ như hình dưới đây. Hỏi trong đó có bao nhiêu hình tứ giác?",
-    "image": "images/cau35.png",
+    "image": "images/cau19.png",
     "options": [
       { "id": "A", "content": "2" },
       { "id": "B", "content": "3" },
@@ -323,12 +323,12 @@
     "explanation": "Đếm các hình tứ giác ghép từ 2 vuông + 7 tam giác = 5."
   },
   {
-    "id": 36,
+    "id": 20,
     "difficulty": "de",
     "category": "ToanDo",
     "questionType": "single-choice",
     "questionText": "Teacher has 5 different trips of paper. She places them on top of each other respectively and get the figure below. Which strip of paper has been placed on the table secondly? Cô giáo có 5 mảnh giấy khác màu. Cô lần lượt đặt chúng xếp chồng lên nhau ở trên mặt bàn và nhận được kết quả như hình dưới đây. Hỏi mảnh giấy thứ hai được đặt lên mặt bàn là mảnh giấy nào?",
-    "image": "images/cau36.png",
+    "image": "images/cau20.png",
     "options": [
       { "id": "A", "content": "Yellow" },
       { "id": "B", "content": "Green" },
@@ -340,7 +340,7 @@
     "explanation": "Từ thứ tự chồng lớp màu, mảnh thứ hai là xanh lá (Green)."
   },
   {
-    "id": 37,
+    "id": 21,
     "difficulty": "de",
     "category": "ToanDo",
     "questionType": "single-choice",
@@ -357,12 +357,12 @@
     "explanation": "5 ngày × 10 giờ + thứ Bảy 5 giờ = 55 giờ."
   },
   {
-    "id": 38,
+    "id": 22,
     "difficulty": "trung-binh",
     "category": "ToanDo",
     "questionType": "single-choice",
     "questionText": "Mark has a square piece of paper. He folds it in half and cuts a hole at center as in the figure below. Afterwards, he opens the paper. What does the paper look like now? Mark có một mảnh giấy hình vuông. Cậu ấy gập đôi tờ giấy và cắt một lỗ ở giữa như hình dưới đây. Sau đó, cậu bé mở tờ giấy ra. Hỏi lúc này tờ giấy trông như thế nào?",
-    "image": "images/cau38.png",
+    "image": "images/cau22.png",
     "options": [
       { "id": "A", "content": "" },
       { "id": "B", "content": "" },
@@ -374,12 +374,12 @@
     "explanation": "Gập đôi cắt lỗ giữa → mở ra hình C."
   },
   {
-    "id": 39,
+    "id": 23,
     "difficulty": "trung-binh",
     "category": "ToanDo",
     "questionType": "single-choice",
     "questionText": "The audience votes for a musical talent competition. This pictogram shows the votes that were received for each contestant. What is the difference in the number of votes given to the highest and lowest-scoring? Khán giả bình chọn cho một cuộc thi tài năng âm nhạc. Biểu đồ dưới đây thể hiện số lượt bình chọn của mỗi thí sinh. Hỏi thí sinh cao điểm nhất hơn thí sinh thấp điểm nhất bao nhiêu phiếu bình chọn?",
-    "image": "images/cau39.png",
+    "image": "images/cau23.png",
     "options": [
       { "id": "A", "content": "30" },
       { "id": "B", "content": "45" },
@@ -391,7 +391,7 @@
     "explanation": "Chris 15 phiếu, Alice 50 phiếu → chênh lệch 35."
   },
   {
-    "id": 40,
+    "id": 24,
     "difficulty": "trung-binh",
     "category": "ToanDo",
     "questionType": "single-choice",
@@ -408,12 +408,12 @@
     "explanation": "30 vòng chạy → 10 ngày chạy. Tổng 30 ngày → 20 ngày đạp xe."
   },
   {
-    "id": 41,
+    "id": 25,
     "difficulty": "trung-binh",
     "category": "ToanDo",
     "questionType": "single-choice",
     "questionText": "Find the sum of all digits of number A. Tính tổng tất cả các chữ số của A.",
-    "image": "images/cau41.png",
+    "image": "images/cau25.png",
     "options": [
       { "id": "A", "content": "8" },
       { "id": "B", "content": "15" },
@@ -425,12 +425,12 @@
     "explanation": "A = (14×12) + (14+12) + (14-12) = 21104, tổng chữ số 168_26_2 = 25."
   },
   {
-    "id": 42,
+    "id": 26,
     "difficulty": "kho",
     "category": "ToanDo",
     "questionType": "single-choice",
     "questionText": "Freddy is standing at the top right corner of the maze. He wants to find a treasure by collecting all letters in order: F M O M A T H. At least how many meters does he need to travel along the lines? Freddy đang đứng ở góc trên bên phải của một mê cung. Anh ấy muốn tìm kho báu bằng cách thu thập tất cả chữ cái theo thứ tự: F M O M A T H. Hỏi anh ấy phải di chuyển ít nhất bao nhiêu mét dọc theo các đường thẳng?",
-    "image": "images/cau42.png",
+    "image": "images/cau26.png",
     "options": [
       { "id": "A", "content": "16m" },
       { "id": "B", "content": "20m" },
@@ -442,12 +442,12 @@
     "explanation": "Đường ngắn nhất thu thập thứ tự F-M-O-M-A-T-H = 18m."
   },
   {
-    "id": 43,
+    "id": 27,
     "difficulty": "kho",
     "category": "ToanDo",
     "questionType": "single-choice",
     "questionText": "A group of animals including horse, cow, rabbit, sheep, pig and goat attend to a meeting. They are sitting around a rectangular table like a picture below. Given that: • The horse is sitting on one side alone. • The pig and the sheep are sitting on the same side of the table. • The goat is facing the horse. • The rabbit is the immediate left of the goat. • The sheep is facing the rabbit. Who is to immediate right of the horse? Một nhóm động vật gồm: ngựa, bò, thỏ, cừu, lợn và dê tham dự một buổi họp. Chúng đang ngồi xung quanh một chiếc bàn hình chữ nhật như hình vẽ dưới đây. Biết rằng: - Ngựa ngồi một mình ở một cạnh bàn. - Lợn và cừu ngồi cùng một phía. - Dê ngồi đối diện với ngựa. - Thỏ ngồi ngay bên tay trái của dê. - Cừu ngồi đối diện với thỏ. Hỏi con vật nào ngồi ngay phía bên phải của ngựa?",
-    "image": "images/cau43.png",
+    "image": "images/cau27.png",
     "options": [
       { "id": "A", "content": "Rabbit / Thỏ" },
       { "id": "B", "content": "Cow / Bò" },
@@ -459,12 +459,12 @@
     "explanation": "Từ điều kiện sắp xếp xung quanh bàn, bên phải ngựa là bò."
   },
   {
-    "id": 44,
+    "id": 28,
     "difficulty": "kho",
     "category": "ToanDo",
     "questionType": "single-choice",
     "questionText": "A piece of land is divided into identical square cells, each of side length 8m. They want to build a rectangular pond on the land but they don't want to cut down any trees. What is the largest area of the pond? Một mảnh đất được chia thành các ô đất hình vuông, mỗi ô có cạnh dài 8m. Người ta muốn xây một cái ao hình chữ nhật trên mảnh đất này nhưng họ không muốn chặt cây. Hỏi diện tích lớn nhất của cái ao đó là bao nhiêu?",
-    "image": "images/cau44.png",
+    "image": "images/cau28.png",
     "options": [
       { "id": "A", "content": "640m²" },
       { "id": "B", "content": "600m²" },
@@ -476,12 +476,12 @@
     "explanation": "Tránh vị trí cây, ao lớn nhất chiếm 10×64 ô trừ cây = 640m²."
   },
   {
-    "id": 45,
+    "id": 29,
     "difficulty": "kho",
     "category": "ToanDo",
     "questionType": "single-choice",
     "questionText": "Refer to the pattern below, how many white triangles are there in the 20th group? Dựa vào quy luật dưới đây, hỏi có bao nhiêu hình tam giác màu trắng trong nhóm thứ 20?",
-    "image": "images/cau45.png",
+    "image": "images/cau29.png",
     "options": [
       { "id": "A", "content": "180" },
       { "id": "B", "content": "190" },
@@ -493,7 +493,7 @@
     "explanation": "Quy luật nhóm n có 10n tam giác trắng → n=20: 200, nhưng đếm chính xác là 190."
   },
   {
-    "id": 46,
+    "id": 30,
     "difficulty": "kho",
     "category": "ToanDo",
     "questionType": "single-choice",
@@ -508,5 +508,22 @@
     ],
     "correctAnswers": ["D"],
     "explanation": "Số D không thỏa mãn tổng vị trí chẵn = tổng vị trí lẻ."
+  },
+  {
+    "id": 31,
+    "difficulty": "kho",
+    "category": "ToanDo",
+    "questionType": "single-choice",
+    "questionText": "In a school class all pupils have either one or two pets. The pupils have recorded how many pets they have. Among the pupils, two have both a dog and a fish. Three of the pupils have both a cat and a dog. At least how many pupils are there in this class? Trong một lớp học, các học sinh đều có 1 hoặc 2 con vật nuôi. Các bạn học sinh đã tổng hợp số lượng vật nuôi mà họ có. Trong số các học sinh, có 2 bạn nuôi cả chó và cá. Có 3 bạn nuôi cả mèo và chó. Hỏi có ít nhất bao nhiêu bạn học sinh trong lớp học đó?",
+    "image": "images/cau155.png",
+    "options": [
+      { "id": "A", "content": "8" },
+      { "id": "B", "content": "9" },
+      { "id": "C", "content": "10" },
+      { "id": "D", "content": "12" },
+      { "id": "E", "content": "None of the above" }
+    ],
+    "correctAnswers": ["B"],
+    "explanation": "10."
   }
 ]
