@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+
+<html lang="vi" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bí Kíp Chinh Phục Phân Số - Từ Cơ Bản Đến Olympic Quốc Tế</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+darkMode: 'class',
+theme: {
+extend: {
+colors: {
+olympiad: {
+blue: '#3b82f6',
+yellow: '#f59e0b',
+red: '#ef4444',
+purple: '#8b5cf6'
+}
+}
+}
+}
+}
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
+body { font-family: 'Quicksand', sans-serif; }
+.glass-card {
+background: rgba(255, 255, 255, 0.1);
+backdrop-filter: blur(10px);
+border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.solution-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; }
+.solution-content.open { max-height: 2000px; }
+.level-badge { padding: 2px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; }
+</style>
+</head>
+<body class="bg-slate-50 text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-slate-100">
+
+<header class="fixed w-full z-50 top-0 left-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+    <div class="container mx-auto px-4 h-16 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+            <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold shadow-lg">$$\frac{a}{b}$$</div>
+            <span class="text-xl font-bold tracking-tight hidden sm:block">MathOlympiad <span class="text-blue-600">Pro</span></span>
+        </div>
+        <nav class="hidden lg:flex items-center gap-6 font-medium text-sm">
+            <a href="#phan-loai" class="hover:text-blue-500 transition-colors">Phân loại dạng bài</a>
+            <a href="#thuc-hanh" class="hover:text-blue-500 transition-colors">Luyện tập</a>
+            <a href="#meo-hay" class="hover:text-blue-500 transition-colors">Mẹo & Kỹ thuật</a>
+        </nav>
+        <button id="theme-toggle" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-all">
+            <svg id="theme-toggle-dark-icon" class="hidden w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"></path></svg>
+        </button>
+    </div>
+</header>
+
+<section class="pt-32 pb-20 px-4 bg-gradient-to-b from-blue-50 to-transparent dark:from-slate-900 dark:to-transparent">
+    <div class="container mx-auto text-center">
+        <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold mb-6 leading-tight">
+            Bản đồ <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-500">Phân Số</span> Toàn Tập
+        </h1>
+        <p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto mb-10">
+            Từ những khái niệm cơ bản nhất đến các "tuyệt kỹ" giải toán trong kỳ thi IMO. Khám phá 5 cấp độ tư duy toán học dành cho những nhà vô địch tương lai.
+        </p>
+        
+        <div class="max-w-4xl mx-auto mb-10 overflow-x-auto">
+            <svg viewBox="0 0 800 300" class="w-full h-auto min-w-[600px]">
+                <circle cx="400" cy="50" r="40" fill="#3b82f6" class="animate-pulse"/>
+                <text x="400" y="55" fill="white" font-weight="bold" text-anchor="middle" font-size="14">PHÂN SỐ</text>
+                
+                <line x1="400" y1="90" x2="100" y2="150" stroke="#cbd5e1" stroke-width="2"/>
+                <line x1="400" y1="90" x2="250" y2="150" stroke="#cbd5e1" stroke-width="2"/>
+                <line x1="400" y1="90" x2="400" y2="150" stroke="#cbd5e1" stroke-width="2"/>
+                <line x1="400" y1="90" x2="550" y2="150" stroke="#cbd5e1" stroke-width="2"/>
+                <line x1="400" y1="90" x2="700" y2="150" stroke="#cbd5e1" stroke-width="2"/>
+
+                <rect x="50" y="150" width="100" height="40" rx="10" fill="#60a5fa"/>
+                <text x="100" y="175" fill="white" font-weight="bold" text-anchor="middle" font-size="12">Cơ bản</text>
+                
+                <rect x="200" y="150" width="100" height="40" rx="10" fill="#34d399"/>
+                <text x="250" y="175" fill="white" font-weight="bold" text-anchor="middle" font-size="12">Nâng cao</text>
+
+                <rect x="350" y="150" width="100" height="40" rx="10" fill="#fbbf24"/>
+                <text x="400" y="175" fill="white" font-weight="bold" text-anchor="middle" font-size="12">Thi HSG</text>
+
+                <rect x="500" y="150" width="100" height="40" rx="10" fill="#f87171"/>
+                <text x="550" y="175" fill="white" font-weight="bold" text-anchor="middle" font-size="12">Đội tuyển</text>
+
+                <rect x="650" y="150" width="100" height="40" rx="10" fill="#a78bfa"/>
+                <text x="700" y="175" fill="white" font-weight="bold" text-anchor="middle" font-size="12">Quốc tế</text>
+            </svg>
+        </div>
+    </div>
+</section>
+
+<main id="phan-loai" class="container mx-auto px-4 py-16">
+    <h2 class="text-3xl font-bold mb-12 text-center flex items-center justify-center gap-3">
+        <span class="w-12 h-1 bg-blue-600"></span>
+        Hệ Thống Phân Loại Dạng Bài
+        <span class="w-12 h-1 bg-blue-600"></span>
+    </h2>
+
+    <div class="mb-20">
+        <div class="flex items-center gap-3 mb-6">
+            <span class="bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400 level-badge">Mức 1</span>
+            <h3 class="text-2xl font-bold">Dạng 1: Nhận diện & Phép tính cơ bản</h3>
+        </div>
+        <div class="grid lg:grid-cols-2 gap-10">
+            <div class="space-y-4">
+                <p class="text-slate-600 dark:text-slate-400">Tập trung vào khái niệm tử số, mẫu số, rút gọn phân số và 4 phép tính cơ bản ($$+, -, \times, \div$$). Đây là nền tảng để xây dựng tư duy phân số.</p>
+                <div class="p-5 bg-white dark:bg-slate-900 rounded-xl border-l-4 border-blue-500 shadow-sm">
+                    <h4 class="font-bold mb-2">Phương pháp giải:</h4>
+                    <ul class="list-disc list-inside space-y-1 text-sm">
+                        <li>Muốn cộng/trừ: Phải đưa về cùng mẫu số (Quy đồng).</li>
+                        <li>Muốn nhân: Tử $$\times$$ Tử, Mẫu $$\times$$ Mẫu.</li>
+                        <li>Muốn chia: Nhân với phân số đảo ngược.</li>
+                        <li>Rút gọn: Chia cả tử và mẫu cho ƯC lớn nhất.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-xl">
+                <div class="mb-4">
+                    <span class="font-bold text-blue-600">Ví dụ 1:</span> Tính giá trị biểu thức: $$A = \frac{3}{5} + \frac{1}{2} - \frac{1}{4}$$
+                </div>
+                <div class="text-sm space-y-2 text-slate-700 dark:text-slate-300">
+                    <p>Bước 1: Tìm mẫu số chung (MSC) của 5, 2, 4 là 20.</p>
+                    <p>Bước 2: Quy đồng các phân số:</p>
+                    <p>$$\frac{3}{5} = \frac{3 \times 4}{5 \times 4} = \frac{12}{20}; \quad \frac{1}{2} = \frac{10}{20}; \quad \frac{1}{4} = \frac{5}{20}$$</p>
+                    <p>Bước 3: Thực hiện phép tính: $$\frac{12+10-5}{20} = \frac{17}{20}$$</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-20">
+        <div class="flex items-center gap-3 mb-6">
+            <span class="bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400 level-badge">Mức 2</span>
+            <h3 class="text-2xl font-bold">Dạng 2: So sánh phân số & Tìm X</h3>
+        </div>
+        <div class="grid lg:grid-cols-2 gap-10">
+            <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-xl order-2 lg:order-1">
+                <div class="mb-4">
+                    <span class="font-bold text-green-600">Ví dụ 2:</span> So sánh $$\frac{2023}{2024}$$ và $$\frac{2024}{2025}$$
+                </div>
+                <div class="text-sm space-y-4">
+                    <p class="font-medium">Giải pháp (Phương pháp phần bù):</p>
+                    <p>$$\frac{2023}{2024} = 1 - \frac{1}{2024}$$</p>
+                    <p>$$\frac{2024}{2025} = 1 - \frac{1}{2025}$$</p>
+                    <p>Vì $$\frac{1}{2024} > \frac{1}{2025}$$ (mẫu nhỏ hơn thì phân số lớn hơn) nên phần bù càng lớn thì phân số càng nhỏ.</p>
+                    <p class="text-green-600 font-bold">Vậy: $$\frac{2023}{2024} < \frac{2024}{2025}$$</p>
+                </div>
+            </div>
+            <div class="space-y-4 order-1 lg:order-2">
+                <p class="text-slate-600 dark:text-slate-400">Sử dụng các kỹ thuật tinh tế hơn như so sánh qua số trung gian, so sánh phần bù tới 1, hoặc so sánh phần hơn.</p>
+                <div class="p-5 bg-white dark:bg-slate-900 rounded-xl border-l-4 border-green-500 shadow-sm">
+                    <h4 class="font-bold mb-2">Kỹ thuật so sánh:</h4>
+                    <ul class="list-disc list-inside space-y-1 text-sm">
+                        <li>Cùng tử số: Mẫu càng lớn phân số càng nhỏ.</li>
+                        <li>Phần bù: $$1 - \frac{a}{b}$$. Phân số nào có phần bù nhỏ hơn thì lớn hơn.</li>
+                        <li>Số trung gian: So sánh cả hai với số thứ ba (thường là 1, $$1/2$$...).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-20">
+        <div class="flex items-center gap-3 mb-6">
+            <span class="bg-yellow-100 text-yellow-600 dark:bg-yellow-900/30 dark:text-yellow-400 level-badge">Mức 3</span>
+            <h3 class="text-2xl font-bold text-yellow-600">Dạng 3: Dãy phân số có quy luật (Telescoping Sums)</h3>
+        </div>
+        <div class="bg-yellow-50 dark:bg-slate-900 border border-yellow-200 dark:border-yellow-900/50 p-8 rounded-3xl relative overflow-hidden">
+            <div class="absolute -right-10 -top-10 opacity-10">
+                <svg width="200" height="200" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" stroke="currentColor" stroke-width="10" fill="none"/></svg>
+            </div>
+            <div class="max-w-3xl">
+                <p class="mb-6 font-medium">Đây là "đặc sản" trong các kỳ thi HSG. Kỹ thuật mấu chốt là tách một phân số thành hiệu của hai phân số để các số hạng ở giữa tự triệt tiêu nhau.</p>
+                <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-inner mb-6">
+                    <p class="text-center text-xl font-mono text-blue-600 mb-4 font-bold">
+                        $$\frac{k}{n(n+k)} = \frac{1}{n} - \frac{1}{n+k}$$
+                    </p>
+                    <p class="text-sm italic text-center">Công thức "vàng" giải quyết 90% bài toán dãy số quy luật.</p>
+                </div>
+                <div class="space-y-4">
+                    <p class="font-bold">Ví dụ (Đề thi HSG lớp 5): Tính giá trị của biểu thức:</p>
+                    <p class="text-center font-bold text-lg">$$S = \frac{1}{1 \times 2} + \frac{1}{2 \times 3} + \frac{1}{3 \times 4} + \dots + \frac{1}{99 \times 100}$$</p>
+                    <div class="bg-white dark:bg-slate-800 p-5 rounded-lg border-l-4 border-yellow-500">
+                        <p class="mb-2"><strong>Giải:</strong> Ta thấy mỗi phân số có dạng $$\frac{1}{n \times (n+1)} = \frac{1}{n} - \frac{1}{n+1}$$. Áp dụng:</p>
+                        <p>$$S = (1 - \frac{1}{2}) + (\frac{1}{2} - \frac{1}{3}) + (\frac{1}{3} - \frac{1}{4}) + \dots + (\frac{99}{1} - \frac{1}{100})$$</p>
+                        <p>$$S = 1 - \frac{1}{2} + \frac{1}{2} - \frac{1}{3} + \dots - \frac{1}{100}$$</p>
+                        <p>$$S = 1 - \frac{1}{100} = \frac{99}{100}$$</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-20">
+        <div class="flex items-center gap-3 mb-6">
+            <span class="bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400 level-badge">Mức 4</span>
+            <h3 class="text-2xl font-bold text-red-600">Dạng 4: Liên phân số (Continued Fractions) & Toán Tổ hợp</h3>
+        </div>
+        <div class="grid lg:grid-cols-2 gap-10">
+            <div class="space-y-4">
+                <p class="text-slate-600 dark:text-slate-400">Dạng toán này yêu cầu tư duy ngược từ dưới lên hoặc thiết lập hệ phương trình để giải. Thường xuất hiện trong vòng quốc gia các kỳ thi như SASMO hay ASMO.</p>
+                <div class="p-6 bg-red-50 dark:bg-red-900/10 rounded-2xl border border-red-200 dark:border-red-900/30">
+                    <h4 class="font-bold text-red-600 mb-3">Ví dụ: Tìm $$x, y, z$$ nguyên dương biết:</h4>
+                    <p class="text-xl text-center mb-4">$$\frac{30}{7} = x + \frac{1}{y + \frac{1}{z}}$$</p>
+                    <div class="text-sm space-y-2">
+                        <p><b>Bước 1:</b> Thực hiện phép chia $$30 : 7 = 4$$ dư $$2$$. Ta có $$30/7 = 4 + 2/7$$. Vậy $$x = 4$$.</p>
+                        <p><b>Bước 2:</b> Ta có $$\frac{1}{y + 1/z} = \frac{2}{7} \Rightarrow y + \frac{1}{z} = \frac{7}{2}$$.</p>
+                        <p><b>Bước 3:</b> $$7/2 = 3 + 1/2$$. Vậy $$y = 3, z = 2$$.</p>
+                        <p class="font-bold text-red-600">Đáp số: $$x=4, y=3, z=2$$.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center justify-center">
+                <svg viewBox="0 0 300 200" class="w-full max-w-xs">
+                    <rect x="10" y="10" width="280" height="180" rx="15" fill="none" stroke="#ef4444" stroke-dasharray="5,5"/>
+                    <text x="150" y="50" text-anchor="middle" font-size="20" font-weight="bold" fill="currentColor">TƯ DUY BẬC THANG</text>
+                    <path d="M50 80 L250 80 M50 110 L200 110 M50 140 L150 140" stroke="#ef4444" stroke-width="3"/>
+                    <circle cx="250" cy="80" r="5" fill="#ef4444"/>
+                    <circle cx="200" cy="110" r="5" fill="#ef4444"/>
+                    <circle cx="150" cy="140" r="5" fill="#ef4444"/>
+                    <text x="260" y="85" font-size="12">Cấp 1</text>
+                    <text x="210" y="115" font-size="12">Cấp 2</text>
+                    <text x="160" y="145" font-size="12">Cấp 3</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-20">
+        <div class="flex items-center gap-3 mb-6">
+            <span class="bg-purple-100 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400 level-badge">Mức 5</span>
+            <h3 class="text-2xl font-bold text-purple-600">Dạng 5: Phân số trong Hình học & Tổ hợp (TIMO/HKIMO/Math Kangaroo)</h3>
+        </div>
+        <div class="bg-slate-900 text-white p-10 rounded-[3rem] shadow-2xl relative overflow-hidden">
+            <div class="grid md:grid-cols-2 gap-10 items-center">
+                <div>
+                    <h4 class="text-xl font-bold text-purple-400 mb-4">Toán Kangaroo & Phân số thị giác</h4>
+                    <p class="text-slate-300 mb-6">Thay vì các con số khô khan, đề thi quốc tế dùng hình ảnh để kiểm tra tư duy phân số sâu sắc của học sinh.</p>
+                    <div class="p-6 bg-white/10 rounded-2xl border border-white/20 backdrop-blur-sm">
+                        <p class="font-bold mb-3 italic">Bài toán từ Math Kangaroo:</p>
+                        <p class="text-sm">Hình vuông lớn có diện tích 1. Mỗi lần ta chia các hình vuông nhỏ thành 4 phần bằng nhau và tô màu 1 phần. Hỏi tổng diện tích phần tô màu sau vô hạn lần là bao nhiêu?</p>
+                        <p class="mt-4 text-purple-400 font-bold">$$S = \frac{1}{4} + \frac{1}{16} + \frac{1}{64} + \dots = \frac{1}{3}$$</p>
+                    </div>
+                </div>
+                <div class="flex justify-center">
+                    <svg width="200" height="200" viewBox="0 0 100 100">
+                        <rect x="0" y="0" width="100" height="100" fill="none" stroke="white" stroke-width="1"/>
+                        <rect x="50" y="0" width="50" height="50" fill="#8b5cf6" opacity="0.8"/>
+                        <rect x="25" y="50" width="25" height="25" fill="#8b5cf6" opacity="0.6"/>
+                        <rect x="37.5" y="75" width="12.5" height="12.5" fill="#8b5cf6" opacity="0.4"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<section id="thuc-hanh" class="py-20 bg-slate-100 dark:bg-slate-900/50">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold mb-12 text-center italic">Đấu Trường Luyện Tập</h2>
+        
+        <div class="grid md:grid-cols-2 gap-6">
+            <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
+                <div class="flex justify-between items-start mb-4">
+                    <span class="text-xs font-bold px-2 py-1 bg-blue-100 text-blue-600 rounded">Cơ bản</span>
+                    <span class="text-slate-400 text-xs">#FRA01</span>
+                </div>
+                <p class="font-semibold mb-6">Tính: $$B = \frac{5}{12} \times \frac{4}{15} + \frac{1}{9}$$</p>
+                <button onclick="toggleSolution('sol1')" class="text-sm font-bold text-blue-600 hover:underline">Hiện lời giải</button>
+                <div id="sol1" class="solution-content mt-4 text-sm text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-900/50 p-4 rounded-lg">
+                    $$\frac{5}{12} \times \frac{4}{15} = \frac{5 \times 4}{12 \times 15} = \frac{20}{180} = \frac{1}{9}$$ <br>
+                    $$B = \frac{1}{9} + \frac{1}{9} = \frac{2}{9}$$
+                </div>
+            </div>
+
+            <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
+                <div class="flex justify-between items-start mb-4">
+                    <span class="text-xs font-bold px-2 py-1 bg-yellow-100 text-yellow-600 rounded">Nâng cao</span>
+                    <span class="text-slate-400 text-xs">#FRA02</span>
+                </div>
+                <p class="font-semibold mb-6">Tính tổng: $$A = \frac{1}{2} + \frac{1}{4} + \frac{1}{8} + \dots + \frac{1}{512}$$</p>
+                <button onclick="toggleSolution('sol2')" class="text-sm font-bold text-blue-600 hover:underline">Hiện lời giải</button>
+                <div id="sol2" class="solution-content mt-4 text-sm text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-900/50 p-4 rounded-lg">
+                    Mẹo: Nhân cả hai vế với 2. <br>
+                    $$2A = 1 + \frac{1}{2} + \frac{1}{4} + \dots + \frac{1}{256}$$ <br>
+                    Lấy $$2A - A = (1 + \frac{1}{2} + \dots + \frac{1}{256}) - (\frac{1}{2} + \frac{1}{4} + \dots + \frac{1}{512})$$ <br>
+                    $$A = 1 - \frac{1}{512} = \frac{511}{512}$$
+                </div>
+            </div>
+
+            <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
+                <div class="flex justify-between items-start mb-4">
+                    <span class="text-xs font-bold px-2 py-1 bg-red-100 text-red-600 rounded">Thi HSG</span>
+                    <span class="text-slate-400 text-xs">#FRA03</span>
+                </div>
+                <p class="font-semibold mb-6">Tìm x biết: $$(x + 1) + (x + 4) + (x + 7) + \dots + (x + 28) = 155$$</p>
+                <button onclick="toggleSolution('sol3')" class="text-sm font-bold text-blue-600 hover:underline">Hiện lời giải</button>
+                <div id="sol3" class="solution-content mt-4 text-sm text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-900/50 p-4 rounded-lg">
+                    Số các số hạng: $$(28 - 1) : 3 + 1 = 10$$ (số hạng). <br>
+                    Biểu thức viết lại: $$10x + (1 + 4 + 7 + \dots + 28) = 155$$. <br>
+                    Tổng dãy số: $$(28 + 1) \times 10 : 2 = 145$$. <br>
+                    $$10x + 145 = 155 \Rightarrow 10x = 10 \Rightarrow x = 1$$.
+                </div>
+            </div>
+
+            <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
+                <div class="flex justify-between items-start mb-4">
+                    <span class="text-xs font-bold px-2 py-1 bg-purple-100 text-purple-600 rounded">Quốc tế (HKIMO)</span>
+                    <span class="text-slate-400 text-xs">#FRA04</span>
+                </div>
+                <p class="font-semibold mb-6">Tính giá trị: $$\frac{1}{1+2} + \frac{1}{1+2+3} + \dots + \frac{1}{1+2+\dots+100}$$</p>
+                <button onclick="toggleSolution('sol4')" class="text-sm font-bold text-blue-600 hover:underline">Hiện lời giải</button>
+                <div id="sol4" class="solution-content mt-4 text-sm text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-900/50 p-4 rounded-lg">
+                    Công thức: $$1+2+\dots+n = \frac{n(n+1)}{2}$$. <br>
+                    Vậy số hạng tổng quát là $$\frac{1}{n(n+1)/2} = \frac{2}{n(n+1)}$$. <br>
+                    Tổng là: $$2 \times (\frac{1}{2 \times 3} + \frac{1}{3 \times 4} + \dots + \frac{1}{100 \times 101})$$ <br>
+                    $$= 2 \times (\frac{1}{2} - \frac{1}{101}) = 2 \times \frac{99}{202} = \frac{99}{101}$$.
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="meo-hay" class="py-20 px-4">
+    <div class="container mx-auto">
+        <h2 class="text-3xl font-bold mb-12 text-center">Mẹo & Kỹ thuật "Vàng"</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="p-8 rounded-3xl bg-blue-600 text-white shadow-xl">
+                <div class="text-3xl mb-4">🚀</div>
+                <h4 class="text-xl font-bold mb-3">Tư duy phần bù</h4>
+                <p class="text-blue-100 text-sm">Khi thấy tử số gần sát mẫu số, hãy lấy 1 trừ đi phân số đó. So sánh các phần bù sẽ nhanh hơn nhiều.</p>
+            </div>
+            <div class="p-8 rounded-3xl bg-amber-500 text-white shadow-xl">
+                <div class="text-3xl mb-4">⚖️</div>
+                <h4 class="text-xl font-bold mb-3">Số trung gian</h4>
+                <p class="text-amber-50 text-sm">Nếu hai phân số khó quy đồng, hãy chọn một số ở giữa (ví dụ số 1, hoặc 1/2) làm mốc để so sánh.</p>
+            </div>
+            <div class="p-8 rounded-3xl bg-emerald-600 text-white shadow-xl">
+                <div class="text-3xl mb-4">✂️</div>
+                <h4 class="text-xl font-bold mb-3">Triệt tiêu tích</h4>
+                <p class="text-emerald-50 text-sm">Trong phép nhân nhiều phân số, hãy luôn tìm cách rút gọn chéo giữa tử của phân số này và mẫu của phân số kia trước khi nhân.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-20 bg-slate-950 text-white overflow-hidden">
+    <div class="container mx-auto px-4 relative">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-blue-600/20 rounded-full blur-3xl"></div>
+        <h2 class="text-3xl font-bold mb-12">Sổ tay Công thức Cần Nhớ</h2>
+        <div class="overflow-x-auto border border-slate-800 rounded-2xl">
+            <table class="w-full text-left text-sm">
+                <thead class="bg-slate-900">
+                    <tr>
+                        <th class="p-4 border-b border-slate-800">Tên Kỹ Thuật</th>
+                        <th class="p-4 border-b border-slate-800">Công thức / Cách làm</th>
+                        <th class="p-4 border-b border-slate-800">Ứng dụng</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-800">
+                    <tr>
+                        <td class="p-4 font-bold text-blue-400">Quy đồng tử số</td>
+                        <td class="p-4">Giữ nguyên tử, tìm MSC cho mẫu</td>
+                        <td class="p-4">Khi tử số nhỏ, mẫu số lớn/phức tạp</td>
+                    </tr>
+                    <tr>
+                        <td class="p-4 font-bold text-green-400">Phần hơn</td>
+                        <td class="p-4">$$\frac{a}{b} = 1 + \frac{a-b}{b}$$</td>
+                        <td class="p-4">So sánh phân số lớn hơn 1</td>
+                    </tr>
+                    <tr>
+                        <td class="p-4 font-bold text-red-400">Tách hạng tử</td>
+                        <td class="p-4">$$\frac{1}{n \times (n+k)} = \frac{1}{k} \times (\frac{1}{n} - \frac{1}{n+k})$$</td>
+                        <td class="p-4">Giải dãy số quy luật phức tạp</td>
+                    </tr>
+                    <tr>
+                        <td class="p-4 font-bold text-purple-400">Tỉ số diện tích</td>
+                        <td class="p-4">$$\frac{S_1}{S_2} = \frac{a_1}{a_2}$$ (cùng chiều cao)</td>
+                        <td class="p-4">Giải toán phân số trong hình học</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<footer class="py-12 bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800">
+    <div class="container mx-auto px-4 text-center">
+        <p class="text-slate-500 text-sm mb-4 italic">Nguồn tham khảo: Đề thi TIMO, HKIMO, Math Kangaroo, AMC 8, Đề thi HSG Quốc gia.</p>
+        <div class="flex justify-center gap-6 mb-8 text-slate-400">
+            <span class="hover:text-blue-500 cursor-pointer">#Mathematics</span>
+            <span class="hover:text-blue-500 cursor-pointer">#Olympiad</span>
+            <span class="hover:text-blue-500 cursor-pointer">#Education</span>
+        </div>
+        <p class="text-xs text-slate-400 font-medium">© 2026 Nội dung được tổng hợp chuyên sâu bởi AI Math Coach.</p>
+    </div>
+</footer>
+
+<script>
+    // Dark Mode Logic
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const themeToggleBtn = document.getElementById('theme-toggle');
+
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+        themeToggleLightIcon.classList.remove('hidden');
+    } else {
+        document.documentElement.classList.remove('dark');
+        themeToggleDarkIcon.classList.remove('hidden');
+    }
+
+    themeToggleBtn.addEventListener('click', function() {
+        themeToggleDarkIcon.classList.toggle('hidden');
+        themeToggleLightIcon.classList.toggle('hidden');
+
+        if (document.documentElement.classList.contains('dark')) {
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('color-theme', 'light');
+        } else {
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('color-theme', 'dark');
+        }
+    });
+
+    // Solution Toggle Logic
+    function toggleSolution(id) {
+        const content = document.getElementById(id);
+        content.classList.toggle('open');
+        const btn = content.previousElementSibling;
+        if (content.classList.contains('open')) {
+            btn.innerText = "Ẩn lời giải";
+        } else {
+            btn.innerText = "Hiện lời giải";
+        }
+    }
+</script>
+</body>
+</html>

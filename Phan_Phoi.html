@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toán Học Lớp 3 - Chuyên Đề Tính Chất Phân Phối</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #fdfcf0;
+        }
+        .step-card {
+            transition: all 0.3s ease;
+        }
+        .step-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        .correct-ans {
+            background-color: #dcfce7 !important;
+            border-color: #22c55e !important;
+        }
+        .wrong-ans {
+            background-color: #fee2e2 !important;
+            border-color: #ef4444 !important;
+        }
+        .scroll-custom::-webkit-scrollbar {
+            width: 8px;
+        }
+        .scroll-custom::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        .scroll-custom::-webkit-scrollbar-thumb {
+            background: #fbbf24;
+            border-radius: 10px;
+        }
+        .hard-mode {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: white;
+        }
+        .formula-box {
+            background: white;
+            padding: 1rem;
+            border-radius: 1rem;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <header class="text-center mb-12">
+            <h1 class="text-5xl font-bold text-orange-500 mb-4">✨ Phép Thuật Phân Phối ✨</h1>
+            <p class="text-gray-700 text-xl">Bí kíp để tính nhẩm "siêu tốc" như một nhà toán học thực thụ!</p>
+        </header>
+
+        <!-- Lý thuyết chi tiết -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-800 border-l-8 border-yellow-400 pl-4 mb-8">Lý thuyết Phép Phân Phối</h2>
+            
+            <div class="space-y-8">
+                <!-- Nhân với Tổng và Hiệu -->
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-blue-50 p-6 rounded-3xl border-2 border-blue-200 step-card">
+                        <h3 class="text-xl font-bold text-blue-700 mb-4 flex items-center">
+                            <span class="mr-2">➕</span> Nhân với một TỔNG
+                        </h3>
+                        <div class="formula-box text-blue-600">a × (b + c) = a × b + a × c</div>
+                        <p class="text-sm text-gray-600 italic">Nhân số đó với từng số hạng của tổng rồi cộng lại.</p>
+                        <div class="mt-4 p-3 bg-white/50 rounded-lg text-sm font-mono">Ví dụ: 5 × (10 + 2) = 5×10 + 5×2 = 60</div>
+                    </div>
+
+                    <div class="bg-red-50 p-6 rounded-3xl border-2 border-red-200 step-card">
+                        <h3 class="text-xl font-bold text-red-700 mb-4 flex items-center">
+                            <span class="mr-2">➖</span> Nhân với một HIỆU
+                        </h3>
+                        <div class="formula-box text-red-600">a × (b - c) = a × b - a × c</div>
+                        <p class="text-sm text-gray-600 italic">Nhân số đó với số bị trừ và số trừ rồi trừ kết quả.</p>
+                        <div class="mt-4 p-3 bg-white/50 rounded-lg text-sm font-mono">Ví dụ: 5 × (10 - 2) = 5×10 - 5×2 = 40</div>
+                    </div>
+                </div>
+
+                <!-- Chia một Tổng và Hiệu -->
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-green-50 p-6 rounded-3xl border-2 border-green-200 step-card">
+                        <h3 class="text-xl font-bold text-green-700 mb-4 flex items-center">
+                            <span class="mr-2">➕</span> Chia một TỔNG
+                        </h3>
+                        <div class="formula-box text-green-600">(a + b) : c = a : c + b : c</div>
+                        <p class="text-sm text-gray-600 italic">Chia từng số hạng của tổng cho số chia rồi cộng lại.</p>
+                        <div class="mt-4 p-3 bg-white/50 rounded-lg text-sm font-mono">Ví dụ: (80 + 20) : 5 = 80:5 + 20:5 = 20</div>
+                    </div>
+
+                    <div class="bg-purple-50 p-6 rounded-3xl border-2 border-purple-200 step-card">
+                        <h3 class="text-xl font-bold text-purple-700 mb-4 flex items-center">
+                            <span class="mr-2">➖</span> Chia một HIỆU
+                        </h3>
+                        <div class="formula-box text-purple-600">(a - b) : c = a : c - b : c</div>
+                        <p class="text-sm text-gray-600 italic">Chia số bị trừ và số trừ cho số chia rồi trừ kết quả.</p>
+                        <div class="mt-4 p-3 bg-white/50 rounded-lg text-sm font-mono">Ví dụ: (100 - 20) : 4 = 100:4 - 20:4 = 20</div>
+                    </div>
+                </div>
+
+                <!-- Gom lại -->
+                <div class="bg-orange-50 p-6 rounded-3xl border-2 border-orange-200 step-card">
+                    <h3 class="text-xl font-bold text-orange-700 mb-4 flex items-center">
+                        <span class="mr-2">🔄</span> Phép Thuật "Gom Lại" (Ngược lại)
+                    </h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <p class="text-sm font-bold text-orange-600 mb-2">Gom thừa số chung:</p>
+                            <div class="formula-box text-orange-600">a×b + a×c = a × (b + c)</div>
+                        </div>
+                        <div>
+                            <p class="text-sm font-bold text-orange-600 mb-2">Gom cùng số chia:</p>
+                            <div class="formula-box text-orange-600">a:c + b:c = (a + b) : c</div>
+                        </div>
+                    </div>
+                    <p class="text-center text-sm text-gray-600 mt-4 italic">"Tìm người bạn chung xuất hiện nhiều lần để mời bạn ấy ra ngoài nhé!"</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab Chọn Bài Tập -->
+        <div class="flex flex-wrap justify-center gap-4 mb-10">
+            <button onclick="showSection('basic')" class="bg-blue-500 text-white px-6 py-3 rounded-full font-bold shadow-lg hover:bg-blue-600 transition-all">📚 30 Câu Cơ Bản</button>
+            <button onclick="showSection('hardcore')" class="bg-slate-800 text-yellow-400 px-6 py-3 rounded-full font-bold shadow-lg hover:bg-slate-900 transition-all border-2 border-yellow-500">🔥 10 Câu SIÊU KHÓ</button>
+        </div>
+
+        <!-- Phần 30 bài tập cơ bản -->
+        <section id="basic-section" class="hidden bg-white rounded-3xl p-8 shadow-2xl border-4 border-blue-400 mb-20">
+            <h2 class="text-3xl font-bold text-blue-700 mb-6 text-center">🏆 Thử Thách 30 Câu Cơ Bản</h2>
+            <div class="h-[500px] overflow-y-auto scroll-custom pr-4 space-y-4" id="basic-list"></div>
+        </section>
+
+        <!-- Phần 10 bài tập SIÊU KHÓ -->
+        <section id="hardcore-section" class="hidden hard-mode rounded-3xl p-8 shadow-2xl border-4 border-yellow-500 mb-20">
+            <div class="text-center mb-8">
+                <h2 class="text-4xl font-bold text-yellow-400 mb-2">💀 Đấu Trường SIÊU CẤP 💀</h2>
+                <p class="text-gray-300 italic">Dành cho các phù thủy tối thượng. Hãy quan sát thật kỹ!</p>
+            </div>
+            <div class="space-y-6" id="hardcore-list"></div>
+        </section>
+
+        <!-- Footer -->
+        <div class="text-center mt-12 mb-20">
+            <div class="inline-block bg-orange-500 text-white px-8 py-4 rounded-full text-xl font-bold shadow-lg transform hover:scale-110 transition-transform">
+                🌟 BÉ LÀ THIÊN TÀI TOÁN HỌC! 🌟
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const basicProblems = [
+            { q: "5 x 12 + 5 x 8", a: "100" }, { q: "4 x 25 - 4 x 5", a: "80" },
+            { q: "120 : 4 + 80 : 4", a: "50" }, { q: "300 : 5 - 50 : 5", a: "50" },
+            { q: "7 x 11 + 7 x 9", a: "140" }, { q: "9 x 16 - 9", a: "135" },
+            { q: "12 x 5 + 12", a: "72" }, { q: "15 x 11 - 15", a: "150" },
+            { q: "250 : 2 + 150 : 2", a: "200" }, { q: "14 x 8 + 14 x 2", a: "140" },
+            { q: "10 x 45 + 10 x 55", a: "1000" }, { q: "18 x 7 + 18 x 3", a: "180" },
+            { q: "6 x 42", a: "252" }, { q: "8 x 99", a: "792" },
+            { q: "X x 3 + X x 7 = 80", a: "8" }, { q: "125 : 5 + 75 : 5", a: "40" },
+            { q: "400 : 8 + 400 : 8", a: "100" }, { q: "5 x 12 + 5 x 7 + 5", a: "100" },
+            { q: "9 x 25 - 9 x 15", a: "90" }, { q: "13 x 2 + 13 x 8", a: "130" },
+            { q: "21 x 101 - 21", a: "2100" }, { q: "100 : 4 - 20 : 4", a: "20" },
+            { q: "X x 5 - X x 2 = 15", a: "5" }, { q: "8 x 50 - 8 x 40 + 8", a: "88" },
+            { q: "15 x 6 + 15 x 4", a: "150" }, { q: "33 : 3 + 66 : 3", a: "33" },
+            { q: "44 x 2 + 44 x 8", a: "440" }, { q: "55 x 11 - 55", a: "550" },
+            { q: "1000 : 2 - 200 : 2", a: "400" }, { q: "X x 9 + X = 100", a: "10" }
+        ];
+
+        const hardcoreProblems = [
+            { q: "342x125 - 15x16 - 342x34 - 15x14 + 9x342", a: "33750", hint: "Gom 342 riêng (125-34+9) và 15 riêng (16+14)" },
+            { q: "17x93 - 16x3 + 17x25 - 17x16 + 31x17 - 17x49", a: "1380", hint: "Gom 17x(93+25-16+31-49) rồi trừ 16x3" },
+            { q: "124:4 - 44:4 + 160:4 + 204:4 + 356:4", a: "200", hint: "Gom (124-44+160+204+356) : 4" },
+            { q: "600:2 + 600:4 + 600:5 + 600:10 + 600:50", a: "642", hint: "Tính lẻ từng cái: 300+150+120+60+12" },
+            { q: "423x285 + 423x236 - 243x423 + 423 - 179x423", a: "42300", hint: "Gom 423x(285+236-243+1-179) = 423x100" },
+            { q: "(12345x6 - 4x12345 - 12345x2) x (347 + 125 + 1345696)", a: "0", hint: "Vế trái: 12345x(6-4-2) = 12345x0 = 0" },
+            { q: "999 x 123 - 999 x 23", a: "99900", hint: "Gom 999 x (123-23)" },
+            { q: "1234 : 5 + 3766 : 5 + 5000 : 5", a: "2000", hint: "Gom (1234+3766+5000) : 5" },
+            { q: "78 x 35 + 78 x 75 - 78 x 10", a: "7800", hint: "78 x (35+75-10)" },
+            { q: "(500:5 + 500:2) x (8x9 - 72)", a: "0", hint: "8x9 - 72 = 0" }
+        ];
+
+        function showSection(type) {
+            document.getElementById('basic-section').classList.add('hidden');
+            document.getElementById('hardcore-section').classList.add('hidden');
+            if (type === 'basic') {
+                document.getElementById('basic-section').classList.remove('hidden');
+                renderBasic();
+            } else {
+                document.getElementById('hardcore-section').classList.remove('hidden');
+                renderHardcore();
+            }
+        }
+
+        function renderBasic() {
+            const list = document.getElementById('basic-list');
+            list.innerHTML = basicProblems.map((p, i) => `
+                <div class="p-3 border-b flex justify-between items-center bg-blue-50/20 rounded-lg">
+                    <span><b>${i+1}.</b> ${p.q}</span>
+                    <div class="flex gap-2">
+                        <input type="text" class="w-20 p-1 border rounded text-center text-sm" placeholder="?">
+                        <button onclick="checkBasic(this, '${p.a}')" class="bg-blue-500 text-white px-3 py-1 rounded text-xs">OK</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderHardcore() {
+            const list = document.getElementById('hardcore-list');
+            list.innerHTML = hardcoreProblems.map((p, i) => `
+                <div class="bg-slate-700 p-6 rounded-2xl border-l-4 border-yellow-500">
+                    <p class="text-yellow-400 font-bold mb-2">Câu ${i+1}:</p>
+                    <p class="text-xl mb-4">${p.q}</p>
+                    <div class="flex flex-wrap gap-4 items-center">
+                        <input type="text" class="bg-slate-800 border-2 border-slate-600 rounded-lg p-2 w-40 text-yellow-200 outline-none focus:border-yellow-400" placeholder="Đáp số...">
+                        <button onclick="checkHard(this, '${p.a}', '${p.hint}')" class="bg-yellow-500 text-slate-900 font-bold px-6 py-2 rounded-lg hover:bg-yellow-400 transition-colors">KIỂM TRA</button>
+                    </div>
+                    <p class="hint hidden mt-3 text-sm text-gray-400 italic"></p>
+                </div>
+            `).join('');
+        }
+
+        function checkBasic(btn, ans) {
+            const input = btn.previousElementSibling;
+            if (input.value.trim() === ans) {
+                btn.parentElement.parentElement.classList.add('correct-ans');
+            } else {
+                btn.parentElement.parentElement.classList.add('wrong-ans');
+                setTimeout(() => btn.parentElement.parentElement.classList.remove('wrong-ans'), 1000);
+            }
+        }
+
+        function checkHard(btn, ans, hint) {
+            const input = btn.previousElementSibling;
+            const hintP = btn.parentElement.nextElementSibling;
+            if (input.value.trim() === ans) {
+                btn.closest('div').parentElement.classList.add('correct-ans');
+                hintP.innerText = "✨ Tuyệt đỉnh! " + hint;
+                hintP.classList.remove('hidden', 'text-gray-400');
+                hintP.classList.add('text-green-400');
+            } else {
+                btn.closest('div').parentElement.classList.add('wrong-ans');
+                hintP.innerText = "💡 Gợi ý: " + hint;
+                hintP.classList.remove('hidden');
+                setTimeout(() => btn.closest('div').parentElement.classList.remove('wrong-ans'), 1000);
+            }
+        }
+    </script>
+</body>
+</html>

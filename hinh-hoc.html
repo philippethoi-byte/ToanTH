@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finly Geometry - Học Hình Học Lớp 3, 4, 5</title>
+    <style>
+        :root {
+            --primary: #6366F1;
+            --secondary: #10B981;
+            --accent: #F59E0B;
+            --bg: #F8FAFC;
+            --card: #FFFFFF;
+            --text: #1E293B;
+        }
+        body {
+            font-family: 'Montserrat', 'Segoe UI', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0; padding: 0;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        header {
+            background: linear-gradient(135deg, var(--primary), #4F46E5);
+            color: white; width: 100%; padding: 2rem 0;
+            text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .nav-buttons { margin-top: 15px; }
+        button {
+            background: rgba(255,255,255,0.2); color: white; border: 2px solid white;
+            padding: 12px 25px; margin: 5px; border-radius: 30px;
+            font-weight: 700; cursor: pointer; transition: 0.3s;
+        }
+        button.active, button:hover { background: white; color: var(--primary); }
+        
+        main { width: 95%; max-width: 900px; margin: 30px auto; }
+        .card {
+            background: var(--card); padding: 30px; border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+        .hidden { display: none; }
+
+        /* Theory Styles */
+        .theory-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: center; }
+        @media (max-width: 600px) { .theory-grid { grid-template-columns: 1fr; } }
+        
+        .visual-container { background: #EEF2FF; border-radius: 15px; padding: 20px; text-align: center; }
+        svg { max-width: 100%; height: auto; }
+        .formula-list { list-style: none; padding: 0; }
+        .formula-list li { margin-bottom: 10px; font-size: 1.1rem; }
+        .example-box { 
+            margin-top: 20px; padding: 15px; background: #ECFDF5; 
+            border-left: 6px solid var(--secondary); border-radius: 8px;
+        }
+
+        /* Practice Styles */
+        .quiz-item { border-bottom: 1px solid #E2E8F0; padding: 25px 0; }
+        .quiz-content { display: flex; gap: 20px; align-items: center; }
+        .quiz-img { width: 120px; height: 120px; background: #F1F5F9; border-radius: 10px; padding: 10px; }
+        .options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
+        .opt-btn { 
+            background: #F8FAFC; border: 1px solid #CBD5E1; color: var(--text); 
+            text-align: left; padding: 10px 15px; border-radius: 8px;
+        }
+        .opt-btn:hover { background: #E2E8F0; }
+        .correct-opt { background: #D1FAE5 !important; border-color: #10B981 !important; }
+        .wrong-opt { background: #FEE2E2 !important; border-color: #EF4444 !important; }
+        
+        select, input { padding: 10px; border-radius: 8px; border: 1px solid #CBD5E1; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>📐 Thư Viện Hình Học Thông Minh</h1>
+    <div class="nav-buttons">
+        <button id="tab-theory" class="active" onclick="showTab('theory')">📖 Lý Thuyết</button>
+        <button id="tab-practice" onclick="showTab('practice')">📝 Luyện Tập</button>
+    </div>
+</header>
+
+<main>
+    <div id="theory-section" class="card">
+        <div style="margin-bottom: 25px;">
+            <label>Chọn loại hình:</label>
+            <select id="select-shape" onchange="renderTheory()"></select>
+        </div>
+        <div id="theory-display" class="theory-grid">
+            </div>
+    </div>
+
+    <div id="practice-section" class="card hidden">
+        <div style="margin-bottom: 25px; display: flex; flex-wrap: wrap; gap: 15px; align-items: center;">
+            <label>Luyện tập hình:</label>
+            <select id="select-practice-shape"></select>
+            <label>Số câu:</label>
+            <input type="number" id="quiz-count" value="4" min="1" max="10" style="width: 60px;">
+            <button onclick="generateQuiz()" style="background: var(--accent); border-color: var(--accent);">Bắt Đầu</button>
+        </div>
+        <div id="quiz-container">
+            </div>
+    </div>
+</main>
+
+<script>
+    const shapes = {
+        vuong: {
+            title: "Hình Vuông",
+            svg: (label = "a") => `<svg width="200" height="200" viewBox="0 0 100 100">
+                <rect x="20" y="20" width="60" height="60" fill="#FDE68A" stroke="#B45309" stroke-width="2"/>
+                <text x="50" y="90" font-size="8" text-anchor="middle">a (${label})</text>
+                <text x="12" y="55" font-size="8" text-anchor="middle" transform="rotate(-90, 12, 55)">a</text>
+            </svg>`,
+            formulas: ["Chu vi: P = a × 4", "Diện tích: S = a × a"],
+            example: "Cạnh a = 4cm. P = 4×4 = 16cm. S = 4×4 = 16cm².",
+            questions: [
+                { q: "Cạnh hình vuông là 5cm. Diện tích là?", a: ["20cm²", "25cm²", "10cm²", "15cm²"], c: 1, val: "5cm" },
+                { q: "Chu vi hình vuông là 24cm. Cạnh hình vuông là?", a: ["4cm", "12cm", "6cm", "8cm"], c: 2, val: "P=24" },
+                { q: "Diện tích hình vuông tăng bao nhiêu lần nếu cạnh tăng gấp đôi?", a: ["2 lần", "4 lần", "6 lần", "8 lần"], c: 1, val: "a x 2" }
+            ]
+        },
+        chunhat: {
+            title: "Hình Chữ Nhật",
+            svg: (a="a", b="b") => `<svg width="200" height="200" viewBox="0 0 120 100">
+                <rect x="10" y="30" width="100" height="40" fill="#BFDBFE" stroke="#1E40AF" stroke-width="2"/>
+                <text x="60" y="85" font-size="8" text-anchor="middle">Chiều dài (${a})</text>
+                <text x="5" y="55" font-size="8" text-anchor="middle" transform="rotate(-90, 5, 55)">Rộng (${b})</text>
+            </svg>`,
+            formulas: ["Chu vi: P = (a + b) × 2", "Diện tích: S = a × b"],
+            example: "Dài 5cm, Rộng 3cm. P = (5+3)×2 = 16cm. S = 5×3 = 15cm².",
+            questions: [
+                { q: "Dài 8cm, rộng 4cm. Chu vi là?", a: ["12cm", "24cm", "32cm", "20cm"], c: 1, val: "8x4" },
+                { q: "Diện tích 40cm², dài 8cm. Rộng là?", a: ["5cm", "32cm", "12cm", "6cm"], c: 0, val: "S=40" }
+            ]
+        },
+        binhhanh: {
+            title: "Hình Bình Hành",
+            svg: (a="a", h="h") => `<svg width="200" height="200" viewBox="0 0 120 100">
+                <path d="M30 20 L110 20 L90 70 L10 70 Z" fill="#D1FAE5" stroke="#065F46" stroke-width="2"/>
+                <line x1="90" y1="20" x2="90" y2="70" stroke="#065F46" stroke-dasharray="2"/>
+                <text x="50" y="85" font-size="8">Cạnh đáy (${a})</text>
+                <text x="95" y="45" font-size="8">h</text>
+            </svg>`,
+            formulas: ["Diện tích: S = a × h", "Chu vi: P = (a + b) × 2"],
+            example: "Đáy 10cm, Cao 5cm. S = 10×5 = 50cm².",
+            questions: [
+                { q: "Đáy 6cm, cao 3cm. Diện tích là?", a: ["9cm²", "18cm²", "12cm²", "15cm²"], c: 1, val: "6x3" }
+            ]
+        },
+        thang: {
+            title: "Hình Thang",
+            svg: (a="a", b="b", h="h") => `<svg width="200" height="200" viewBox="0 0 120 100">
+                <path d="M30 20 L90 20 L110 70 L10 70 Z" fill="#FEE2E2" stroke="#991B1B" stroke-width="2"/>
+                <line x1="30" y1="20" x2="30" y2="70" stroke="#991B1B" stroke-dasharray="2"/>
+                <text x="60" y="15" font-size="8" text-anchor="middle">Đáy bé (a)</text>
+                <text x="60" y="85" font-size="8" text-anchor="middle">Đáy lớn (b)</text>
+                <text x="35" y="50" font-size="8">h</text>
+            </svg>`,
+            formulas: ["Diện tích: S = (a + b) × h : 2"],
+            example: "Đáy 5cm và 8cm, cao 4cm. S = (5+8)×4:2 = 26cm².",
+            questions: [
+                { q: "Đáy 4cm và 6cm, cao 5cm. S = ?", a: ["50cm²", "25cm²", "20cm²", "15cm²"], c: 1, val: "4,6,5" }
+            ]
+        },
+        tron: {
+            title: "Hình Tròn",
+            svg: (r="r") => `<svg width="200" height="200" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="40" fill="#E0F2FE" stroke="#0369A1" stroke-width="2"/>
+                <line x1="50" y1="50" x2="90" y2="50" stroke="#0369A1"/>
+                <text x="70" y="45" font-size="8">r</text>
+                <circle cx="50" cy="50" r="1.5" fill="black"/>
+            </svg>`,
+            formulas: ["Chu vi: C = d × 3.14 (hoặc r × 2 × 3.14)", "Diện tích: S = r × r × 3.14"],
+            example: "Bán kính r=2cm. C = 2×2×3.14 = 12.56cm. S = 2×2×3.14 = 12.56cm².",
+            questions: [
+                { q: "Bán kính 10cm. Chu vi là?", a: ["31.4cm", "62.8cm", "314cm", "100cm"], c: 1, val: "r=10" }
+            ]
+        },
+        hopchunhat: {
+            title: "Hình Hộp Chữ Nhật",
+            svg: () => `<svg width="200" height="200" viewBox="0 0 120 100">
+                <rect x="10" y="40" width="70" height="40" fill="none" stroke="#4F46E5" stroke-width="1"/>
+                <rect x="30" y="20" width="70" height="40" fill="none" stroke="#4F46E5" stroke-width="1"/>
+                <line x1="10" y1="40" x2="30" y2="20" stroke="#4F46E5"/>
+                <line x1="80" y1="40" x2="100" y2="20" stroke="#4F46E5"/>
+                <line x1="10" y1="80" x2="30" y2="60" stroke="#4F46E5"/>
+                <line x1="80" y1="80" x2="100" y2="60" stroke="#4F46E5"/>
+                <text x="45" y="90" font-size="7">Dài (a)</text>
+                <text x="90" y="75" font-size="7">Rộng (b)</text>
+                <text x="105" y="45" font-size="7">Cao (h)</text>
+            </svg>`,
+            formulas: ["S xung quanh: Sxq = P đáy × h", "S toàn phần: Stp = Sxq + S 2 đáy", "Thể tích: V = a × b × h"],
+            example: "a=5, b=4, h=3. V = 5×4×3 = 60cm³.",
+            questions: [
+                { q: "Kích thước 2cm, 3cm, 4cm. Thể tích là?", a: ["9cm³", "24cm³", "12cm³", "20cm³"], c: 1, val: "2,3,4" }
+            ]
+        }
+    };
+
+    function showTab(tab) {
+        document.querySelectorAll('.nav-buttons button').forEach(b => b.classList.remove('active'));
+        document.getElementById('tab-' + tab).classList.add('active');
+        document.getElementById('theory-section').classList.toggle('hidden', tab !== 'theory');
+        document.getElementById('practice-section').classList.toggle('hidden', tab !== 'practice');
+    }
+
+    function renderTheory() {
+        const key = document.getElementById('select-shape').value;
+        const s = shapes[key];
+        const html = `
+            <div class="visual-container">${s.svg()}</div>
+            <div>
+                <h2 style="color:var(--primary)">${s.title}</h2>
+                <div class="example-box"><strong>💡 Mô tả:</strong>
+                        <br>Hình chữ nhật có 4 cạnh.
+                        <br>Có 4 góc, góc nào cũng là góc vuông (góc 90 độ, như góc bàn học, góc quyển vở).
+                        <br>Hai cạnh đối diện thì bằng nhau.
+            </div>
+                <ul class="formula-list">${s.formulas.map(f => `<li>✅ ${f}</li>`).join('')}</ul>
+                <div class="example-box"><strong>💡 Ví dụ:</strong><br>${s.example}</div>
+            </div>
+        `;
+        document.getElementById('theory-display').innerHTML = html;
+    }
+
+    function generateQuiz() {
+        const key = document.getElementById('select-practice-shape').value;
+        const count = document.getElementById('quiz-count').value;
+        const s = shapes[key];
+        let qHTML = "";
+        
+        // Shuffle questions
+        const shuffled = [...s.questions].sort(() => 0.5 - Math.random()).slice(0, count);
+
+        shuffled.forEach((q, idx) => {
+            qHTML += `
+                <div class="quiz-item">
+                    <div class="quiz-content">
+                        <div class="quiz-img">${s.svg(q.val)}</div>
+                        <div style="flex:1">
+                            <p><strong>Câu ${idx+1}:</strong> ${q.q}</p>
+                            <div class="options">
+                                ${q.a.map((opt, i) => `<button class="opt-btn" onclick="checkAnswer(this, ${i==q.c})">${opt}</button>`).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        document.getElementById('quiz-container').innerHTML = qHTML;
+    }
+
+    function checkAnswer(btn, isCorrect) {
+        const parent = btn.parentElement;
+        parent.querySelectorAll('button').forEach(b => b.disabled = true);
+        btn.classList.add(isCorrect ? 'correct-opt' : 'wrong-opt');
+        if (!isCorrect) {
+            // Highlight the correct one
+            // (Simple logic for demo)
+        }
+    }
+
+    // Init App
+    const sel = document.getElementById('select-shape');
+    const pSel = document.getElementById('select-practice-shape');
+    Object.keys(shapes).forEach(k => {
+        sel.add(new Option(shapes[k].title, k));
+        pSel.add(new Option(shapes[k].title, k));
+    });
+    renderTheory();
+</script>
+
+</body>
+</html>
